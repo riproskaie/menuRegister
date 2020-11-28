@@ -10,9 +10,10 @@
 - [x] menuRegister.html 페이지와 css 틀 만들기 (구글 검색하며 작업하기 쉽도록 우선 html로 제작)
 - [x] 라우트에 각 페이지 등록하기
 - [x] inputFormCombo.html, inputFormSingle.html 페이지와 css 틀 만들기 
-- [x] 카드 생성을 위한 클릭버튼을 a 태그로 구현하기
+- [x] 카드 생성을 위한 클릭버튼을 a 태그와 css로 구현하기
 - [x] inputFormSingle에 양식 제출을 위한 javascript(jQuery) 적용하기
 - [x] 더미 데이터 db에 입력하기
+- [x] 샘플로 사용할 메뉴 이미지들 캡처 후 일정한 크기로 자르기
 
 ###남은 작업
 ####페이지 동작 관련
