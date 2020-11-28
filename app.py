@@ -42,9 +42,9 @@ def desserts():
     return render_template('desserts.html')
 
 
-@app.route('/inputForm')
+@app.route('/inputFormSingle')
 def inputForm():
-    return render_template('inputForm.html')
+    return render_template('inputFormSingle.html')
 
 
 @app.route('/inputForm', methods=['POST'])

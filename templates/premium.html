@@ -37,6 +37,30 @@
             font-size: 0.5rem;
             text-align: center;
         }
+
+        #popup {
+            display: flex;
+            justify-content: center;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,.7);
+            z-index: 1;
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
+        }
+
+        #popup.hide {
+            display: none;
+        }
+
+        #popup .content {
+            padding: 20px;
+            background: #fff;
+            box-shadow: 1px 1px 3px rgba(0,0,0,.3);
+        }
     </style>
     <script>
     </script>
@@ -44,7 +68,7 @@
         <div id="card">
         </div>
         <div class="addCard">
-            <a href=""> + </a>
+            <a href="/inputFormSingle"> + </a>
             <br>
             <p>Premium menus will go here</p>
         </div>
