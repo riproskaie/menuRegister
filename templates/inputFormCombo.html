@@ -240,85 +240,78 @@
                 </div>
                 <p class="lab">카테고리</p>
                 <div class="radios">
-                    <input type="radio" id="premium" name="category"><label for="premium"><span></span>프리미엄</label>
-                    <input type="radio" id="whoppers" name="category"><label for="whoppers"><span></span>와퍼</label>
-                    <input type="radio" id="chickenBurgers" name="category"><label for="chickenBurgers"><span></span>치킨버거</label>
-                    <input type="radio" id="sides" name="category"><label for="sides"><span></span>사이드</label>
-                    <input type="radio" id="drinks" name="category"><label for="drinks"><span></span>음료</label>
-                    <input type="radio" id="desserts" name="category"><label for="desserts"><span></span>디저트</label>
-                </div>
-                <p class="lab">메뉴유형</p>
-                <div class="checkboxes">
-                    <input type="radio" id="burger" name="menuType"><label for="burger"><span></span>버거류</label>
-                    <input type="radio" id="side" name="menuType"><label for="side"><span></span>사이드</label>
-                    <input type="radio" id="drink" name="menuType"><label for="drink"><span></span>음료수</label>
-                    <input type="radio" id="dessert" name="menuType"><label for="dessert"><span></span>디저트</label>
+                    <input type="radio" id="premium" name="categoryCombo"><label for="premium"><span></span>프리미엄</label>
+                    <input type="radio" id="whoppers" name="categoryCombo"><label for="whoppers"><span></span>와퍼</label>
+                    <input type="radio" id="chickenBurgers" name="categoryCombo"><label for="chickenBurgers"><span></span>치킨버거</label>
+                    <input type="radio" id="sides" name="categoryCombo"><label for="sides"><span></span>사이드</label>
+                    <input type="radio" id="drinks" name="categoryCombo"><label for="drinks"><span></span>음료</label>
+                    <input type="radio" id="desserts" name="categoryCombo"><label for="desserts"><span></span>디저트</label>
                 </div>
                 <div class="textForm">
                     <p class="lab">메뉴이름(한글)</p>
-                    <br><input type="text" placeholder="최대 20자까지 입력 가능" maxlength="20" id="nameKo" required
+                    <br><input type="text" placeholder="최대 20자까지 입력 가능" maxlength="20" id="nameKoCombo" required
                                autocomplete=off>
-                    <label for="nameKo"></label>
+                    <label for="nameKoCombo"></label>
                 </div>
                 <div class="textForm">
                     <p class="lab">메뉴이름(영어)</p>
-                    <br><input type="text" placeholder="최대 50자까지 입력 가능 (영어)" maxlength="50" id="nameEn" required
+                    <br><input type="text" placeholder="최대 50자까지 입력 가능 (영어)" maxlength="50" id="nameEnCombo" required
                                autocomplete=off>
-                    <label for="nameEn"></label>
+                    <label for="nameEnCombo"></label>
                 </div>
                 <div class="textForm">
                     <p class="lab">칼로리(kcal)</p>
-                    <br><input type="text" placeholder="최대 20자까지 입력 가능" maxlength="20" id="calories" required
+                    <br><input type="text" placeholder="최대 20자까지 입력 가능" maxlength="20" id="caloriesCombo" required
                                autocomplete=off>
-                    <label for="calories"></label>
+                    <label for="caloriesCombo"></label>
                 </div>
                 <div class="textForm">
-                    <p class="lab">기본상품가격(원)</p>
-                    <br><input type="text" placeholder="최대 20자까지 입력 가능" maxlength="20" id="originalPrice" required
+                    <p class="lab">세트가격(원)</p>
+                    <br><input type="text" placeholder="최대 20자까지 입력 가능" maxlength="20" id="priceCombo" required
                                autocomplete=off>
-                    <label for="originalPrice"></label>
+                    <label for="priceCombo"></label>
                 </div>
                 <!--CSS상으로 체크박스 줄바꿈 및 정렬(3열로) 구현해야 한다-->
                 <!--CSS상으로 이미지 체크박스를 구현해야 한다-->
                 <!--자바스크립트로 '재료구성'에서 클릭된 성분이 '알레르기 유발성분'에서도 자동 클릭되게 해야 한다-->
                 <p class="lab">재료구성</p>
                 <div class="checkboxes">
-                    <input type="checkbox" id="beef"><label for="beef">쇠고기</label>
-                    <input type="checkbox" id="pork"><label for="pork">돼지고기</label>
-                    <input type="checkbox" id="chicken"><label for="chicken">닭고기</label>
-                    <input type="checkbox" id="pollock"><label for="pollock">명태연육</label>
-                    <input type="checkbox" id="crab"><label for="crab">붉은대게</label>
-                    <input type="checkbox" id="shellfish"><label for="shellfish">조개류</label>
-                    <input type="checkbox" id="shrimp"><label for="shrimp">새우</label>
-                    <input type="checkbox" id="cheese"><label for="cheese">치즈</label>
-                    <input type="checkbox" id="egg"><label for="egg">난류</label>
-                    <input type="checkbox" id="flour"><label for="flour">밀가루</label>
-                    <input type="checkbox" id="soybean"><label for="soybean">대두</label>
-                    <input type="checkbox" id="potato"><label for="potato">감자</label>
-                    <input type="checkbox" id="lettuce"><label for="lettuce">양상추</label>
-                    <input type="checkbox" id="tomato"><label for="tomato">토마토</label>
-                    <input type="checkbox" id="cucumber"><label for="cucumber">오이</label>
-                    <input type="checkbox" id="onion"><label for="onion">양파</label>
-                    <input type="checkbox" id="truffle"><label for="truffle">트러플</label>
+                    <input type="checkbox" id="beef" name="ingredientsCombo"><label for="beef">쇠고기</label>
+                    <input type="checkbox" id="pork" name="ingredientsCombo"><label for="pork">돼지고기</label>
+                    <input type="checkbox" id="chicken" name="ingredientsCombo"><label for="chicken">닭고기</label>
+                    <input type="checkbox" id="pollock" name="ingredientsCombo"><label for="pollock">명태연육</label>
+                    <input type="checkbox" id="crab" name="ingredientsCombo"><label for="crab">붉은대게</label>
+                    <input type="checkbox" id="shellfish" name="ingredientsCombo"><label for="shellfish">조개류</label>
+                    <input type="checkbox" id="shrimp" name="ingredientsCombo"><label for="shrimp">새우</label>
+                    <input type="checkbox" id="cheese" name="ingredientsCombo"><label for="cheese">치즈</label>
+                    <input type="checkbox" id="egg" name="ingredientsCombo"><label for="egg">난류</label>
+                    <input type="checkbox" id="flour" name="ingredientsCombo"><label for="flour">밀가루</label>
+                    <input type="checkbox" id="soybean" name="ingredientsCombo"><label for="soybean">대두</label>
+                    <input type="checkbox" id="potato" name="ingredientsCombo"><label for="potato">감자</label>
+                    <input type="checkbox" id="lettuce" name="ingredientsCombo"><label for="lettuce">양상추</label>
+                    <input type="checkbox" id="tomato" name="ingredientsCombo"><label for="tomato">토마토</label>
+                    <input type="checkbox" id="cucumber" name="ingredientsCombo"><label for="cucumber">오이</label>
+                    <input type="checkbox" id="onion" name="ingredientsCombo"><label for="onion">양파</label>
+                    <input type="checkbox" id="truffle" name="ingredientsCombo"><label for="truffle">트러플</label>
                 </div>
                 <p class="lab">알레르기 유발재료</p>
                 <div class="checkboxes">
                     <!--글자수가 많으니 oval 내에 맞아떨어지게 작아져야 한다-->
-                    <input type="checkbox" id="soybeanAllergen"><label for="soybeanAllergen">대두</label>
-                    <input type="checkbox" id="porkAllergen"><label for="porkAllergen">돼지고기</label>
-                    <input type="checkbox" id="chickenAllergen"><label for="chickenAllergen">닭고기</label>
-                    <input type="checkbox" id="beefAllergen"><label for="beefAllergen">쇠고기</label>
-                    <input type="checkbox" id="shellfishAllergen"><label for="shellfishAllergen">조개류</label>
-                    <input type="checkbox" id="eggAllergen"><label for="eggAllergen">난류</label>
-                    <input type="checkbox" id="shrimpAllergen"><label for="shrimpAllergen">새우</label>
-                    <input type="checkbox" id="tomatoAllergen"><label for="tomatoAllergen">토마토</label>
+                    <input type="checkbox" id="soybeanAllergen" name="allergensCombo"><label for="soybeanAllergen">대두</label>
+                    <input type="checkbox" id="porkAllergen" name="allergensCombo"><label for="porkAllergen">돼지고기</label>
+                    <input type="checkbox" id="chickenAllergen" name="allergensCombo"><label for="chickenAllergen">닭고기</label>
+                    <input type="checkbox" id="beefAllergen" name="allergensCombo"><label for="beefAllergen">쇠고기</label>
+                    <input type="checkbox" id="shellfishAllergen" name="allergensCombo"><label for="shellfishAllergen">조개류</label>
+                    <input type="checkbox" id="eggAllergen" name="allergensCombo"><label for="eggAllergen">난류</label>
+                    <input type="checkbox" id="shrimpAllergen" name="allergensCombo"><label for="shrimpAllergen">새우</label>
+                    <input type="checkbox" id="tomatoAllergen" name="allergensCombo"><label for="tomatoAllergen">토마토</label>
                 </div>
             </div>
-            <!--아예 사진을 체크박스로 만들기는 내 수준에서 어려울 수 있다-->
+            <!--상품사진을 체크박스로 만들기-->
             <div class="setCombination">
                 <span class="title">세트구성</span>
                 <div class="divider"></div>
-                <!--CSS상으로 이미지 체크박스를 구현해야 한다-->
+                <!--사이드/음료를 미리 올려놓은 상태에서 ObjectId를 전달해야 함-->
                 <p class="lab">사이드</p>
                 <div class="radios">
                     <input type="radio" checked="checked" id="frenchFries" name="side"><label

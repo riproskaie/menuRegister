@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
+        <!--매출분석 페이지가 어떻게 html상으로 렌더링이 되는지를 보고 얼개를 배껴보자-->
         <meta charset="UTF-8">
         <title>BURGERKING</title>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -16,15 +17,14 @@
             flex-direction: column;
         }
 
-        /*메인페이지(메뉴관리) 관련 css*/
         #menuRegister .topArea {
-            font-family: "Black Han Sans", sans-serif;
+            font-family: 'Black Han Sans';
             height: 200px;
             background-color: #E1C89F;
         }
 
         #menuRegister .btn {
-            font-family: "Black Han Sans", sans-serif;
+            font-family: 'Black Han Sans';
             position: fixed;
             text-decoration: none;
             color: #000000;
@@ -53,7 +53,7 @@
         }
 
         #menuRegister span.title {
-            font-family: "Black Han Sans", sans-serif;
+            font-family: 'Black Han Sans';
             font-size: 5rem;
             margin-right: 1rem;
             position: absolute;
@@ -90,7 +90,7 @@
         }
 
         #menuRegister #categoryTabs > label {
-            font-family: "Black Han Sans", sans-serif;
+            font-family: 'Black Han Sans';
             display: inline-block;
             padding: 20px 0 10px 0;
             text-align: center;
@@ -139,93 +139,6 @@
             margin: 0 0 5px 0;
         }
 
-        /*팝업창 관련 코드*/
-        #menuRegister input[id="popup"] {
-            display: none;
-        }
-
-        #menuRegister input[id="popup"] + label {
-            display: inline-block;
-            position: absolute;
-            top: 40px;
-            font-size: 3rem;
-            text-align: center;
-            text-decoration: none;
-            color: #cccccc;
-            padding: 40px 40px 40px 40px;
-            border-style: dotted;
-            border-color: #cccccc;
-            left: 50px;
-        }
-
-        #menuRegister input[id="popup"] + label + div {
-            display: none;
-        }
-
-        #menuRegister input[id="popup"]:checked + label + div {
-            display: block;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 100;
-        }
-
-        #menuRegister input[id="popup"] + label + div > div {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 70%;
-            height: 70%;
-            background: #ffffff;
-            z-index: 2;
-        }
-
-        #menuRegister input[id="popup"] + label + div > div > div {
-            height: 50%;
-            overflow-y: auto;
-            overflow-x: hidden;
-        }
-
-        #menuRegister input[id="popup"] + label + div > div > label {
-            position: absolute;
-            bottom: 0%;
-            left: 50%;
-            color: #ffffff;
-            font-size: 2rem;
-            transform: translate(-110%, -50%);
-            padding: 20px 15% 20px 15%;
-            background: #000000;
-            border-radius: 5px;
-            z-index: 1;
-        }
-
-        #menuRegister input[id="popup"] + label + div > label {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, .7);
-            z-index: 1;
-        }
-
-        #menuRegister .submit {
-            position: absolute;
-            bottom: 0%;
-            right: 50%;
-            color: #ffffff;
-            border-color: #E50014;
-            transform: translate(110%, -50%);
-            padding: 20px 15% 20px 15%;
-            background: #E50014;
-            border-radius: 5px;
-            font-size: 2rem;
-        }
-
-        /*메뉴카드 관련 css*/
         #menuRegister .addCard {
             height: 200px;
             width: 200px;
@@ -256,13 +169,15 @@
             top: 80px;
             font-size: 0.7rem;
             text-align: center;
-            font-family: "Black Han Sans", sans-serif;
+            font-family: 'Gothic A1'
         }
 
 
     </style>
     <script type="text/javascript">
         //긴 메소드는 jQuery로 가급적 바꾸는게 좋겠다
+
+
 
         //메뉴별 카드 표시용 함수 (서버와 통신 성공하면 구현 예정)
         $(document).ready(function () {
