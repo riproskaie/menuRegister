@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <!--매출분석 페이지가 어떻게 html상으로 렌더링이 되는지를 보고 얼개를 배껴보자-->
+        <meta charset="UTF-8">
+        <title>BURGERKING</title>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    </head>
+
+    <link href="https://fonts.googleapis.com/css?family=Black+Han+Sans&display=swap&subset=korean" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Gothic+A1&display=swap" rel="stylesheet">
+
+    <style type="text/css">
+        * {
+            font-family: 'Black Han Sans';
+        }
+
+        #menuRegister {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .topArea {
+            height: 200px;
+            background-color: #E1C89F;
+            margin: 1rem;
+        }
+
+        #popUp {
+
+        }
+
+        .btn {
+            position: fixed;
+            text-decoration: none;
+            color: #000000;
+            font-size: 2rem;
+            background-color: #f3e9d8;
+            padding: 10px 10px 10px 10px;
+            margin-top: 60px;
+            left: 5rem;
+            border-style: solid;
+            border-radius: 8px;
+            border-color: #ffffff;
+            display: inline-block;
+        }
+
+        .btn:hover {
+            background-color: #fff6e5;
+        }
+
+        .logo {
+            position: absolute;
+            width: 150px;
+            height: 100px;
+            top: 50%;
+            right: calc(5rem + 200px);
+            transform: translateY(-50%);
+        }
+
+        span.title {
+            font-size: 5rem;
+            margin-right: 1rem;
+            position: absolute;
+            top: 50%;
+            right: calc(1rem);
+            transform: translateY(-50%);
+            color: #fff
+        }
+
+        .category ul {
+            float: left;
+            text-align: center;
+            position: relative;
+            list-style: none;
+            font-size: 2rem;
+            width: 100%;
+            background-color: #ffffff;
+        }
+
+        .category ul li {
+            display: inline-block;
+            margin-right: 5%;
+        }
+
+        .category a:link {
+            color: #000000;
+            text-decoration: none;
+        }
+
+        .category a:hover {
+            color: #000000;
+            text-decoration: none;
+        }
+
+        .category a:active {
+            color: #E50014;
+            text-decoration: underline;
+        }
+
+        .category a:visited {
+            color: #000000;
+            text-decoration: none;
+        }
+
+        .container {
+            position: relative;
+            width: 85%;
+            height: 100%;
+            margin: auto;
+            display: grid;
+        }
+
+        .direction {
+            background-color: #999999;
+            color: #ffffff;
+            text-align: center;
+            height: 50px;
+            margin: 1rem
+        }
+
+        .bottomArea {
+        }
+
+        #bottomArea .addCard {
+            height: 200px;
+            width: 200px;
+        }
+
+        #bottomArea .addCard a:link {
+            position: relative;
+            top: 40px;
+            font-size: 3rem;
+            text-align: center;
+            text-decoration: none;
+            color: #cccccc;
+            padding: 40px 40px 40px 40px;
+            border-style: dotted;
+            border-color: #cccccc;
+            left: 50px;
+        }
+
+        #bottomArea .addCard a:visited {
+            font-size: 3rem;
+            text-align: center;
+            text-decoration: none;
+            color: #cccccc;
+        }
+
+        #bottomArea .addCard p {
+            position: relative;
+            top: 80px;
+            font-size: 0.7rem;
+            text-align: center;
+            font-family: 'Gothic A1'
+        }
+
+
+    </style>
+    <script type="text/javascript">
+        //긴 메소드는 jQuery로 가급적 바꾸는게 좋겠다
+
+        //카드 만들기 함수
+        //let imageUrl = ;
+        //let nameKr = ;
+        //let price = ['￦', ].join(' ');
+
+        //팝업 표시 함수
+        function showPopup() {
+            let popup = document.querySelector('#popup');
+            popup.classList.remove("hide");
+        }
+
+        //팝업 취소 함수
+        function cancelPopup() {
+            let popup = document.querySelector('#popup');
+            popup.classList.add("hide")
+        }
+
+        //bottomArea에 각 카테고리별 html-in-html추가
+        $(document).ready(function () {
+            $("#bottomArea").load("../premium")
+        });
+
+        function premium() {
+            $(".premium").click(function () {
+                $("#bottomArea").load("../premium");
+                return false;
+            });
+        }
+
+        function whoppers() {
+            $(".whoppers").click(function () {
+                $("#bottomArea").load("../whoppers");
+                return false;
+            });
+        }
+
+        function chickenBurgers() {
+            $(".chickenBurgers").click(function () {
+                $("#bottomArea").load("../chickenBurgers");
+                return false;
+            });
+        }
+
+        function drinks() {
+            $(".drinks").click(function () {
+                $("#bottomArea").load("../drinks");
+                return false;
+            });
+        }
+
+        function sides() {
+            $(".sides").click(function () {
+                $("#bottomArea").load("../sides");
+                return false;
+            });
+        }
+
+        function desserts() {
+            $(".desserts").click(function () {
+                $("#bottomArea").load("../desserts");
+                return false;
+            });
+        }
+
+        $(document).ready(function(){
+            //$("#card").html("");
+            showMenu();
+        });
+
+
+        function showMenu() {
+            $.ajax({
+                type: "GET",
+                url: "/",
+                data: { },
+                success: function (response) {
+                    if (response['result'] === 'success') {
+                        alert(response['msg']);
+                    } else {
+                        alert('메뉴 받아오기 실패');
+                    }
+                }
+            })
+        }
+    </script>
+    <body>
+        <div id="menuRegister">
+            <div class="topArea"> <!--헤더에 해당-->
+                <div class="container">
+                    <a href="" class="btn"> 《 주문알림 </a>
+                    <img class="logo" src="https://cdn.freebiesupply.com/images/thumbs/2x/burger-king-logo.png"
+                         alt="버거킹 로고이미지"><span
+                        class="title">메뉴관리</span>
+                </div>
+            </div>
+            <!--카테고리와 안내문에 해당-->
+            <!--a:link 시에는 검은색-->
+            <!--a:hover 시에는 검은색 상태에서 글자크기가 약간 커진다-->
+            <!--a:active 시에는 글자 빨간색, 밑줄 처리-->
+            <div class="category">
+                <!--카테고리 하이퍼링크-->
+                <!--pug에서는 조금더 동적으로 구현 가능하려나?-->
+                <ul>
+                    <li><a class="premium" onclick="premium()">프리미엄</a></li>
+                    <li><a class="whoppers" onclick="whoppers()">와퍼</a></li>
+                    <li><a class="chickenBurgers" onclick="chickenBurgers()">치킨버거</a></li>
+                    <li><a class="sides" onclick="sides()">사이드</a></li>
+                    <li><a class="drinks" onclick="drinks()">음료</a></li>
+                    <li><a class="desserts" onclick="desserts()">디저트</a></li>
+                </ul>
+            </div>
+            <div class="direction"> <!--사용법안내 회색창-->
+                <p style="font-family: 'Gothic A1', sans-serif;">[안내] 생성된 메뉴를 클릭하면 상세정보 수정이 가능합니다.</p>
+            </div>
+        </div>
+        <!--카드가 표시되는 넓은 란에 해당-->
+        <!--각 카테고리에 해당하는 페이지를 따로 만들어두어야 한다-->
+        <!--각 카드에 hover 시에는 포인터만 손가락 모양으로 바뀐다-->
+        <div id="bottomArea">
+        </div>
+
+        <!--팝업창. 실제 pug로 구현시에는 extend를 사용할 예정-->
+        <!--
+        <div id="alertPopup" class="hide">
+            <div class="content">
+                <p>
+                    이것은 팝업창입니다.
+                </p>
+                <button onClick="cancelPopup()">취소</button>
+                <button onClick="uploadMenu()">확인</button>
+        </div>
+        -->
+    </body>
+</html>

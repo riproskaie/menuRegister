@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>인풋 양식</title>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    </head>
+
+    <link href="https://fonts.googleapis.com/css?family=Black+Han+Sans&display=swap&subset=korean" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Gothic+A1&display=swap" rel="stylesheet">
+
+    <style>
+        p.lab {
+            position: relative;
+            font-family: "Black Han Sans";
+            display: inline-block;
+            color: #ffffff;
+            border-style: none;
+            border-radius: 15px;
+            background-color: #818181;
+            padding: 10px 20px 10px 20px;
+        }
+
+        span.title {
+            font-family: "Black Han Sans";
+            font-size: 2rem;
+        }
+
+        .divider {
+            width: 100%;
+            border: 1px solid rgb(65, 65, 65);
+            margin: 0 0 3rem 0;
+        }
+
+        .textForm {
+            position: relative;
+            margin: 10px 0 30px 0;
+        }
+
+        .textForm input {
+            width: 100%;
+            height: 100%;
+            color: #595f6e;
+            padding-top: 20px;
+            border: none;
+        }
+
+        .textForm label {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50%;
+            height: 100%;
+            pointer-events: none;
+            border-bottom: 1px solid black;
+        }
+
+        .checkboxes {
+            display: grid;
+            grid: '. . .';
+            gap: 1px;
+            margin: 0 0 30px 0;
+        }
+
+        .radios {
+            display: grid;
+            grid: '. . .';
+            gap: 1px;
+            margin: 0 0 30px 0;
+        }
+
+        input[type="text"] {
+            width: 50%;
+            text-overflow: ellipsis;
+            font-family: 'Gothic A1', sans-serif;
+            font-size: 1rem;
+            border-left: #ffffff;
+            border-bottom: #595f6e;
+            border-top: #ffffff;
+            border-right: #ffffff;
+            outline: none;
+        }
+
+        input[type="checkbox"] {
+            position: absolute;
+            left: -3000%
+        }
+
+        input[type="checkbox"] + label {
+            font-family: 'Gothic A1', sans-serif;
+            position: relative;
+            left: 30px;
+        }
+
+        input[type="checkbox"] + label:before {
+            content: "";
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            margin: 0 4px 0 0;
+            border-width: 1px;
+            border-style: solid;
+            border-radius: 3px;
+            border-color: #9a9a9a;
+            position: relative;
+            transition: all 0.5s;
+            cursor: pointer;
+        }
+
+        input[type="checkbox"]:checked + label:before {
+            background: #9a9a9a;
+            border-color: #9a9a9a;
+        }
+
+        input[type="checkbox"]:checked + label:after {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 0;
+            background: url(https://i.imgur.com/TLMEHfs.png) no-repeat center;
+            width: 20px;
+            height: 20px;
+            background-size: 15px auto;
+        }
+
+        input[type="radio"] {
+            position: absolute;
+            left: -3000%
+        }
+
+        input[type="radio"] + label {
+            font-family: 'Gothic A1', sans-serif;
+            position: relative;
+            left: 30px;
+            vertical-align: middle;
+        }
+
+        input[type="radio"] + label span {
+            content: "";
+            position: relative;
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            top: 7px;
+            margin: 0 4px 0 0;
+            border-width: 1px;
+            border-style: solid;
+            border-radius: 3px;
+            border-color: #9a9a9a;
+            background-color: #ffffff;
+            cursor: pointer;
+            transition: all 0.5s;
+        }
+
+        input[type="radio"]:checked + label span {
+            content: "";
+            position: relative;
+            width: 20px;
+            height: 20px;
+            background: #9a9a9a url(https://i.imgur.com/TLMEHfs.png) no-repeat center;
+            background-size: 15px auto;
+        }
+
+        input[type="radio"] + label em {
+            content: "";
+            position: relative;
+            display: inline-block;
+            width: 50px;
+            height: 50px;
+            top: 7px;
+            margin: 0 4px 0 0;
+            border-width: 1px;
+            border-style: solid;
+            border-radius: 3px;
+            border-color: #cccccc;
+            background: #cccccc;
+            cursor: pointer;
+            transition: all 0.5s;
+        }
+
+        input[type="radio"]:checked + label em {
+            content: "";
+            position: relative;
+            width: 50px;
+            height: 50px;
+            background: #9a9a9a url(https://i.imgur.com/IHolKIj.png) no-repeat center;
+            background-size: 15px auto;
+        }
+
+
+        .singleOrSet button {
+            font-family: 'Black Han Sans';
+            color: #ffffff;
+            border-color: #ffffff;
+            padding: 10px 10px 10px 10px;
+            border-radius: 8px;
+            background-color: #cccccc;
+        }
+
+        .singleOrSet button:active {
+            background-color: #33a74c
+        }
+
+    </style>
+    <script>
+        function uploadMenu() {
+            $.ajax({
+                type: "POST",
+                url: "/inputForm",
+                data: {},
+                success: function (response) {
+                    if (response['result'] == 'success') {
+                        alert(response['msg']);
+                    } else {
+                        alert('POST 실패');
+                    }
+                }
+            })
+        }
+
+        function getInputValue() {
+            let menuType =;
+
+        }
+    </script>
+
+    <body>
+        <form>
+            <!--사진입력부는 나 혼자서 구현하기 어려울수도 있다. 다른거 먼저 구현하고 구글하자-->
+            <div class="photoArea"></div>
+            <!--'*필수항목'을 붉은색으로 원하는 위치에 표시해야 한다-->
+            <!--정해진 스키마에 맞게 id이름을 통일해야 한다-->
+
+            <!--각 요소의 값을 읽어와서, 버튼을 누르면 해당 요소가 딕셔너리로 정리된 팝업창이 뜨게 하자-->
+            <div class="basicInfo">
+                <div class="textForm">
+                    <p class="lab">세트이미지(링크)</p>
+                    <br><input type="text" placeholder="여기에 상품 이미지의 URL을 입력하세요" id="comboImage" autocomplete=off>
+                    <label for="comboImage"></label>
+                </div>
+                <p class="lab">카테고리</p>
+                <div class="radios">
+                    <input type="radio" id="premium" name="category"><label for="premium"><span></span>프리미엄</label>
+                    <input type="radio" id="whoppers" name="category"><label for="whoppers"><span></span>와퍼</label>
+                    <input type="radio" id="chickenBurgers" name="category"><label for="chickenBurgers"><span></span>치킨버거</label>
+                    <input type="radio" id="sides" name="category"><label for="sides"><span></span>사이드</label>
+                    <input type="radio" id="drinks" name="category"><label for="drinks"><span></span>음료</label>
+                    <input type="radio" id="desserts" name="category"><label for="desserts"><span></span>디저트</label>
+                </div>
+                <p class="lab">메뉴유형</p>
+                <div class="checkboxes">
+                    <input type="radio" id="burger" name="menuType"><label for="burger"><span></span>버거류</label>
+                    <input type="radio" id="side" name="menuType"><label for="side"><span></span>사이드</label>
+                    <input type="radio" id="drink" name="menuType"><label for="drink"><span></span>음료수</label>
+                    <input type="radio" id="dessert" name="menuType"><label for="dessert"><span></span>디저트</label>
+                </div>
+                <div class="textForm">
+                    <p class="lab">메뉴이름(한글)</p>
+                    <br><input type="text" placeholder="최대 20자까지 입력 가능" maxlength="20" id="nameKo" required
+                               autocomplete=off>
+                    <label for="nameKo"></label>
+                </div>
+                <div class="textForm">
+                    <p class="lab">메뉴이름(영어)</p>
+                    <br><input type="text" placeholder="최대 50자까지 입력 가능 (영어)" maxlength="50" id="nameEn" required
+                               autocomplete=off>
+                    <label for="nameEn"></label>
+                </div>
+                <div class="textForm">
+                    <p class="lab">칼로리(kcal)</p>
+                    <br><input type="text" placeholder="최대 20자까지 입력 가능" maxlength="20" id="calories" required
+                               autocomplete=off>
+                    <label for="calories"></label>
+                </div>
+                <div class="textForm">
+                    <p class="lab">기본상품가격(원)</p>
+                    <br><input type="text" placeholder="최대 20자까지 입력 가능" maxlength="20" id="originalPrice" required
+                               autocomplete=off>
+                    <label for="originalPrice"></label>
+                </div>
+                <!--CSS상으로 체크박스 줄바꿈 및 정렬(3열로) 구현해야 한다-->
+                <!--CSS상으로 이미지 체크박스를 구현해야 한다-->
+                <!--자바스크립트로 '재료구성'에서 클릭된 성분이 '알레르기 유발성분'에서도 자동 클릭되게 해야 한다-->
+                <p class="lab">재료구성</p>
+                <div class="checkboxes">
+                    <input type="checkbox" id="beef"><label for="beef">쇠고기</label>
+                    <input type="checkbox" id="pork"><label for="pork">돼지고기</label>
+                    <input type="checkbox" id="chicken"><label for="chicken">닭고기</label>
+                    <input type="checkbox" id="pollock"><label for="pollock">명태연육</label>
+                    <input type="checkbox" id="crab"><label for="crab">붉은대게</label>
+                    <input type="checkbox" id="shellfish"><label for="shellfish">조개류</label>
+                    <input type="checkbox" id="shrimp"><label for="shrimp">새우</label>
+                    <input type="checkbox" id="cheese"><label for="cheese">치즈</label>
+                    <input type="checkbox" id="egg"><label for="egg">난류</label>
+                    <input type="checkbox" id="flour"><label for="flour">밀가루</label>
+                    <input type="checkbox" id="soybean"><label for="soybean">대두</label>
+                    <input type="checkbox" id="potato"><label for="potato">감자</label>
+                    <input type="checkbox" id="lettuce"><label for="lettuce">양상추</label>
+                    <input type="checkbox" id="tomato"><label for="tomato">토마토</label>
+                    <input type="checkbox" id="cucumber"><label for="cucumber">오이</label>
+                    <input type="checkbox" id="onion"><label for="onion">양파</label>
+                    <input type="checkbox" id="truffle"><label for="truffle">트러플</label>
+                </div>
+                <p class="lab">알레르기 유발재료</p>
+                <div class="checkboxes">
+                    <!--글자수가 많으니 oval 내에 맞아떨어지게 작아져야 한다-->
+                    <input type="checkbox" id="soybeanAllergen"><label for="soybeanAllergen">대두</label>
+                    <input type="checkbox" id="porkAllergen"><label for="porkAllergen">돼지고기</label>
+                    <input type="checkbox" id="chickenAllergen"><label for="chickenAllergen">닭고기</label>
+                    <input type="checkbox" id="beefAllergen"><label for="beefAllergen">쇠고기</label>
+                    <input type="checkbox" id="shellfishAllergen"><label for="shellfishAllergen">조개류</label>
+                    <input type="checkbox" id="eggAllergen"><label for="eggAllergen">난류</label>
+                    <input type="checkbox" id="shrimpAllergen"><label for="shrimpAllergen">새우</label>
+                    <input type="checkbox" id="tomatoAllergen"><label for="tomatoAllergen">토마토</label>
+                </div>
+            </div>
+            <!--아예 사진을 체크박스로 만들기는 내 수준에서 어려울 수 있다-->
+            <div class="setCombination">
+                <span class="title">세트구성</span>
+                <div class="divider"></div>
+                <!--CSS상으로 이미지 체크박스를 구현해야 한다-->
+                <p class="lab">사이드</p>
+                <div class="radios">
+                    <input type="radio" checked="checked" id="frenchFries" name="side"><label
+                        for="frenchFries"><em></em>프렌치프라이</label>
+                    <input type="radio" id="cheeseFries" name="side"><label
+                        for="cheeseFries"><em></em>치즈프라이</label>
+                    <input type="radio" id="chiliCrabFries" name="side"><label
+                        for="chiliCrabFries"><em></em>칠리크랩프라이</label>
+                    <input type="radio" id="truffleFries" name="side"><label
+                        for="truffleFries"><em></em>트러플프라이</label>
+                </div>
+                <p class="lab">음료</p>
+                <div class="radios">
+                    <input type="radio" checked="checked" id="coke" name="drink"><label for="coke"><em></em>코카콜라</label>
+                    <input type="radio" id="zeroCoke" name="drink"><label
+                        for="zeroCoke"><em></em>제로콜라</label>
+                    <input type="radio" id="sprite" name="drink"><label
+                        for="sprite"><em></em>스프라이트</label>
+                </div>
+            </div>
+            <span class="title">기타설정</span>
+            <div class="divider"></div>
+            <p class="lab">할인</p>
+            <div class="radios">
+                <input type="radio" id="isDiscounted" name="dc"><label for="isDiscounted"><span></span>사용</label>
+                <input type="radio" checked="checked" id="!isDiscounted" name="dc"><label
+                    for="!isDiscounted"><span></span>미사용</label>
+            </div>
+            <p class="lab">품절</p>
+            <div class="radios">
+                <input type="radio" id="isSoldOut" name="stock"><label for="isSoldOut"><span></span>사용</label>
+                <input type="radio" checked="checked" id="!isSoldOut" name="stock"><label for="!isSoldOut"><span></span>미사용</label>
+            </div>
+            <p class="lab">추천</p>
+            <div class="radios">
+                <input type="radio" checked="checked" id="isRecommended" name="recommendation"><label
+                    for="isRecommended"><span></span>사용</label>
+                <input type="radio" id="!isRecommended" name="recommendation"><label
+                    for="!isRecommended"><span></span>미사용</label>
+            </div>
+            <p class="lab">단종</p>
+            <div class="radios">
+                <input type="radio" checked="checked" id="isDiscontinued" name="discontinue"><label
+                    for="isDiscontinued"><span></span>사용</label>
+                <input type="radio" id="!isDiscontinued" name="discontinue"><label
+                    for="!isDiscontinued"><span></span>미사용</label>
+            </div>
+            <button type="button" onclick="uploadMenu()">보내기</button>
+            </div>
+        </form>
+    </body>
+</html>

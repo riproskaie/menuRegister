@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Title</title>
+    </head>
+    <style type="text/css">
+        input[type="radio"] {
+            position: absolute;
+            left: -3000%
+        }
+
+        input[type="radio"] + label {
+            font-family: 'Gothic A1', sans-serif;
+            position: relative;
+            left: 30px;
+            vertical-align: middle;
+        }
+
+        input[type="radio"] + label span {
+            content: "";
+            position: relative;
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            top: 7px;
+            margin: 0 4px 0 0;
+            border-width: 1px;
+            border-style: solid;
+            border-radius: 3px;
+            border-color: #9a9a9a;
+            background-color: #ffffff;
+            border-color: #9a9a9a;
+            cursor: pointer;
+            transition: all 0.5s;
+        }
+
+        input[type="radio"]:checked + label span {
+            content: "";
+            position: relative;
+            width: 20px;
+            height: 20px;
+            background: #9a9a9a url(https://i.imgur.com/TLMEHfs.png) no-repeat center;
+            background-size: 15px auto;
+        }
+    </style>
+    <body>
+        <input type="radio" id="r1" name="rad">
+        <label for="r1"><span></span>동의합니다.</label>
+        <input type="radio" id="r2" name="rad">
+        <label for="r2"><span></span>비동의합니다.</label>
+    </body>
+</html>
