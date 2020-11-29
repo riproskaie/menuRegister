@@ -10,7 +10,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Gothic+A1&display=swap" rel="stylesheet">
 
     <style>
-        form#inputFormSingle p.lab {
+        p.lab {
             position: relative;
             font-family: "Black Han Sans";
             display: inline-block;
@@ -21,23 +21,23 @@
             padding: 10px 20px 10px 20px;
         }
 
-        form#inputFormSingle span.title {
+        span.title {
             font-family: "Black Han Sans";
             font-size: 2rem;
         }
 
-        form#inputFormSingle .divider {
+        .divider {
             width: 100%;
             border: 1px solid rgb(65, 65, 65);
             margin: 0 0 3rem 0;
         }
 
-        form#inputFormSingle .textForm {
+        .textForm {
             position: relative;
             margin: 10px 0 30px 0;
         }
 
-        form#inputFormSingle .textForm input {
+        .textForm input {
             width: 100%;
             height: 100%;
             color: #595f6e;
@@ -45,7 +45,7 @@
             border: none;
         }
 
-        form#inputFormSingle .textForm label {
+        .textForm label {
             position: absolute;
             bottom: 0;
             left: 0;
@@ -55,21 +55,21 @@
             border-bottom: 1px solid black;
         }
 
-        form#inputFormSingle .checkboxes {
+        .checkboxes {
             display: grid;
             grid: '. . .';
             gap: 1px;
             margin: 0 0 30px 0;
         }
 
-        form#inputFormSingle .radios {
+        .radios {
             display: grid;
             grid: '. . .';
             gap: 1px;
             margin: 0 0 30px 0;
         }
 
-        form#inputFormSingle input[type="text"] {
+        input[type="text"] {
             width: 50%;
             text-overflow: ellipsis;
             font-family: 'Gothic A1', sans-serif;
@@ -81,18 +81,18 @@
             outline: none;
         }
 
-        form#inputFormSingle input[type="checkbox"] {
+        input[type="checkbox"] {
             position: absolute;
-            display: none;
+            left: -3000%
         }
 
-        form#inputFormSingle input[type="checkbox"] ~ label {
+        input[type="checkbox"] + label {
             font-family: 'Gothic A1', sans-serif;
             position: relative;
             left: 30px;
         }
 
-        form#inputFormSingle input[type="checkbox"] ~ label:before {
+        input[type="checkbox"] + label:before {
             content: "";
             display: inline-block;
             width: 20px;
@@ -107,12 +107,12 @@
             cursor: pointer;
         }
 
-        form#inputFormSingle input[type="checkbox"]:checked ~ label:before {
+        input[type="checkbox"]:checked + label:before {
             background: #9a9a9a;
             border-color: #9a9a9a;
         }
 
-        form#inputFormSingle input[type="checkbox"]:checked ~ label:after {
+        input[type="checkbox"]:checked + label:after {
             content: "";
             position: absolute;
             left: 0;
@@ -123,19 +123,19 @@
             background-size: 15px auto;
         }
 
-        form#inputFormSingle input[type="radio"] {
+        input[type="radio"] {
             position: absolute;
-            display: none;
+            left: -3000%
         }
 
-        form#inputFormSingle input[type="radio"] + label {
+        input[type="radio"] + label {
             font-family: 'Gothic A1', sans-serif;
             position: relative;
             left: 30px;
             vertical-align: middle;
         }
 
-        form#inputFormSingle input[type="radio"] + label span {
+        input[type="radio"] + label span {
             content: "";
             position: relative;
             display: inline-block;
@@ -152,7 +152,7 @@
             transition: all 0.5s;
         }
 
-        form#inputFormSingle input[type="radio"]:checked + label span {
+        input[type="radio"]:checked + label span {
             content: "";
             position: relative;
             width: 20px;
@@ -161,49 +161,21 @@
             background-size: 15px auto;
         }
 
-        /*세트주문 설정시 사용할 css*/
-        /*form#inputFormSingle input[type="radio"] + label em {*/
-        /*    content: "";*/
-        /*    position: relative;*/
-        /*    display: inline-block;*/
-        /*    width: 50px;*/
-        /*    height: 50px;*/
-        /*    top: 7px;*/
-        /*    margin: 0 4px 0 0;*/
-        /*    border-width: 1px;*/
-        /*    border-style: solid;*/
-        /*    border-radius: 3px;*/
-        /*    border-color: #cccccc;*/
-        /*    background: #cccccc;*/
-        /*    cursor: pointer;*/
-        /*    transition: all 0.5s;*/
-        /*}*/
+        .singleOrSet button {
+            font-family: 'Black Han Sans';
+            color: #ffffff;
+            border-color: #ffffff;
+            padding: 10px 10px 10px 10px;
+            border-radius: 8px;
+            background-color: #cccccc;
+        }
 
-        /*form#inputFormSingle input[type="radio"]:checked + label em {*/
-        /*    content: "";*/
-        /*    position: relative;*/
-        /*    width: 50px;*/
-        /*    height: 50px;*/
-        /*    background: #9a9a9a url(https://i.imgur.com/IHolKIj.png) no-repeat center;*/
-        /*    background-size: 15px auto;*/
-        /*}*/
+        .singleOrSet button:active {
+            background-color: #33a74c
+        }
 
-        /*단품/메뉴 라디오 탭으로 재활용할 예정*/
-        /*form#inputFormSingle .singleOrSet button {*/
-        /*    font-family: 'Black Han Sans';*/
-        /*    color: #ffffff;*/
-        /*    border-color: #ffffff;*/
-        /*    padding: 10px 10px 10px 10px;*/
-        /*    border-radius: 8px;*/
-        /*    background-color: #cccccc;*/
-        /*}*/
-
-        /*form#inputFormSingle .singleOrSet button:active {*/
-        /*    background-color: #33a74c*/
-        /*}*/
     </style>
     <script>
-        //재료구성에서 체크한 항목 중 알레르기 유발재료가 자동 체크되게 하기
         $(document).ready(function () {
             $('input:checkbox[name=ingredients]').click(function () {
                 let ingredientId = $(this).attr('id');
@@ -230,9 +202,7 @@
             })
         })
 
-
-        //단품 메뉴정보를 submit
-        function getInputValueSingle() {
+                function getInputValueSingle() {
             let image = $('#productImage').val();
             let categoryId = $('input:radio[name=category]:checked').attr('id');
             let category = $('label[for=' + categoryId + ']').text();
@@ -395,7 +365,7 @@
                 </div>
                 <p class="lab">알레르기 유발재료</p>
                 <div class="checkboxes">
-                    <input type="checkbox" id="beefAllergen" name="allergens"><label for="beefAllergen">쇠고기</label>
+                    <input type="checkbox" id="beefAllergen" name="allergens" required><label for="beefAllergen">쇠고기</label>
                     <input type="checkbox" id="porkAllergen" name="allergens"><label for="porkAllergen">돼지고기</label>
                     <input type="checkbox" id="chickenAllergen" name="allergens"><label
                         for="chickenAllergen">닭고기</label>
@@ -403,7 +373,7 @@
                         for="shellfishAllergen">조개류</label>
                     <input type="checkbox" id="shrimpAllergen" name="allergens"><label for="shrimpAllergen">새우</label>
                     <input type="checkbox" id="eggAllergen" name="allergens"><label for="eggAllergen">난류</label>
-                    <input type="checkbox" id="soybeanAllergen" name="allergens" required><label for="soybeanAllergen">대두</label>
+                    <input type="checkbox" id="soybeanAllergen" name="allergens"><label for="soybeanAllergen">대두</label>
                     <input type="checkbox" id="tomatoAllergen" name="allergens"><label for="tomatoAllergen">토마토</label>
                 </div>
             </div>
