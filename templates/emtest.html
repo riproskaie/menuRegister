@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Title</title>
+    </head>
+    <style>
+        /*해결법: 각 음료수별로 clicked이미지와 평소 이미지를 따로 만들기*/
+        input[type="radio"] {
+            display:none;
+        }
+
+        .drinks input[type='radio'] + label em {
+            display: inline-block;
+            position: relative;
+            padding: 5px;
+            margin: 20px 20px 20px 20px;
+            border: 1px solid #cccccc;
+            width: 100px;
+            height: 100px;
+        }
+
+        .drinks label em#cokeImg {
+            background: url(https://i.imgur.com/KhLflXf.png) no-repeat center;
+            width: 100px;
+            height: 100px;
+            background-size: contain;
+        }
+
+        .drinks label em#zeroCokeImg {
+            background: url(https://i.imgur.com/9JehOCA.png) no-repeat center;
+            width: 100px;
+            height: 100px;
+            background-size: contain;
+        }
+
+        .drinks label em#spriteImg {
+            background: url(https://i.imgur.com/3nQCrXS.png) no-repeat center;
+            width: 100px;
+            height: 100px;
+            background-size: contain;
+        }
+
+        .drinks input[type='radio']:checked + label em {
+            position: relative;
+            background: url(https://i.imgur.com/IHolKIj.png) no-repeat center;
+            background-size: 50px auto;
+        }
+
+
+    </style>
+    <body>
+        <p class="lab">음료</p>
+        <div class="drinks">
+            <input type="radio" checked="checked" id="coke" name="drink"><label for="coke"><em
+                id="cokeImg"></em>코카콜라</label>
+            <input type="radio" id="zeroCoke" name="drink"><label
+                for="zeroCoke"><em id="zeroCokeImg"></em>제로콜라</label>
+            <input type="radio" id="sprite" name="drink"><label
+                for="sprite"><em id="spriteImg"></em>스프라이트</label>
+        </div>
+    </body>
+</html>

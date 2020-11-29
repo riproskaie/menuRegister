@@ -20,10 +20,11 @@
 - [x] menuRegister 페이지 내에 inputForm 팝업창을 hidden div 형태로 포함시키기
 - [x] inputForm이 팝업창 내에 표시되게 하기
 - [x] 스크롤바 css 디자인 적용 (선행작업자 코드 그대로 사용)
+- [x] 팝업창 테두리 색(베이지) 입히기 (가능하나 예쁘지 않음. 흰색으로 할지 검토)
 
 ###남은 작업
 ####웹페이지 동작 관련
-- [ ] inputFormCombo에서 default 사이드/음료수 선택 라디오버튼을 제품사진으로 디자인 
+- [ ] inputFormCombo에서 default 사이드/음료수 선택 라디오버튼을 제품사진으로 디자인 (힘들면 그냥 체크박스로)
 - [ ] 검은고딕 폰트를 전체 적용이 아닌 요소별 세부적용으로 바꾸기
 - [ ] inputFormSingle(default로 노출)과 inputFormCombo를 하나로 합치고 radio button을 이용한 tab 적용
 - [ ] inputForm 내에서 inputFormCombo와 inputFormSingle의 내용이 탭 형태로 함께 들어가게 하기
@@ -33,6 +34,7 @@
 - [ ] 읽어온 메뉴 데이터를 바탕으로, menuType별로 각 카테고리에 메뉴 카드를 .append()
 - [ ] 메뉴 카드를 클릭하면 inputForm 팝업창에 해당 메뉴 데이터가 뜨게 하기
 - [ ] inputForm 상에서 수정하기
+- [ ] isSoldOut인 카드는 자동으로 흑백 + sold표시 (javascript + css 이용)
 - [ ] 사이드/음료는 라디오버튼을 통해 선택하되, ObjectId 값을 서버로 보내게 하기 
 - [ ] 클라이언트(javascript) 및 백엔드 상에서, ObjectId를 이용해 수정 반영하기 (?)
 - [ ] isDiscontinued인 아이템은 서버상으로는 남아있되 jQuery상으로 .remove() 하기 

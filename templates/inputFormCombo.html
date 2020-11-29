@@ -173,7 +173,6 @@
             border-style: solid;
             border-radius: 3px;
             border-color: #cccccc;
-            background: #cccccc;
             cursor: pointer;
             transition: all 0.5s;
         }
@@ -184,8 +183,11 @@
             width: 50px;
             height: 50px;
             background: #9a9a9a url(https://i.imgur.com/IHolKIj.png) no-repeat center;
-            background-size: 15px auto;
+            background-size: 30px auto;
         }
+
+        /*사이드 및 음료수 라디오버튼 css*/
+
 
 
         .singleOrSet button {
@@ -203,25 +205,129 @@
 
     </style>
     <script>
-        function uploadMenu() {
-            $.ajax({
-                type: "POST",
-                url: "/inputForm",
-                data: {},
-                success: function (response) {
-                    if (response['result'] == 'success') {
-                        alert(response['msg']);
-                    } else {
-                        alert('POST 실패');
-                    }
+        $(document).ready(function () {
+            $('input:checkbox[name=ingredientsCombo]').click(function () {
+                let ingredientId = $(this).attr('id');
+                let chk = $(this).is(':checked');
+                if (chk === true) {
+                    $('input:checkbox[name=allergensCombo][id=' + ingredientId + 'Allergen]').prop('checked', true);
+                } else {
+                    $('input:checkbox[name=allergensCombo][id=' + ingredientId + 'Allergen]').prop('checked', false);
                 }
             })
+        })
+
+        $(document).ready(function () {
+            $('input:checkbox[name=allergensCombo]').click(function () {
+                let allergenId = $(this).attr('id');
+                let strArr = allergenId.split('Allergen');
+                let chk = $(this).is(':checked');
+                if (chk === true) {
+                    $('input:checkbox[name=ingredientsCombo][id=' + strArr[0] + ']').prop('checked', true);
+                } else {
+                    $('input:checkbox[name=ingredientsCombo][id=' + strArr[0] + ']').prop('checked', false);
+                }
+            })
+        })
+
+
+        function getInputValueCombo() {
+            let image = $('#comboImage').val(); //
+            let categoryId = $('input:radio[name=categoryCombo]:checked').attr('id');
+            let category = $('label[for=' + categoryId + ']').text();
+            let nameKr = $('#nameKrCombo').val();
+            let nameEng = $('#nameEngCombo').val();
+            let calories = parseInt($('#caloriesCombo').val());
+            let price = parseInt($('#priceCombo').val());
+            let extraPrice = parseInt($('#extraPriceCombo').val());
+            let discount = $('input:radio[name=discountCombo]:checked').attr('id');
+            let soldOut = $('input:radio[name=soldOutCombo]:checked').attr('id');
+            let isRecommended = $('input:radio[name=recommendationCombo]:checked').attr('id');
+            let isDiscontinued = $('input:radio[name=discontinueCombo]:checked').attr('id');
+
+            let ingredients = [];
+            let ingredientsAllergicEng = [];
+
+            $('input:checkbox[name=ingredientsCombo]:checked').each(function () {
+                let ingredient = $(this).attr('id');
+                ingredients.push(ingredient);
+            })
+
+            $('input:checkbox[name=allergensCombo]:checked').each(function () {
+                let allergenId = $(this).attr('id');
+                let allergen = allergenId.split('Allergen')
+                ingredientsAllergicEng.push(allergen[0]);
+            })
+
+            let ingredientsNonAllergicEng = ingredients.filter(x => !ingredientsAllergicEng.includes(x));
+
+            let ingredientsAllergicKor = [];
+            let ingredientsNonAllergicKor = [];
+
+            for (let idx in ingredients) {
+                if (ingredientsAllergicEng.includes(ingredients[idx])) {
+                    ingredientsAllergicKor.push($('label[for=' + ingredients[idx] + ']').text());
+                } else {
+                    ingredientsNonAllergicKor.push($('label[for=' + ingredients[idx] + ']').text());
+                }
+            }
+
+            let newMenu = {};
+
+            newMenu['isCombo'] = false; //원래는 서버 차원에서 구현해야 한다
+            newMenu['image'] = image;
+            newMenu['menuType'] = category;
+            newMenu['nameKr'] = nameKr;
+            newMenu['nameEng'] = nameEng;
+            newMenu['calories'] = calories;
+            newMenu['price'] = price;
+            newMenu['extraPrice'] = extraPrice;
+            newMenu['ingredientsAllergicEng'] = ingredientsAllergicEng;
+            newMenu['ingredientsAllergicKor'] = ingredientsAllergicKor;
+            newMenu['ingredientsNonAllergicEng'] = ingredientsNonAllergicEng;
+            newMenu['ingredientsNonAllergicKor'] = ingredientsNonAllergicKor;
+            if (discount === 'isDiscounted') {
+                newMenu['isDiscounted'] = true;
+            } else {
+                newMenu['isDiscounted'] = false;
+            }
+
+            if (soldOut === 'isSoldOut') {
+                newMenu['isSoldOut'] = true;
+            } else {
+                newMenu['isSoldOut'] = false;
+            }
+
+            if (isRecommended === 'isRecommended') {
+                newMenu['isRecommended'] = true;
+            } else {
+                newMenu['isRecommended'] = false;
+            }
+
+            if (isDiscontinued === 'isDiscontinued') {
+                newMenu['isDiscontinued'] = true;
+            } else {
+                newMenu['isDiscontinued'] = false;
+            }
+
+            console.log(newMenu);
         }
 
-        function getInputValue() {
-            let menuType =;
-
-        }
+        // ajax 통신용. 최종 함수에 끼워넣을 예정
+        // function uploadMenu() {
+        //     $.ajax({
+        //         type: "POST",
+        //         url: "/inputForm",
+        //         data: {},
+        //         success: function (response) {
+        //             if (response['result'] == 'success') {
+        //                 alert(response['msg']);
+        //             } else {
+        //                 alert('POST 실패');
+        //             }
+        //         }
+        //     })
+        // }
     </script>
 
     <body>
@@ -242,10 +348,12 @@
                 <div class="radios">
                     <input type="radio" id="premium" name="categoryCombo"><label for="premium"><span></span>프리미엄</label>
                     <input type="radio" id="whoppers" name="categoryCombo"><label for="whoppers"><span></span>와퍼</label>
-                    <input type="radio" id="chickenBurgers" name="categoryCombo"><label for="chickenBurgers"><span></span>치킨버거</label>
+                    <input type="radio" id="chickenBurgers" name="categoryCombo"><label
+                        for="chickenBurgers"><span></span>치킨버거</label>
                     <input type="radio" id="sides" name="categoryCombo"><label for="sides"><span></span>사이드</label>
                     <input type="radio" id="drinks" name="categoryCombo"><label for="drinks"><span></span>음료</label>
-                    <input type="radio" id="desserts" name="categoryCombo"><label for="desserts"><span></span>디저트</label>
+                    <input type="radio" id="desserts" name="categoryCombo"><label
+                        for="desserts"><span></span>디저트</label>
                 </div>
                 <div class="textForm">
                     <p class="lab">메뉴이름(한글)</p>
@@ -297,14 +405,19 @@
                 <p class="lab">알레르기 유발재료</p>
                 <div class="checkboxes">
                     <!--글자수가 많으니 oval 내에 맞아떨어지게 작아져야 한다-->
-                    <input type="checkbox" id="soybeanAllergen" name="allergensCombo"><label for="soybeanAllergen">대두</label>
-                    <input type="checkbox" id="porkAllergen" name="allergensCombo"><label for="porkAllergen">돼지고기</label>
-                    <input type="checkbox" id="chickenAllergen" name="allergensCombo"><label for="chickenAllergen">닭고기</label>
                     <input type="checkbox" id="beefAllergen" name="allergensCombo"><label for="beefAllergen">쇠고기</label>
+                    <input type="checkbox" id="porkAllergen" name="allergensCombo"><label
+                        for="porkAllergen">돼지고기</label>
+                    <input type="checkbox" id="chickenAllergen" name="allergensCombo"><label
+                        for="chickenAllergen">닭고기</label>
                     <input type="checkbox" id="shellfishAllergen" name="allergensCombo"><label for="shellfishAllergen">조개류</label>
+                    <input type="checkbox" id="shrimpAllergen" name="allergensCombo"><label
+                        for="shrimpAllergen">새우</label>
                     <input type="checkbox" id="eggAllergen" name="allergensCombo"><label for="eggAllergen">난류</label>
-                    <input type="checkbox" id="shrimpAllergen" name="allergensCombo"><label for="shrimpAllergen">새우</label>
-                    <input type="checkbox" id="tomatoAllergen" name="allergensCombo"><label for="tomatoAllergen">토마토</label>
+                    <input type="checkbox" id="soybeanAllergen" name="allergensCombo"><label
+                        for="soybeanAllergen">대두</label>
+                    <input type="checkbox" id="tomatoAllergen" name="allergensCombo"><label
+                        for="tomatoAllergen">토마토</label>
                 </div>
             </div>
             <!--상품사진을 체크박스로 만들기-->
@@ -325,41 +438,42 @@
                 </div>
                 <p class="lab">음료</p>
                 <div class="radios">
-                    <input type="radio" checked="checked" id="coke" name="drink"><label for="coke"><em></em>코카콜라</label>
+                    <input type="radio" checked="checked" id="coke" name="drink"><label for="coke"><em id="cokeImg"></em>코카콜라</label>
                     <input type="radio" id="zeroCoke" name="drink"><label
-                        for="zeroCoke"><em></em>제로콜라</label>
+                        for="zeroCoke"><em id="zeroCokeImg"></em>제로콜라</label>
                     <input type="radio" id="sprite" name="drink"><label
-                        for="sprite"><em></em>스프라이트</label>
+                        for="sprite"><em id="spriteImg"></em>스프라이트</label>
                 </div>
             </div>
             <span class="title">기타설정</span>
             <div class="divider"></div>
             <p class="lab">할인</p>
             <div class="radios">
-                <input type="radio" id="isDiscounted" name="dc"><label for="isDiscounted"><span></span>사용</label>
-                <input type="radio" checked="checked" id="!isDiscounted" name="dc"><label
+                <input type="radio" id="isDiscounted" name="discountCombo"><label
+                    for="isDiscounted"><span></span>사용</label>
+                <input type="radio" checked="checked" id="!isDiscounted" name="discountCombo"><label
                     for="!isDiscounted"><span></span>미사용</label>
             </div>
             <p class="lab">품절</p>
             <div class="radios">
-                <input type="radio" id="isSoldOut" name="stock"><label for="isSoldOut"><span></span>사용</label>
-                <input type="radio" checked="checked" id="!isSoldOut" name="stock"><label for="!isSoldOut"><span></span>미사용</label>
+                <input type="radio" id="isSoldOut" name="soldOutCombo"><label for="isSoldOut"><span></span>사용</label>
+                <input type="radio" checked="checked" id="!isSoldOut" name="soldOutCombo"><label
+                    for="!isSoldOut"><span></span>미사용</label>
             </div>
             <p class="lab">추천</p>
             <div class="radios">
-                <input type="radio" checked="checked" id="isRecommended" name="recommendation"><label
+                <input type="radio" checked="checked" id="isRecommended" name="recommendationCombo"><label
                     for="isRecommended"><span></span>사용</label>
-                <input type="radio" id="!isRecommended" name="recommendation"><label
+                <input type="radio" id="!isRecommended" name="recommendationCombo"><label
                     for="!isRecommended"><span></span>미사용</label>
             </div>
             <p class="lab">단종</p>
             <div class="radios">
-                <input type="radio" checked="checked" id="isDiscontinued" name="discontinue"><label
+                <input type="radio" checked="checked" id="isDiscontinued" name="discontinueCombo"><label
                     for="isDiscontinued"><span></span>사용</label>
-                <input type="radio" id="!isDiscontinued" name="discontinue"><label
+                <input type="radio" id="!isDiscontinued" name="discontinueCombo"><label
                     for="!isDiscontinued"><span></span>미사용</label>
             </div>
-            <button type="button" onclick="uploadMenu()">보내기</button>
             </div>
         </form>
     </body>
