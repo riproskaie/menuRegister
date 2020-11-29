@@ -10,6 +10,24 @@
     <link href="https://fonts.googleapis.com/css2?family=Gothic+A1&display=swap" rel="stylesheet">
 
     <style type="text/css">
+        /*스크롤바 관련 설정(다른 작업자 코드와 겹치면 삭제할 것)*/
+        ::-webkit-scrollbar {
+            width: 15px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #dedede;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #888;
+            border-radius: 15px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #555;
+        }
+
         #menuRegister {
             position: relative;
             display: flex;
@@ -152,7 +170,13 @@
             margin: 0 0 5px 0;
         }
 
+        #menuRegister span.smallerTitle {
+            font-family: "Black Han Sans", sans-serif;
+            font-size: 2rem;
+        }
+
         /*팝업창 관련 코드*/
+        /*팝업(메뉴등록/수정) 관련 라디오의 css*/
         #menuRegister input[id="popup"] {
             display: none;
         }
@@ -169,6 +193,20 @@
             border-style: dotted;
             border-color: #cccccc;
             left: 50px;
+        }
+
+        #menuRegister input[id="popup"] + label:after {
+            font-family: 'Gothic A1', sans-serif;
+            content: "메뉴등록";
+            display: block;
+            bottom: -20%;
+            left: 0;
+            transform: translate(40%, 0%);
+            position: absolute;
+            font-size: 1rem;
+            text-align: center;
+            text-decoration: none;
+            color: #000000;
         }
 
         #menuRegister input[id="popup"] + label + div {
@@ -192,17 +230,31 @@
             transform: translate(-50%, -50%);
             width: 70%;
             height: 70%;
-            background: #ffffff;
+            background: #f7f3f0;
             z-index: 2;
         }
 
+        #menuRegister input[id="popup"] + label + div > div > span {
+            font-family: "Black Han Sans", sans-serif;
+            font-size: 2.5rem;
+            position: relative;
+            margin: 20px 0 20px 0;
+            top: 10px;
+            left: 10px;
+        }
+
         #menuRegister input[id="popup"] + label + div > div > div {
+            position: relative;
+            top: 3rem;
             height: 50%;
+            background-color: #ffffff;
             overflow-y: auto;
             overflow-x: hidden;
         }
 
+        /*팝업창 취소 버튼에 해당*/
         #menuRegister input[id="popup"] + label + div > div > label {
+            font-family: "Black Han Sans", sans-serif;
             position: absolute;
             bottom: 0%;
             left: 50%;
@@ -211,10 +263,11 @@
             transform: translate(-110%, -50%);
             padding: 20px 15% 20px 15%;
             background: #000000;
-            border-radius: 5px;
+            border-radius: 10px;
             z-index: 1;
         }
 
+        /*팝업창 바깥 배경에 해당*/
         #menuRegister input[id="popup"] + label + div > label {
             position: absolute;
             top: 0;
@@ -225,19 +278,20 @@
             z-index: 1;
         }
 
-        #menuRegister .submit {
+        /*팝업창 확인(제출) 버튼에 해당*/
+        .submit {
+            font-family: "Black Han Sans", sans-serif;
             position: absolute;
-            bottom: 0%;
+            bottom: 0;
             right: 50%;
             color: #ffffff;
             border-color: #E50014;
             transform: translate(110%, -50%);
             padding: 20px 15% 20px 15%;
             background: #E50014;
-            border-radius: 5px;
+            border-radius: 10px;
             font-size: 2rem;
         }
-
 
 
         /*메뉴카드 관련 css*/
@@ -336,15 +390,21 @@
                 <label for="desserts">디저트</label>
 
                 <div class="premium">
-                    <p>"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."</p>
-                    <p>"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."</p>
-                    <p>"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."</p>
-                    <p>"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."</p>
-                    <p>"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."</p>
-                    <p>"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."</p>
-                    <p>"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."</p>
-                    <p>"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."</p>
-                    <p>"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."</p>
+                    <input type="checkbox" id="popup">
+                    <!--팝업을 띄울 때 버튼으로 사용하는 레이블-->
+                    <label for="popup" onClick="">+</label>
+                    <div>
+                        <div>
+                            <!--팝업 닫기용 레이블-->
+                            <span class="smallerTitle">메뉴등록</span>
+                            <br>
+                            <div>여기에 내용을 넣고 싶다.</div>
+                            <label for="popup">취소</label>
+                            <a class="submit">확인</a>
+                            <!--컨텐츠 외부공간 레이블-->
+                        </div>
+                        <label for="popup"></label>
+                    </div>
                 </div>
                 <div class="whoppers">
                     Whoppers will go here
