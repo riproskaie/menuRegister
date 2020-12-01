@@ -24,12 +24,14 @@
 - [x] inputFormCombo에서 default 사이드/음료수 선택 라디오버튼을 제품사진으로 디자인 (힘들면 그냥 체크박스로) 
 - [x] inputFormSingle(default로 노출)과 inputFormCombo를 하나로 합치기 
 - [x] menuRegister 내의 메뉴표시 영역만 scroll되게 하기
+- [x] 팝업창과 메인페이지 합침 확인
+- [x] radio button을 이용한 inputFormSingle/inputFormCombo tab버튼 적용
+- [x] db로부터 메뉴 데이터 읽어오기 (Flask 상으로는 가능함 확인. ajax 정상작동 확인)
+- [x] 팝업창에 inputForm 들어가게 하기. tab버튼은 팝업창 상단 고정 (디자인 깨짐으로 어려움 겪는 중)
 
 ###남은 작업
 ####웹페이지 동작 관련
-- [ ] radio button을 이용한 inputFormSingle/inputFormCombo tab버튼 적용
 - [ ] 검은고딕 폰트를 전체 적용이 아닌 요소별 세부적용으로 바꾸기
-- [ ] inputForm 내에서 inputFormCombo와 inputFormSingle의 내용이 탭 형태로 함께 들어가게 하기
 - [ ] javascript를 통해, (menuType === '프리미엄' or '와퍼' or '치킨버거')에 대해서 isCombo = true 적용 
 - [ ] javascript를 통해, isCombo일 경우에는 inputFormCombo와 inputFormSingle이 (2초 정도의 time interval을 두고) 모두 submit, !isCombo이면 inputFormSingle만 submit
 - [ ] db로부터 메뉴 데이터 읽어오기 
@@ -39,7 +41,7 @@
 - [ ] 사이드/음료는 라디오버튼을 통해 선택하되, ObjectId 값을 서버로 보내게 하기 
 - [ ] 클라이언트(javascript) 및 백엔드 상에서, ObjectId를 이용해 수정 반영하기 (?)
 - [ ] isDiscontinued인 아이템은 서버상으로는 남아있되 jQuery상으로 .remove() 하기 
-
+- [ ] 가능하면 x축 방향으로도 스크롤이 되게 할 것 (창을 줄이니까 사이트가 깨짐)
 
 ####제출서식 관련
 - [ ] html을 pug로 바꾸고 세부모듈로 분할하기

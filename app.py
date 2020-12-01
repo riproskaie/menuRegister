@@ -12,41 +12,6 @@ def home():
     return render_template('menuRegister.html')
 
 
-@app.route('/premium')
-def premium():
-    return render_template('premium.html')
-
-
-@app.route('/whoppers')
-def whoppers():
-    return render_template("whoppers.html")
-
-
-@app.route('/chickenBurgers')
-def chickenBurgers():
-    return render_template("chickenBurgers.html")
-
-
-@app.route('/sides')
-def sides():
-    return render_template("sides.html")
-
-
-@app.route('/drinks')
-def drinks():
-    return render_template("drinks.html")
-
-
-@app.route('/desserts')
-def desserts():
-    return render_template('desserts.html')
-
-
-@app.route('/inputFormSingle')
-def inputForm():
-    return render_template('inputFormSingle.html')
-
-
 @app.route('/inputForm', methods=['POST'])
 def write_menus():
     #여기 있는 스키마는 동환님 작업 pull해서 최신버전 확인해야.
@@ -97,14 +62,9 @@ def write_menus():
     #db.menus.insert_one(menu)
     return jsonify({'result': 'success', 'msg': '요청을 post했다.'})
 
-
-@app.route('/premium', methods=['GET'])
+@app.route('/api/menus', methods=['GET'])
 def read_menus():
-    print("get 호출")
-    menu = list(db.menus.find({},{'_id': 0}))
-    print("db 확인")
-    return "connect"
-
+    return jsonify({'result': 'success', 'msg': 'menus 연결되었습니다'})
 
 if __name__ == '__main__':
     app.run('0.0.0.0', port=5000, debug=True)

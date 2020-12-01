@@ -328,7 +328,6 @@
             font-family: "Black Han Sans", sans-serif;
         }
 
-
     </style>
     <script type="text/javascript">
         //긴 메소드는 jQuery로 가급적 바꾸는게 좋겠다
@@ -342,7 +341,7 @@
         function showMenu() {
             $.ajax({
                 type: "GET",
-                url: "/",
+                url: "/api/menus",
                 data: {},
                 success: function (response) {
                     if (response['result'] === 'success') {
