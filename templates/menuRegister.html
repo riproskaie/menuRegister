@@ -165,12 +165,89 @@
             margin: 0 0 5px 0;
         }
 
-        span.smallerTitle {
+        span.smallerTitle,
+        span.registerOrEdit {
             font-family: "Black Han Sans", sans-serif;
             font-size: 2.5rem;
             position: relative;
             top: 20px;
             left: 20px;
+        }
+
+        /*메뉴카드(사진+이름+가격) 관련 css*/
+        .container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(auto, 350px));
+            border: #33a74c solid;
+        }
+
+        .card {
+            display: grid;
+            grid-template-rows: 100px auto;
+            font-family: "Black Han Sans", sans-serif;
+            text-align: center;
+            margin: 20px 0 60px 10%;
+            border: #E50014 solid;
+        }
+
+        .card img {
+            height: 100px;
+            width: 150px;
+            object-fit: cover;
+        }
+
+        .card a {
+            display: block;
+            padding: 10px 5px 10px 5px;
+            margin: 0 0 0 45px;
+            width: 160px;
+            color: #000000;
+            border: solid #595f6e;
+            text-decoration: none;
+        }
+
+        .card a:hover,
+        .card a:visited,
+        .card a:active {
+            color: #000000;
+            text-decoration: none;
+        }
+
+        .menuName {
+            font-size: 2rem;
+        }
+
+        .price {
+            font-size: 2rem;
+            text-align: left;
+            margin-left: 70px;
+            color: #E50014;
+        }
+
+        /*메뉴등록(+)버튼 관련 css*/
+        a.plusButton {
+            display: block;
+            font-size: 3rem;
+            text-align: center;
+            color: #cccccc;
+            border-style: dotted;
+            border-color: #cccccc;
+            padding: 50px 0 0 0;
+            width: 170px;
+            height: 130px;
+            margin: 20px 0 50px 95px;
+            cursor: pointer;
+        }
+
+        a.plusButton:after {
+            content: "메뉴등록";
+            display: block;
+            font-family: 'Gothic A1', sans-serif;
+            transform: translate(0%, 400%);
+            font-size: 1rem;
+            text-align: center;
+            text-decoration: none;
+            color: #000000;
         }
 
         a:link,
@@ -180,35 +257,6 @@
             text-decoration: none !important;
         }
 
-        a.plusButton {
-            display: inline-block;
-            position: absolute;
-            top: 40px;
-            font-size: 3rem;
-            text-align: center;
-            text-decoration: none;
-            color: #cccccc;
-            padding: 40px 40px 40px 40px;
-            border-style: dotted;
-            border-color: #cccccc;
-            left: 50px;
-            cursor: pointer;
-        }
-
-        /*'메뉴등록' 텍스트 (현재 뜨지 않는 문제가 있음) */
-        a.plusButton:after {
-            content: "메뉴등록";
-            font-family: 'Gothic A1', sans-serif;
-            display: block;
-            bottom: -20%;
-            left: 0;
-            transform: translate(40%, 0%);
-            position: absolute;
-            font-size: 1rem;
-            text-align: center;
-            text-decoration: none;
-            color: #000000;
-        }
 
         a.plusButton:hover {
             color: #cccccc;
@@ -219,6 +267,8 @@
             color: #cccccc !important;
         }
 
+
+        /*팝업(모달)창 관련*/
         .popup {
             position: absolute;
             display: none;
@@ -518,44 +568,16 @@
             background-size: 15px auto;
         }
 
-        /*메뉴카드 관련 css*/
-        /*#menuRegister .addCard {*/
-        /*    height: 200px;*/
-        /*    width: 200px;*/
-        /*}*/
-
-        /*#menuRegister .addCard a:link {*/
-        /*    position: relative;*/
-        /*    top: 40px;*/
-        /*    font-size: 3rem;*/
-        /*    text-align: center;*/
-        /*    text-decoration: none;*/
-        /*    color: #cccccc;*/
-        /*    padding: 40px 40px 40px 40px;*/
-        /*    border-style: dotted;*/
-        /*    border-color: #cccccc;*/
-        /*    left: 50px;*/
-        /*}*/
-
-        /*#menuRegister .addCard a:visited {*/
-        /*    font-size: 3rem;*/
-        /*    text-align: center;*/
-        /*    text-decoration: none;*/
-        /*    color: #cccccc;*/
-        /*}*/
-
-        /*#menuRegister .addCard p {*/
-        /*    position: relative;*/
-        /*    top: 80px;*/
-        /*    font-size: 0.7rem;*/
-        /*    text-align: center;*/
-        /*    font-family: "Black Han Sans", sans-serif;*/
-        /*}*/
-
     </style>
     <script type="text/javascript">
         function openRegisterPopup() {
             $("#registerPopup").css("display", "block");
+            $(".registerOrEdit").text('메뉴등록');
+        }
+
+        function openEditPopup() {
+            $("#registerPopup").css("display", "block");
+            $(".registerOrEdit").text('메뉴수정');
         }
 
         function closePopup() {
@@ -577,6 +599,29 @@
             $('.inputForm2').append(tempHtml);
         })
 
+
+        // 메뉴카드 추가용 css. 이걸 응용해서 showMenu() 함수를 만들 것
+        // href에는 수정팝업으로 가는 #id가 들어간다
+        // a의 id에는 서버에서 읽어온 ObjectID가 자동으로 할당될 예정이다
+        // 클릭되면 해당 id값의 정보를 읽어와 폼에 기입하는 함수를 만들어야 한다
+        $(document).ready(function () {
+            for (let i = 0; i < 6; i++) {
+                let tempHtml = `
+                <div class="card">
+                    <div>
+                        <a href="#registerPopup" onclick="openEditPopup()">
+                            <img src="https://i.imgur.com/KRRUR8g.png">
+                        </a>
+                    </div>
+                    <div>
+                        <a href="#registerPopup" onclick="openEditPopup()" class="menuName">버거5</a>
+                        <div class="price">￦ 5000</div>
+                    </div>
+                </div>
+            `;
+                $('.lastCard').before(tempHtml);
+            }
+        })
 
 
         //팝업 제어용 JQuery
@@ -871,36 +916,63 @@
 
                 <div class="premium">
                     <!--메뉴등록 버튼-->
-                    <a href="#registerPopup" class="plusButton" onclick="openRegisterPopup()"> + </a>
+                    <div class="container">
+                        <div class="lastCard">
+                            <a href="#registerPopup" class="plusButton" onclick="openRegisterPopup()"> + </a>
+                        </div>
+                    </div>
                     premium
                 </div>
                 <div class="whoppers">
                     <!--메뉴등록 버튼-->
-                    <a href="#registerPopup" class="plusButton" onclick="openRegisterPopup()"> + </a>
+                    <div class="container">
+                        <div class="lastCard">
+                            <a href="#registerPopup" class="plusButton" onclick="openRegisterPopup()"> + </a>
+                        </div>
+                    </div>
                     whoppers
                 </div>
                 <div class="chickenBurgers">
-                    <a href="#registerPopup" class="plusButton" onclick="openRegisterPopup()"> + </a>
+                    <!--메뉴등록 버튼-->
+                    <div class="container">
+                        <div class="lastCard">
+                            <a href="#registerPopup" class="plusButton" onclick="openRegisterPopup()"> + </a>
+                        </div>
+                    </div>
                     chicken burgers
                 </div>
                 <div class="sides">
-                    <a href="#registerPopup" class="plusButton" onclick="openRegisterPopup()"> + </a>
+                    <!--메뉴등록 버튼-->
+                    <div class="container">
+                        <div class="lastCard">
+                            <a href="#registerPopup" class="plusButton" onclick="openRegisterPopup()"> + </a>
+                        </div>
+                    </div>
                     sides
                 </div>
                 <div class="drinks">
-                    <a href="#registerPopup" class="plusButton" onclick="openRegisterPopup()"> + </a>
+                    <!--메뉴등록 버튼-->
+                    <div class="container">
+                        <div class="lastCard">
+                            <a href="#registerPopup" class="plusButton" onclick="openRegisterPopup()"> + </a>
+                        </div>
+                    </div>
                     drinks
                 </div>
                 <div class="desserts">
-                    <a href="#registerPopup" class="plusButton" onclick="openRegisterPopup()"> + </a>
+                    <!--메뉴등록 버튼-->
+                    <div class="container">
+                        <div class="lastCard">
+                            <a href="#registerPopup" class="plusButton" onclick="openRegisterPopup()"> + </a>
+                        </div>
+                    </div>
                     desserts
                 </div>
             </div>
         </div>
-
         <div>
             <div class="popup" id="registerPopup">
-                <span class="smallerTitle">메뉴등록</span>
+                <span class="registerOrEdit">메뉴등록</span>
                 <div class="inputForm">
                     <div id="formTabs">
                         <input id="single" type="radio" name="singleOrCombo" checked="checked"/>

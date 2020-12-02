@@ -1,10 +1,12 @@
 # kiosk_clone
  Cloning a kiosk system for a fast-food shop.
 
-###웹페이지 파일 설명
+###웹페이지 설명
 - menuRegister: 메인페이지(메뉴관리)에 해당합니다.
-- premium, whoppers, chickenBurgers, drinks, sides, desserts: 메뉴 카테고리에 해당합니다. 생성한 메뉴의 카드들이 각 페이지에 저장됩니다.
-- inputFormCombo, inputFormSingle: 카드 생성을 위한 입력 폼입니다. 탭을 이용해 두 가지 데이터를 한꺼번에 서버로 보내게 하려 합니다. submit 타입 버튼을 사용하기보다는 딕셔너리를 자바스크립트 함수로 서버에 보내게 하려고 합니다.
+
+###div 설명
+- premium, whoppers, chickenBurgers, drinks, sides, desserts: 생성한 메뉴의 카드들이 각 페이지에 저장됩니다.
+- inputFormCombo, inputFormSingle: 카드 생성을 위한 입력 폼입니다. 탭을 이용해 두 가지 데이터를 한꺼번에 서버로 보내게 하려 합니다. html에서 미리 정의된 submit 타입 버튼을 사용하기보다는, 딕셔너리를 자바스크립트 함수로 서버에 보내게 하려고 합니다.
 
 ###진행중인 작업
 - [x] menuRegister.html 페이지와 css 틀 만들기 (구글 검색하며 작업하기 쉽도록 우선 html로 제작)
@@ -29,10 +31,15 @@
 - [x] db로부터 메뉴 데이터 읽어오기 (Flask 상으로는 가능함 확인. ajax 정상작동 확인)
 - [x] 팝업창에 inputForm 들어가게 하기. tab버튼은 팝업창 상단 고정 (디자인 깨짐으로 어려움 겪는 중)
 - [x] 팝업창을 취소하면 폼이 비워지도록 처리
-- [ ] 메뉴등록 (+)버튼을 여러 카테고리에서 재활용할 수 있도록 jQuery로 처리
+- [x] 메뉴등록 (+)버튼을 여러 카테고리에서 재활용할 수 있도록 처리
+- [x] 메뉴카드가 (+) 버튼의 앞으로 왼쪽 위에서부터 누적되게 하기 (.before() 메소드 활용)
+- [x] 메뉴카드와 (+)버튼을 grid로 표시되게 하기
+- [x] 메뉴카드와 (+)버튼을 메인 페이지에 합치기
+- [x] 메뉴등록/메뉴수정 함수 작동 여부에 따라 팝업창의 타이틀을 '메뉴등록'/'메뉴수정'으로 변경
 
 ###남은 작업
 ####웹페이지 동작 관련
+- [ ] 메뉴 단종 탭을 클릭할 경우, '정말로 삭제할지' 모달창 띄워 확인. 취소시 자동으로 '아니오'.
 - [ ] 검은고딕 폰트를 전체 적용이 아닌 요소별 세부적용으로 바꾸기
 - [ ] javascript를 통해, (menuType === '프리미엄' or '와퍼' or '치킨버거')에 대해서 isCombo = true 적용 
 - [ ] javascript를 통해, isCombo일 경우에는 inputFormCombo와 inputFormSingle이 (2초 정도의 time interval을 두고) 모두 submit, !isCombo이면 inputFormSingle만 submit
