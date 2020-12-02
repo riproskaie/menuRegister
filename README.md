@@ -28,6 +28,8 @@
 - [x] radio button을 이용한 inputFormSingle/inputFormCombo tab버튼 적용
 - [x] db로부터 메뉴 데이터 읽어오기 (Flask 상으로는 가능함 확인. ajax 정상작동 확인)
 - [x] 팝업창에 inputForm 들어가게 하기. tab버튼은 팝업창 상단 고정 (디자인 깨짐으로 어려움 겪는 중)
+- [x] 팝업창을 취소하면 폼이 비워지도록 처리
+- [ ] 메뉴등록 (+)버튼을 여러 카테고리에서 재활용할 수 있도록 jQuery로 처리
 
 ###남은 작업
 ####웹페이지 동작 관련
