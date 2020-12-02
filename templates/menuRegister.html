@@ -99,15 +99,18 @@
             display: block;
         }
 
+        #menuRegister #categoryTabs {
+            text-align: center;
+        }
+
         #menuRegister #categoryTabs > label {
             font-family: "Black Han Sans", sans-serif;
             display: inline-block;
             padding: 20px 0 10px 0;
-            text-align: center;
+            /*text-align: center;*/
             width: 15%;
             color: #000000;
             font-size: 2rem;
-            margin-left: 1%;
         }
 
         #menuRegister #categoryTabs > label:hover {
@@ -146,7 +149,7 @@
             color: #9a9a9a;
         }
 
-        #menuRegister .container {
+        #menuRegister .header {
             position: relative;
             width: 85%;
             height: 100%;
@@ -162,28 +165,12 @@
             margin: 0 0 5px 0;
         }
 
-
-        /*메뉴등록 팝업창을 호출하는 버튼*/
-        /*메뉴등록 버튼 및 팝업 관련*/
         span.smallerTitle {
             font-family: "Black Han Sans", sans-serif;
             font-size: 2.5rem;
             position: relative;
             top: 20px;
             left: 20px;
-        }
-
-        a:after {
-            font-family: 'Gothic A1', sans-serif;
-            display: block;
-            bottom: -20%;
-            left: 0;
-            transform: translate(40%, 0%);
-            position: absolute;
-            font-size: 1rem;
-            text-align: center;
-            text-decoration: none;
-            color: #000000;
         }
 
         a:link,
@@ -206,6 +193,21 @@
             border-color: #cccccc;
             left: 50px;
             cursor: pointer;
+        }
+
+        /*'메뉴등록' 텍스트 (현재 뜨지 않는 문제가 있음) */
+        a.plusButton:after {
+            content: "메뉴등록";
+            font-family: 'Gothic A1', sans-serif;
+            display: block;
+            bottom: -20%;
+            left: 0;
+            transform: translate(40%, 0%);
+            position: absolute;
+            font-size: 1rem;
+            text-align: center;
+            text-decoration: none;
+            color: #000000;
         }
 
         a.plusButton:hover {
@@ -277,6 +279,11 @@
             border-radius: 10px;
             font-size: 2rem;
             cursor: pointer;
+        }
+
+        a.decline:after,
+        a.submit:after {
+            content: "";
         }
 
         .dim {
@@ -360,7 +367,8 @@
             padding: 20px 20px 20px 20px;
         }
 
-        form p.lab {
+        form p.lab,
+        form p.deletion {
             position: relative;
             font-family: "Black Han Sans", sans-serif;
             display: inline-block;
@@ -371,10 +379,14 @@
             padding: 10px 20px 10px 20px;
         }
 
+        form p.deletion {
+            background-color: #E50014;
+        }
+
         form .divider {
             width: 100%;
             border: 1px solid rgb(65, 65, 65);
-            margin: 0 0 3rem 0;
+            margin: 1rem 0 3rem 0;
         }
 
         form .textForm {
@@ -505,7 +517,6 @@
             background: #9a9a9a url(https://i.imgur.com/TLMEHfs.png) no-repeat center;
             background-size: 15px auto;
         }
-
 
         /*메뉴카드 관련 css*/
         /*#menuRegister .addCard {*/
@@ -826,7 +837,7 @@
     <body>
         <div id="menuRegister">
             <div class="topArea"> <!--헤더에 해당-->
-                <div class="container">
+                <div class="header">
                     <a href="" class="btn"> 《 주문알림 </a>
                     <img class="logo" src="https://cdn.freebiesupply.com/images/thumbs/2x/burger-king-logo.png"
                          alt="버거킹 로고이미지"><span
@@ -1007,29 +1018,29 @@
                 <p class="lab">할인</p>
                 <div class="radios">
                     <input type="radio" id="isDiscounted" name="discount"><label
-                        for="isDiscounted"><span></span>사용</label>
+                        for="isDiscounted"><span></span>예</label>
                     <input type="radio" checked="checked" id="!isDiscounted" name="discount"><label
-                        for="!isDiscounted"><span></span>미사용</label>
+                        for="!isDiscounted"><span></span>아니오</label>
                 </div>
                 <p class="lab">품절</p>
                 <div class="radios">
-                    <input type="radio" id="isSoldOut" name="soldOut"><label for="isSoldOut"><span></span>사용</label>
+                    <input type="radio" id="isSoldOut" name="soldOut"><label for="isSoldOut"><span></span>예</label>
                     <input type="radio" checked="checked" id="!isSoldOut" name="soldOut"><label
-                        for="!isSoldOut"><span></span>미사용</label>
+                        for="!isSoldOut"><span></span>아니오</label>
                 </div>
                 <p class="lab">추천</p>
                 <div class="radios">
                     <input type="radio" checked="checked" id="isRecommended" name="recommendation"><label
-                        for="isRecommended"><span></span>사용</label>
+                        for="isRecommended"><span></span>예</label>
                     <input type="radio" id="!isRecommended" name="recommendation"><label
-                        for="!isRecommended"><span></span>미사용</label>
+                        for="!isRecommended"><span></span>아니오</label>
                 </div>
-                <p class="lab">단종</p>
+                <p class="deletion">단종</p>
                 <div class="radios">
-                    <input type="radio" checked="checked" id="isDiscontinued" name="discontinue"><label
-                        for="isDiscontinued"><span></span>사용</label>
-                    <input type="radio" id="!isDiscontinued" name="discontinue"><label
-                        for="!isDiscontinued"><span></span>미사용</label>
+                    <input type="radio" id="isDiscontinued" name="discontinue"><label
+                        for="isDiscontinued"><span></span>예</label>
+                    <input type="radio" checked="checked" id="!isDiscontinued" name="discontinue"><label
+                        for="!isDiscontinued"><span></span>아니오</label>
                 </div>
             </form>
         </div>
@@ -1173,30 +1184,30 @@
                 <p class="lab">할인</p>
                 <div class="radios">
                     <input type="radio" id="isDiscountedCombo" name="discountCombo"><label
-                        for="isDiscountedCombo"><span></span>사용</label>
+                        for="isDiscountedCombo"><span></span>예</label>
                     <input type="radio" checked="checked" id="!isDiscountedCombo" name="discountCombo"><label
-                        for="!isDiscountedCombo"><span></span>미사용</label>
+                        for="!isDiscountedCombo"><span></span>아니오</label>
                 </div>
                 <p class="lab">품절</p>
                 <div class="radios">
                     <input type="radio" id="isSoldOutCombo" name="soldOutCombo"><label
-                        for="isSoldOutCombo"><span></span>사용</label>
+                        for="isSoldOutCombo"><span></span>예</label>
                     <input type="radio" checked="checked" id="!isSoldOutCombo" name="soldOutCombo"><label
-                        for="!isSoldOutCombo"><span></span>미사용</label>
+                        for="!isSoldOutCombo"><span></span>아니오</label>
                 </div>
                 <p class="lab">추천</p>
                 <div class="radios">
                     <input type="radio" checked="checked" id="isRecommendedCombo" name="recommendationCombo"><label
-                        for="isRecommendedCombo"><span></span>사용</label>
+                        for="isRecommendedCombo"><span></span>예</label>
                     <input type="radio" id="!isRecommendedCombo" name="recommendationCombo"><label
-                        for="!isRecommendedCombo"><span></span>미사용</label>
+                        for="!isRecommendedCombo"><span></span>아니오</label>
                 </div>
-                <p class="lab">단종</p>
+                <p class="deletion">단종</p>
                 <div class="radios">
-                    <input type="radio" checked="checked" id="isDiscontinuedCombo" name="discontinueCombo"><label
-                        for="isDiscontinuedCombo"><span></span>사용</label>
-                    <input type="radio" id="!isDiscontinuedCombo" name="discontinueCombo"><label
-                        for="!isDiscontinuedCombo"><span></span>미사용</label>
+                    <input type="radio" id="isDiscontinuedCombo" name="discontinueCombo"><label
+                        for="isDiscontinuedCombo"><span></span>예</label>
+                    <input type="radio" checked="checked" id="!isDiscontinuedCombo" name="discontinueCombo"><label
+                        for="!isDiscontinuedCombo"><span></span>아니오</label>
                 </div>
             </form>
         </div>
