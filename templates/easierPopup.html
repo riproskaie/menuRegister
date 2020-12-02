@@ -9,6 +9,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Gothic+A1&display=swap" rel="stylesheet">
 
     <style>
+
+        /*메뉴등록 버튼 및 팝업 관련*/
         span.smallerTitle {
             font-family: "Black Han Sans", sans-serif;
             font-size: 2.5rem;
@@ -262,13 +264,13 @@
             display: none;
         }
 
-        form input[type="checkbox"] ~ label {
+        form input[type="checkbox"] + label {
             font-family: 'Gothic A1', sans-serif;
             position: relative;
             left: 30px;
         }
 
-        form input[type="checkbox"] ~ label:before {
+        form input[type="checkbox"] + label:before {
             content: "";
             display: inline-block;
             width: 20px;
@@ -283,12 +285,12 @@
             cursor: pointer;
         }
 
-        form input[type="checkbox"]:checked ~ label:before {
+        form input[type="checkbox"]:checked + label:before {
             background: #9a9a9a;
             border-color: #9a9a9a;
         }
 
-        form input[type="checkbox"]:checked ~ label:after {
+        form input[type="checkbox"]:checked + label:after {
             content: "";
             position: absolute;
             left: 0;
@@ -595,6 +597,7 @@
     </script>
     <body>
         <a href="#popup" class="addMenu"> + </a>
+        <div>
         <div class="popup" id="popup">
             <span class="smallerTitle">메뉴등록</span>
             <div class="inputForm">
@@ -614,13 +617,10 @@
             <a href="#a" class="submit">확인</a>
         </div>
         <div class="dim"></div>
+        </div>
         <div class="hidden1">
             <form id="inputFormSingle">
                 <!--사진입력부는 나 혼자서 구현하기 어려울수도 있다. 다른거 먼저 구현하고 구글하자-->
-                <div class="photoArea"></div>
-                <!--'*필수항목'을 붉은색으로 원하는 위치에 표시해야 한다-->
-                <!--정해진 스키마에 맞게 id이름을 통일해야 한다-->
-
                 <!--각 요소의 값을 읽어와서, 버튼을 누르면 해당 요소가 딕셔너리로 정리된 팝업창이 뜨게 하자-->
                 <div class="basicInfo">
                     <div class="textForm">
