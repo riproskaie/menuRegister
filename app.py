@@ -60,6 +60,8 @@ def write_menus():
     #     'isDiscontinued': isDiscontinued
     # }
     #db.menus.insert_one(menu)
+
+    # 서버상으로 메뉴이름을 단품인 경우 [단품], 세트인경우 [세트]를  post한다
     return jsonify({'result': 'success', 'msg': '요청을 post했다.'})
 
 @app.route('/api/menus', methods=['GET'])

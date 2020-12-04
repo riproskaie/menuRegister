@@ -9,6 +9,7 @@
 - inputFormCombo, inputFormSingle: 카드 생성을 위한 입력 폼입니다. 탭을 이용해 두 가지 데이터를 한꺼번에 서버로 보내게 하려 합니다. html에서 미리 정의된 submit 타입 버튼을 사용하기보다는, 딕셔너리를 자바스크립트 함수로 서버에 보내게 하려고 합니다.
 
 ###진행중인 작업
+- [x] 검은고딕 폰트를 전체 적용이 아닌 요소별 세부적용으로 바꾸기
 - [x] menuRegister.html 페이지와 css 틀 만들기 (구글 검색하며 작업하기 쉽도록 우선 html로 제작)
 - [x] 라우트에 각 페이지 등록하기
 - [x] inputFormCombo.html, inputFormSingle.html 페이지와 css 틀 만들기 
@@ -36,20 +37,24 @@
 - [x] 메뉴카드와 (+)버튼을 grid로 표시되게 하기
 - [x] 메뉴카드와 (+)버튼을 메인 페이지에 합치기
 - [x] 메뉴등록/메뉴수정 함수 작동 여부에 따라 팝업창의 타이틀을 '메뉴등록'/'메뉴수정'으로 변경
+- [x] 삭제버튼을 누를 경우 제출 과정이 복잡해질 것을 고려, '단종' 라디오 버튼으로 구현함 
+- [x] 메뉴 단종 라디오버튼을 '예'로 클릭할 경우, '정말로 삭제할지' 모달창 띄워 확인. 취소시 자동으로 '아니오'.
+- [x] 필수입력항목에는 p.lab에 :after를 적용해서 빨간 글씨로 필수입력란임을 표시해주기
+- [x] javascript를 통해, (menuType === '프리미엄' or '와퍼' or '치킨버거')에 대해서 세트메뉴 미입력시 경고창 뜨도록 
 
 ###남은 작업
 ####웹페이지 동작 관련
-- [ ] 메뉴 단종 탭을 클릭할 경우, '정말로 삭제할지' 모달창 띄워 확인. 취소시 자동으로 '아니오'.
-- [ ] 검은고딕 폰트를 전체 적용이 아닌 요소별 세부적용으로 바꾸기
-- [ ] javascript를 통해, (menuType === '프리미엄' or '와퍼' or '치킨버거')에 대해서 isCombo = true 적용 
+- [ ] submit() 함수 구현하기
 - [ ] javascript를 통해, isCombo일 경우에는 inputFormCombo와 inputFormSingle이 (2초 정도의 time interval을 두고) 모두 submit, !isCombo이면 inputFormSingle만 submit
-- [ ] db로부터 메뉴 데이터 읽어오기 
-- [ ] 읽어온 메뉴 데이터를 바탕으로, menuType별로 각 카테고리에 메뉴 카드를 .append()
+
+- [ ] showMenu() 함수 구현하기(db로부터 읽어온 메뉴 데이터를 바탕으로, menuType별로 각 카테고리에 메뉴 카드를 .append())
+- [ ] isDiscontinued인 아이템은 서버상으로는 남아있되 jQuery상으로 .remove() 하기 
+- [ ] isSoldOut인 카드는 자동으로 흑백 + sold표시 (javascript + css 이용) - 서식은 구현해둠
+- [ ] isDiscounted인 경우에는 SALE 표시 - 서식은 구현해둠
 - [ ] 메뉴 카드를 클릭하면 inputForm 팝업창에 해당 메뉴 데이터가 뜨게 해서 수정창으로 활용하기
-- [ ] isSoldOut인 카드는 자동으로 흑백 + sold표시 (javascript + css 이용)
+
 - [ ] 사이드/음료는 라디오버튼을 통해 선택하되, ObjectId 값을 서버로 보내게 하기 
 - [ ] 클라이언트(javascript) 및 백엔드 상에서, ObjectId를 이용해 수정 반영하기 (?)
-- [ ] isDiscontinued인 아이템은 서버상으로는 남아있되 jQuery상으로 .remove() 하기 
 - [ ] 가능하면 x축 방향으로도 스크롤이 되게 할 것 (창을 줄이니까 사이트가 깨짐)
 
 ####제출서식 관련
