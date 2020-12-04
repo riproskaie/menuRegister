@@ -28,19 +28,27 @@
             background: #555;
         }
 
-        #menuRegister {
+
+        #menu-register,
+        #register-popup,
+        .alert-container {
+            min-width: 750px;
+            overflow-x: scroll;
+        }
+
+        #menu-register {
             display: flex;
             flex-direction: column;
         }
 
         /*메인페이지(메뉴관리) 관련 css*/
-        #menuRegister .topArea {
+        #menu-register .top-area {
             font-family: "Black Han Sans", sans-serif;
             height: 200px;
             background-color: #E1C89F;
         }
 
-        #menuRegister .btn {
+        #menu-register .btn {
             font-family: "Black Han Sans", sans-serif;
             position: absolute;
             text-decoration: none;
@@ -56,11 +64,11 @@
             display: inline-block;
         }
 
-        #menuRegister .btn:hover {
+        #menu-register .btn:hover {
             background-color: #fff6e5;
         }
 
-        #menuRegister .logo {
+        #menu-register .logo {
             position: absolute;
             width: 150px;
             height: 100px;
@@ -69,7 +77,7 @@
             transform: translateY(-50%);
         }
 
-        #menuRegister span.title {
+        #menu-register span.title {
             font-family: "Black Han Sans", sans-serif;
             font-size: 5rem;
             margin-right: 1rem;
@@ -81,29 +89,29 @@
         }
 
 
-        #menuRegister #categoryTabs input[id="premiumCategory"], #menuRegister #categoryTabs input[id="premiumCategory"] ~ div.premium,
-        #menuRegister #categoryTabs input[id="whoppersCategory"], #menuRegister #categoryTabs input[id="whoppersCategory"] ~ div.whoppers,
-        #menuRegister #categoryTabs input[id="chickenBurgersCategory"], #menuRegister #categoryTabs input[id="chickenBurgersCategory"] ~ div.chickenBurgers,
-        #menuRegister #categoryTabs input[id="sidesCategory"], #menuRegister #categoryTabs input[id="sidesCategory"] ~ div.sides,
-        #menuRegister #categoryTabs input[id="drinksCategory"], #menuRegister #categoryTabs input[id="drinksCategory"] ~ div.drinks,
-        #menuRegister #categoryTabs input[id="dessertsCategory"], #menuRegister #categoryTabs input[id="dessertsCategory"] ~ div.desserts {
+        #menu-register #category-tabs input[id="premium-category"], #menu-register #category-tabs input[id="premium-category"] ~ div.premium,
+        #menu-register #category-tabs input[id="whoppers-category"], #menu-register #category-tabs input[id="whoppers-category"] ~ div.whoppers,
+        #menu-register #category-tabs input[id="chicken-burgers-category"], #menu-register #category-tabs input[id="chicken-burgers-category"] ~ div.chicken-burgers,
+        #menu-register #category-tabs input[id="sides-category"], #menu-register #category-tabs input[id="sides-category"] ~ div.sides,
+        #menu-register #category-tabs input[id="drinks-category"], #menu-register #category-tabs input[id="drinks-category"] ~ div.drinks,
+        #menu-register #category-tabs input[id="desserts-category"], #menu-register #category-tabs input[id="desserts-category"] ~ div.desserts {
             display: none;
         }
 
-        #menuRegister #categoryTabs input[id="premiumCategory"]:checked ~ div.premium,
-        #menuRegister #categoryTabs input[id="whoppersCategory"]:checked ~ div.whoppers,
-        #menuRegister #categoryTabs input[id="chickenBurgersCategory"]:checked ~ div.chickenBurgers,
-        #menuRegister #categoryTabs input[id="sidesCategory"]:checked ~ div.sides,
-        #menuRegister #categoryTabs input[id="drinksCategory"]:checked ~ div.drinks,
-        #menuRegister #categoryTabs input[id="dessertsCategory"]:checked ~ div.desserts {
+        #menu-register #category-tabs input[id="premium-category"]:checked ~ div.premium,
+        #menu-register #category-tabs input[id="whoppers-category"]:checked ~ div.whoppers,
+        #menu-register #category-tabs input[id="chicken-burgers-category"]:checked ~ div.chicken-burgers,
+        #menu-register #category-tabs input[id="sides-category"]:checked ~ div.sides,
+        #menu-register #category-tabs input[id="drinks-category"]:checked ~ div.drinks,
+        #menu-register #category-tabs input[id="desserts-category"]:checked ~ div.desserts {
             display: block;
         }
 
-        #menuRegister #categoryTabs {
+        #menu-register #category-tabs {
             text-align: center;
         }
 
-        #menuRegister #categoryTabs > label {
+        #menu-register #category-tabs > label {
             font-family: "Black Han Sans", sans-serif;
             display: inline-block;
             padding: 20px 0 10px 0;
@@ -113,16 +121,16 @@
             font-size: 2rem;
         }
 
-        #menuRegister #categoryTabs > label:hover {
+        #menu-register #category-tabs > label:hover {
             cursor: pointer;
         }
 
-        #menuRegister #categoryTabs div.premium,
-        #menuRegister #categoryTabs div.whoppers,
-        #menuRegister #categoryTabs div.chickenBurgers,
-        #menuRegister #categoryTabs div.sides,
-        #menuRegister #categoryTabs div.drinks,
-        #menuRegister #categoryTabs div.desserts {
+        #menu-register #category-tabs div.premium,
+        #menu-register #category-tabs div.whoppers,
+        #menu-register #category-tabs div.chicken-burgers,
+        #menu-register #category-tabs div.sides,
+        #menu-register #category-tabs div.drinks,
+        #menu-register #category-tabs div.desserts {
             border: #ffffff;
             height: 500px;
             width: 100%;
@@ -130,26 +138,26 @@
             position: relative;
         }
 
-        #menuRegister #categoryTabs input[id="premiumCategory"]:checked + label[for="premiumCategory"],
-        #menuRegister #categoryTabs input[id="whoppersCategory"]:checked + label[for="whoppersCategory"],
-        #menuRegister #categoryTabs input[id="chickenBurgersCategory"]:checked + label[for="chickenBurgersCategory"],
-        #menuRegister #categoryTabs input[id="sidesCategory"]:checked + label[for="sidesCategory"],
-        #menuRegister #categoryTabs input[id="drinksCategory"]:checked + label[for="drinksCategory"],
-        #menuRegister #categoryTabs input[id="dessertsCategory"]:checked + label[for="dessertsCategory"] {
+        #menu-register #category-tabs input[id="premium-category"]:checked + label[for="premium-category"],
+        #menu-register #category-tabs input[id="whoppers-category"]:checked + label[for="whoppers-category"],
+        #menu-register #category-tabs input[id="chicken-burgers-category"]:checked + label[for="chicken-burgers-category"],
+        #menu-register #category-tabs input[id="sides-category"]:checked + label[for="sides-category"],
+        #menu-register #category-tabs input[id="drinks-category"]:checked + label[for="drinks-category"],
+        #menu-register #category-tabs input[id="desserts-category"]:checked + label[for="desserts-category"] {
             color: #E50014;
             text-decoration: underline;
         }
 
-        #menuRegister #categoryTabs > label[for="premiumCategory"]:hover,
-        #menuRegister #categoryTabs > label[for="whoppersCategory"]:hover,
-        #menuRegister #categoryTabs > label[for="chickenBurgersCategory"]:hover,
-        #menuRegister #categoryTabs > label[for="sidesCategory"]:hover,
-        #menuRegister #categoryTabs > label[for="drinksCategory"]:hover,
-        #menuRegister #categoryTabs > label[for="dessertsCategory"]:hover {
+        #menu-register #category-tabs > label[for="premium-category"]:hover,
+        #menu-register #category-tabs > label[for="whoppers-category"]:hover,
+        #menu-register #category-tabs > label[for="chicken-burgers-category"]:hover,
+        #menu-register #category-tabs > label[for="sides-category"]:hover,
+        #menu-register #category-tabs > label[for="drinks-category"]:hover,
+        #menu-register #category-tabs > label[for="desserts-category"]:hover {
             color: #9a9a9a;
         }
 
-        #menuRegister .header {
+        #menu-register .header {
             position: relative;
             width: 85%;
             height: 100%;
@@ -157,7 +165,7 @@
             display: grid;
         }
 
-        #menuRegister .direction {
+        #menu-register .direction {
             background-color: #999999;
             color: #ffffff;
             text-align: center;
@@ -165,14 +173,15 @@
             margin: 0 0 5px 0;
         }
 
-        span.smallerTitle,
-        span.registerOrEdit {
+        span.smaller-title,
+        span.register-or-edit {
             font-family: "Black Han Sans", sans-serif;
             font-size: 2.5rem;
             position: relative;
             top: 20px;
             left: 20px;
         }
+
 
         /*메뉴카드(사진+이름+가격) 관련 css*/
         .container {
@@ -213,7 +222,7 @@
             text-decoration: none;
         }
 
-        .menuName {
+        .menu-name {
             font-size: 2rem;
         }
 
@@ -225,7 +234,7 @@
         }
 
         /*메뉴등록(+)버튼 관련 css*/
-        a.plusButton {
+        a.plus-button {
             display: block;
             font-size: 3rem;
             text-align: center;
@@ -239,7 +248,7 @@
             cursor: pointer;
         }
 
-        a.plusButton:after {
+        a.plus-button:after {
             content: "메뉴등록";
             display: block;
             font-family: "Gothic A1", sans-serif;
@@ -258,12 +267,12 @@
         }
 
 
-        a.plusButton:hover {
+        a.plus-button:hover {
             color: #cccccc;
             text-decoration: none;
         }
 
-        a.plusButton:visited {
+        a.plus-button:visited {
             color: #cccccc !important;
         }
 
@@ -292,14 +301,15 @@
             z-index: 2;
         }
 
-        #registerPopup {
+        #register-popup {
             position: fixed;
         }
 
-        .inputForm {
+        .input-form {
             position: relative;
             top: 2rem;
         }
+
 
         .decline {
             font-family: "Black Han Sans", sans-serif;
@@ -349,7 +359,7 @@
 
 
         /*폼(탭버튼 제외)이 들어갈 공간에 해당*/
-        #formTabs {
+        #form-tabs {
             position: absolute;
             top: 50%;
             left: 50%;
@@ -359,18 +369,18 @@
             background: #f7f3f0;
         }
 
-        #formTabs input[type="radio"]:nth-of-type(1), #formTabs input[type="radio"]:nth-of-type(1) ~ div.inputForm1,
-        #formTabs input[type="radio"]:nth-of-type(2), #formTabs input[type="radio"]:nth-of-type(2) ~ div.inputForm2 {
+        #form-tabs input[type="radio"]:nth-of-type(1), #form-tabs input[type="radio"]:nth-of-type(1) ~ div.input-form1,
+        #form-tabs input[type="radio"]:nth-of-type(2), #form-tabs input[type="radio"]:nth-of-type(2) ~ div.input-form2 {
             display: none;
         }
 
-        #formTabs input[type="radio"]:nth-of-type(1):checked ~ div.inputForm1,
-        #formTabs input[type="radio"]:nth-of-type(2):checked ~ div.inputForm2 {
+        #form-tabs input[type="radio"]:nth-of-type(1):checked ~ div.input-form1,
+        #form-tabs input[type="radio"]:nth-of-type(2):checked ~ div.input-form2 {
             display: block;
         }
 
-        #formTabs div.inputForm1,
-        #formTabs div.inputForm2 {
+        #form-tabs div.input-form1,
+        #form-tabs div.input-form2 {
             overflow-y: scroll;
             overflow-x: hidden;
             background-color: #ffffff;
@@ -378,7 +388,7 @@
             margin: 10px 10px 10px 10px;
         }
 
-        #formTabs > label {
+        #form-tabs > label {
             font-family: "Black Han Sans", sans-serif;
             display: inline-block;
             font-size: 2rem;
@@ -392,18 +402,18 @@
             margin-bottom: 10px;
         }
 
-        #formTabs > label:hover {
+        #form-tabs > label:hover {
             cursor: pointer;
             background-color: #cccccc;
         }
 
-        #formTabs label[for=single] {
+        #form-tabs label[for=single] {
             position: relative;
             margin-left: 10px;
         }
 
-        #formTabs input[type="radio"][id="single"]:checked ~ label[for="single"],
-        #formTabs input[type="radio"][id="combo"]:checked ~ label[for="combo"] {
+        #form-tabs input[type="radio"][id="single"]:checked ~ label[for="single"],
+        #form-tabs input[type="radio"][id="combo"]:checked ~ label[for="combo"] {
             background-color: #33a74c;
         }
 
@@ -429,7 +439,7 @@
             padding: 10px 20px 10px 20px;
         }
 
-        form p.labRequired {
+        form p.lab-required {
             display: inline-block;
             font-family: "Gothic A1", sans-serif;
             font-size: 0.8rem;
@@ -447,12 +457,12 @@
             margin: 1rem 0 3rem 0;
         }
 
-        form .textForm {
+        form .text-form {
             position: relative;
             margin: 10px 0 30px 0;
         }
 
-        form .textForm input {
+        form .text-form input {
             width: 100%;
             height: 100%;
             color: #595f6e;
@@ -460,7 +470,7 @@
             border: none;
         }
 
-        form .textForm label {
+        form .text-form label {
             position: absolute;
             bottom: 0;
             left: 0;
@@ -576,8 +586,8 @@
             background-size: 15px auto;
         }
 
-        .alertContainer,
-        .fillAlertContainer {
+        .alert-container,
+        .fill-alert-container {
             display: none;
             position: fixed;
             background: rgba(0, 0, 0, 0.5);
@@ -599,24 +609,28 @@
             padding: 50px 50px 150px 50px;
         }
 
-        .fillAlertDecline {
+        .fill-alert-decline {
             transform: translate(-50%, -20%);
         }
 
     </style>
     <script type="text/javascript">
         // 메뉴등록 준비 함수 (+ 버튼을 누르면 실행된다)
+        history.replaceState({}, null, location.pathname);
+
         function openRegisterPopup() {
             // 팝업창을 준비 (폼은 비어있음)
-            $("#registerPopup").css("display", "block");
-            $(".registerOrEdit").text("메뉴등록");
+            $(".dim").show();
+            $("#register-popup").css("display", "block");
+            $(".register-or-edit").text("메뉴등록");
         }
 
         // 메뉴수정 준비 함수 (메뉴카드의 a 태그 영역(메뉴사진+메뉴이름)을 누르면 실행된다)
         function openEditPopup() {
             // 1. 팝업창을 준비
-            $("#registerPopup").css("display", "block");
-            $(".registerOrEdit").text("메뉴수정");
+            $(".dim").show();
+            $("#register-popup").css("display", "block");
+            $(".register-or-edit").text("메뉴수정");
 
             // 2. 클릭한 a태그의 id(objectId)를 참조해서, DB에서 데이터를 GET한 뒤 폼에 차례로 입력
         }
@@ -627,42 +641,44 @@
                 this.reset();
             });
 
-            $("#registerPopup").css("display", "none");
+            $("#register-popup").css("display", "none");
+            $(".dim").hide();
             window.location.href = window.location.href; // window.location.reload()를 쓰면 dim이 없어지지 않음
+            history.replaceState({}, null, location.pathname);
         }
 
         // 팝업창에 입력폼을 불러온다
         $(document).ready(function () {
             let tempHtml = $(".hidden1").html();
-            $(".inputForm1").append(tempHtml);
+            $(".input-form1").append(tempHtml);
         })
 
         $(document).ready(function () {
             let tempHtml = $(".hidden2").html();
-            $(".inputForm2").append(tempHtml);
+            $(".input-form2").append(tempHtml);
         })
 
         $(document).ready(function () {
             $("input:radio[id=isDiscontinued]").click(function () {
-                $(".alertContainer").css("display", "flex");
+                $(".alert-container").css("display", "flex");
             })
         })
 
         function alertProceed() {
-            $(".alertContainer").css("display", "none");
+            $(".alert-container").css("display", "none");
         }
 
         function alertDecline() {
-            $(".alertContainer").css("display", "none");
+            $(".alert-container").css("display", "none");
             $("input:radio[id=isNotDiscontinued]").click();
         }
 
         function fillAlertPopup() {
-            $(".fillAlertContainer").css("display", "flex");
+            $(".fill-alert-container").css("display", "flex");
         }
 
         function fillAlertClose() {
-            $(".fillAlertContainer").css("display", "none");
+            $(".fill-alert-container").css("display", "none");
         }
 
 
@@ -696,21 +712,21 @@
             // let tempHtml = `
             //     <div class="card" id="${objectId}">
             //         <div>
-            //             <a href="#registerPopup" onclick="openEditPopup()">
+            //             <a href="#register-popup" onclick="openEditPopup()">
             //                 <img src="${imageUrl}">
             //             </a>
             //         </div>
             //         <div>
-            //             <a href="#registerPopup" onclick="openEditPopup()" class="menuName">${nameKr}</a>
+            //             <a href="#register-popup" onclick="openEditPopup()" class="menu-name">${nameKr}</a>
             //             <div class="price">￦ ${price}</div>
             //         </div>
             //     </div>
             // `;
-            // 4. .before() 메소드를 이용해서, menuType에 해당하는 카테고리의 .lastCard 앞에 카드를 붙인다.
+            // 4. .before() 메소드를 이용해서, menuType에 해당하는 카테고리의 .last-card 앞에 카드를 붙인다.
             // 메뉴타입별 딕셔너리를 category라는 이름으로 만들어두고 매칭시키는 것도 방법이겠다.
-            // let categories = {"프리미엄": "premium", "와퍼": "whoppers", "치킨버거": "chickenBurgers", "사이드": "sides", "음료": "drinks", "디저트": "desserts"};
+            // let categories = {"프리미엄": "premium", "와퍼": "whoppers", "치킨버거": "chicken-burgers", "사이드": "sides", "음료": "drinks", "디저트": "desserts"};
             // let category = category[menuType];
-            // $(`${category} > ??? .lastCard`).before(tempHtml);
+            // $(`${category} > ??? .last-card`).before(tempHtml);
 
             // 5. if (isDiscounted > 0)이면 SALE 레이블을 붙인다
             // $(`#${objectId} > div > a`).append(`<style>${objectId} > div > a {-webkit-filter: grayscale(100%); filter: gray;}`);
@@ -724,15 +740,15 @@
 
 
         //팝업 제어용 JQuery (별도의 함수명을 부여해서 document ready 시켜야)
-        // // inputFormSingle
+        // // input-form-single
         $(document).ready(function () {
             $("input:checkbox[name=ingredients]").click(function () {
                 let ingredientId = $(this).attr("id");
                 let chk = $(this).is(":checked");
                 if (chk === true) {
-                    $("input:checkbox[name=allergens][id=" + ingredientId + "Allergen]").prop("checked", true);
+                    $("input:checkbox[name=allergens][id=" + ingredientId + "-allergen]").prop("checked", true);
                 } else {
-                    $("input:checkbox[name=allergens][id=" + ingredientId + "Allergen]").prop("checked", false);
+                    $("input:checkbox[name=allergens][id=" + ingredientId + "-allergen]").prop("checked", false);
                 }
             })
         })
@@ -741,40 +757,12 @@
         $(document).ready(function () {
             $("input:checkbox[name=allergens]").click(function () {
                 let allergenId = $(this).attr("id");
-                let strArr = allergenId.split("Allergen");
+                let strArr = allergenId.split("-allergen");
                 let chk = $(this).is(":checked");
                 if (chk === true) {
                     $("input:checkbox[name=ingredients][id=" + strArr[0] + "]").prop("checked", true);
                 } else {
                     $("input:checkbox[name=ingredients][id=" + strArr[0] + "]").prop("checked", false);
-                }
-            })
-        })
-
-        // // inputFormCombo
-        $(document).ready(function () {
-            $("input:checkbox[name=ingredientsCombo]").click(function () {
-                let ingredientId = $(this).attr("id");
-                ingredientId = ingredientId.substr(0, ingredientId.length - 5);
-                let chk = $(this).is(":checked");
-                if (chk === true) {
-                    $("input:checkbox[name=allergensCombo][id=" + ingredientId + "AllergenCombo]").prop("checked", true);
-                } else {
-                    $("input:checkbox[name=allergensCombo][id=" + ingredientId + "AllergenCombo]").prop("checked", false);
-                }
-            })
-        })
-
-        // // vice versa
-        $(document).ready(function () {
-            $("input:checkbox[name=allergensCombo]").click(function () {
-                let allergenId = $(this).attr("id");
-                let strArr = allergenId.split("AllergenCombo");
-                let chk = $(this).is(":checked");
-                if (chk === true) {
-                    $("input:checkbox[name=ingredientsCombo][id=" + strArr[0] + "Combo]").prop("checked", true);
-                } else {
-                    $("input:checkbox[name=ingredientsCombo][id=" + strArr[0] + "Combo]").prop("checked", false);
                 }
             })
         })
@@ -789,7 +777,7 @@
             let categoryKorToEng = {
                 "premium": "프리미엄",
                 "whoppers": "와퍼",
-                "chickenBurgers": "치킨버거",
+                "chicken-burgers": "치킨버거",
                 "sides": "사이드",
                 "drinks": "음료",
                 "desserts": "디저트"
@@ -849,15 +837,15 @@
                 "truffle": "트러플"
             };
 
-            let ingredientsAllergicKor = [];
-            let ingredientsNonAllergicKor = [];
+            let ingredientsAllergicKr = [];
+            let ingredientsNonAllergicKr = [];
 
             for (let ingredient in ingredientsAllergicEng) {
-                ingredientsAllergicKor.push(ingredientsEngToKr[ingredientsAllergicEng[ingredient]]);
+                ingredientsAllergicKr.push(ingredientsEngToKr[ingredientsAllergicEng[ingredient]]);
             }
 
             for (let ingredient in ingredientsNonAllergicEng) {
-                ingredientsNonAllergicKor.push(ingredientsEngToKr[ingredientsNonAllergicEng[ingredient]]);
+                ingredientsNonAllergicKr.push(ingredientsEngToKr[ingredientsNonAllergicEng[ingredient]]);
             }
 
             // 2. 딕셔너리 형태로 가공한다
@@ -882,9 +870,9 @@
             newMenu["side"] = "";
             newMenu["drink"] = "";
             newMenu["ingredientsAllergicEng"] = ingredientsAllergicEng;
-            newMenu["ingredientsAllergicKor"] = ingredientsAllergicKor;
+            newMenu["ingredientsAllergicKr"] = ingredientsAllergicKr;
             newMenu["ingredientsNonAllergicEng"] = ingredientsNonAllergicEng;
-            newMenu["ingredientsNonAllergicKor"] = ingredientsNonAllergicKor;
+            newMenu["ingredientsNonAllergicKr"] = ingredientsNonAllergicKr;
             newMenu["isDiscounted"] = discount;
 
             if (soldOut === "isSoldOut") {
@@ -918,7 +906,7 @@
             let categoryKorToEng = {
                 "premium": "프리미엄",
                 "whoppers": "와퍼",
-                "chickenBurgers": "치킨버거",
+                "chicken-burgers": "치킨버거",
                 "sides": "사이드",
                 "drinks": "음료",
                 "desserts": "디저트"
@@ -976,15 +964,15 @@
                 "truffle": "트러플"
             };
 
-            let ingredientsAllergicKor = [];
-            let ingredientsNonAllergicKor = [];
+            let ingredientsAllergicKr = [];
+            let ingredientsNonAllergicKr = [];
 
             for (let ingredient in ingredientsAllergicEng) {
-                ingredientsAllergicKor.push(ingredientsEngToKr[ingredientsAllergicEng[ingredient]]);
+                ingredientsAllergicKr.push(ingredientsEngToKr[ingredientsAllergicEng[ingredient]]);
             }
 
             for (let ingredient in ingredientsNonAllergicEng) {
-                ingredientsNonAllergicKor.push(ingredientsEngToKr[ingredientsNonAllergicEng[ingredient]]);
+                ingredientsNonAllergicKr.push(ingredientsEngToKr[ingredientsNonAllergicEng[ingredient]]);
             }
 
 
@@ -1004,9 +992,9 @@
             newMenu["side"] = ""; //프렌치프라이 objectId값 (백엔드로)
             newMenu["drink"] = ""; //코카콜라 objectId값 (백엔드로)
             newMenu["ingredientsAllergicEng"] = ingredientsAllergicEng;
-            newMenu["ingredientsAllergicKor"] = ingredientsAllergicKor;
+            newMenu["ingredientsAllergicKr"] = ingredientsAllergicKr;
             newMenu["ingredientsNonAllergicEng"] = ingredientsNonAllergicEng;
-            newMenu["ingredientsNonAllergicKor"] = ingredientsNonAllergicKor;
+            newMenu["ingredientsNonAllergicKr"] = ingredientsNonAllergicKr;
             newMenu["isDiscounted"] = discount;
 
             if (soldOut === "isSoldOut") {
@@ -1046,7 +1034,7 @@
 
             // 재료구성 (음료가 아닌데 비어있을 경우)
             let noNonAllergenEng = singleInfo["ingredientsNonAllergicEng"].length === 0;
-            let noNonAllergenKr = singleInfo["ingredientsNonAllergicKor"].length === 0;
+            let noNonAllergenKr = singleInfo["ingredientsNonAllergicKr"].length === 0;
 
             let checkDrink = singleInfo["menuType"] === "음료"
 
@@ -1063,20 +1051,51 @@
                 }
             }
 
+            let isCombo = singleInfo["isCombo"];
+            let image = singleInfo["image"];
+            let menuType = singleInfo["menuType"];
+            let nameKr = singleInfo["nameKr"];
+            let nameEng = singleInfo["nameEng"];
+            let calories = singleInfo["calories"];
+            let price = singleInfo["price"];
+            let extraPrice = singleInfo["extraPrice"];
+            let defaultCombo = singleInfo["defaultCombo"];
+            let isDefaultCombo = singleInfo["isDefaultCombo"];
+            let side = singleInfo["side"];
+            let drink = singleInfo["drink"];
+            let isDiscounted = singleInfo["isDiscounted"];
+            let ingredientsAllergicEng = singleInfo["ingredientsAllergicEng"];
+            let ingredientsAllergicKr = singleInfo["ingredientsAllergicKr"];
+            let ingredientsNonAllergicEng = singleInfo["ingredientsNonAllergicEng"];
+            let ingredientsNonAllergicKr = singleInfo["ingredientsNonAllergicKr"];
+            let isSoldOut = singleInfo["isSoldOut"];
+            let isRecommended = singleInfo["isRecommended"];
+            let isDiscontinued = singleInfo["isDiscontinued"];
+
             console.log(singleInfo);
+
             // ajax를 통해 단품 폼만 서버에 POST한다
-            // $.ajax({
-            //     type: "POST",
-            //     url: "/api/menus",
-            //     data: {},
-            //     success: function (response) {
-            //         if (response["result"] === "success") {
-            //             alert(response["msg"]);
-            //         } else {
-            //             alert("메뉴 받아오기 실패");
-            //         }
-            //     }
-            // })
+            $.ajax({
+                type: "POST",
+                url: "/api/menus",
+                data: { isCombo: isCombo, image: image, menuType: menuType,
+                    nameKr: nameKr, nameEng: nameEng, calories: calories,
+                    price: price, extraPrice: extraPrice, defaultCombo: defaultCombo,
+                    isDefaultCombo: isDefaultCombo, side: side, drink: drink,
+                    isDiscounted: isDiscounted,
+                    ingredientsAllergicEng: ingredientsAllergicEng,
+                    ingredientsAllergicKr: ingredientsAllergicKr,
+                    ingredientsNonAllergicEng: ingredientsNonAllergicEng,
+                    ingredientsNonAllergicKr: ingredientsNonAllergicKr,
+                    isSoldOut: isSoldOut, isRecommended: isRecommended, isDiscontinued: isDiscontinued },
+                success: function (response) {
+                    if (response["result"] === "success") {
+                        alert(response["msg"]);
+                    } else {
+                        alert("메뉴 올리기 실패");
+                    }
+                }
+            })
 
 
             // 2-2-1. true라면, 두 폼을 모두 입력한다. 입력되지 않은 항목이 있을 경우 제출을 하지 않는 분기를 구현한다
@@ -1096,21 +1115,21 @@
                     return;
                 }
 
-                console.log(comboInfo);
-                // 약간의 시간 interval을 둔다
+                // 약간의 시간 interval을 둬야 하나?
+
                 // ajax를 통해 세트 폼도 서버에 POST한다
-                // $.ajax({
-                //     type: "POST",
-                //     url: "/api/menus",
-                //     data: {},
-                //     success: function (response) {
-                //         if (response["result"] === "success") {
-                //             alert(response["msg"]);
-                //         } else {
-                //             alert("메뉴 받아오기 실패");
-                //         }
-                //     }
-                // })
+                $.ajax({
+                    type: "POST",
+                    url: "/api/menus",
+                    data: {},
+                    success: function (response) {
+                        if (response["result"] === "success") {
+                            alert(response["msg"]);
+                        } else {
+                            alert("메뉴 받아오기 실패");
+                        }
+                    }
+                })
 
             }
 
@@ -1119,8 +1138,8 @@
 
     </script>
     <body>
-        <div id="menuRegister">
-            <div class="topArea"> <!--헤더에 해당-->
+        <div id="menu-register">
+            <div class="top-area"> <!--헤더에 해당-->
                 <div class="header">
                     <a href="" class="btn"> 《 주문알림 </a>
                     <img class="logo" src="https://cdn.freebiesupply.com/images/thumbs/2x/burger-king-logo.png"
@@ -1132,32 +1151,32 @@
             <div class="direction"> <!--사용법안내 회색창-->
                 <p style="font-family: "Gothic A1", sans-serif;">[안내] 생성된 메뉴를 클릭하면 상세정보 수정이 가능합니다.</p>
             </div>
-            <div id="categoryTabs">
+            <div id="category-tabs">
                 <!--라디오버튼으로 카테고리 탭을 구현함-->
                 <!--pug에서는 조금더 동적으로 구현 가능하려나?-->
-                <input id="premiumCategory" type="radio" name="categories" checked="checked"/>
-                <label for="premiumCategory">프리미엄</label>
+                <input id="premium-category" type="radio" name="categories" checked="checked"/>
+                <label for="premium-category">프리미엄</label>
 
-                <input id="whoppersCategory" type="radio" name="categories"/>
-                <label for="whoppersCategory">와퍼</label>
+                <input id="whoppers-category" type="radio" name="categories"/>
+                <label for="whoppers-category">와퍼</label>
 
-                <input id="chickenBurgersCategory" type="radio" name="categories"/>
-                <label for="chickenBurgersCategory">치킨버거</label>
+                <input id="chicken-burgers-category" type="radio" name="categories"/>
+                <label for="chicken-burgers-category">치킨버거</label>
 
-                <input id="sidesCategory" type="radio" name="categories"/>
-                <label for="sidesCategory">사이드</label>
+                <input id="sides-category" type="radio" name="categories"/>
+                <label for="sides-category">사이드</label>
 
-                <input id="drinksCategory" type="radio" name="categories"/>
-                <label for="drinksCategory">음료</label>
+                <input id="drinks-category" type="radio" name="categories"/>
+                <label for="drinks-category">음료</label>
 
-                <input id="dessertsCategory" type="radio" name="categories"/>
-                <label for="dessertsCategory">디저트</label>
+                <input id="desserts-category" type="radio" name="categories"/>
+                <label for="desserts-category">디저트</label>
 
                 <div class="premium">
                     <!--메뉴등록 버튼-->
                     <div class="container">
-                        <div class="lastCard">
-                            <a href="#registerPopup" class="plusButton" onclick="openRegisterPopup()"> + </a>
+                        <div class="last-card">
+                            <a href="#register-popup" class="plus-button" onclick="openRegisterPopup()"> + </a>
                         </div>
                     </div>
                     premium
@@ -1165,17 +1184,17 @@
                 <div class="whoppers">
                     <!--메뉴등록 버튼-->
                     <div class="container">
-                        <div class="lastCard">
-                            <a href="#registerPopup" class="plusButton" onclick="openRegisterPopup()"> + </a>
+                        <div class="last-card">
+                            <a href="#register-popup" class="plus-button" onclick="openRegisterPopup()"> + </a>
                         </div>
                     </div>
                     whoppers
                 </div>
-                <div class="chickenBurgers">
+                <div class="chicken-burgers">
                     <!--메뉴등록 버튼-->
                     <div class="container">
-                        <div class="lastCard">
-                            <a href="#registerPopup" class="plusButton" onclick="openRegisterPopup()"> + </a>
+                        <div class="last-card">
+                            <a href="#register-popup" class="plus-button" onclick="openRegisterPopup()"> + </a>
                         </div>
                     </div>
                     chicken burgers
@@ -1183,8 +1202,8 @@
                 <div class="sides">
                     <!--메뉴등록 버튼-->
                     <div class="container">
-                        <div class="lastCard">
-                            <a href="#registerPopup" class="plusButton" onclick="openRegisterPopup()"> + </a>
+                        <div class="last-card">
+                            <a href="#register-popup" class="plus-button" onclick="openRegisterPopup()"> + </a>
                         </div>
                     </div>
                     sides
@@ -1192,8 +1211,8 @@
                 <div class="drinks">
                     <!--메뉴등록 버튼-->
                     <div class="container">
-                        <div class="lastCard">
-                            <a href="#registerPopup" class="plusButton" onclick="openRegisterPopup()"> + </a>
+                        <div class="last-card">
+                            <a href="#register-popup" class="plus-button" onclick="openRegisterPopup()"> + </a>
                         </div>
                     </div>
                     drinks
@@ -1201,8 +1220,8 @@
                 <div class="desserts">
                     <!--메뉴등록 버튼-->
                     <div class="container">
-                        <div class="lastCard">
-                            <a href="#registerPopup" class="plusButton" onclick="openRegisterPopup()"> + </a>
+                        <div class="last-card">
+                            <a href="#register-popup" class="plus-button" onclick="openRegisterPopup()"> + </a>
                         </div>
                     </div>
                     desserts
@@ -1210,82 +1229,82 @@
             </div>
         </div>
         <div>
-            <div class="popup" id="registerPopup">
-                <span class="registerOrEdit">메뉴등록</span>
-                <div class="inputForm">
-                    <div id="formTabs">
+            <div class="popup" id="register-popup">
+                <span class="register-or-edit">메뉴등록</span>
+                <div class="input-form">
+                    <div id="form-tabs">
                         <input id="single" type="radio" name="singleOrCombo" checked="checked"/>
                         <label for="single">단품</label>
                         <input id="combo" type="radio" name="singleOrCombo"/>
                         <label for="combo">세트</label>
                         <!--여기에 입력폼이 표시됩니다-->
-                        <div class="inputForm1">
+                        <div class="input-form1">
                         </div>
-                        <div class="inputForm2">
+                        <div class="input-form2">
                         </div>
                     </div>
                 </div>
-                <a href="#a" class="decline" onclick="closePopup()">취소</a>
-                <a href="#a" class="submit" onclick="submit()">확인</a> <!--별도의 POST 기능 함수로 구현 예정-->
+                <a href="#a" class="decline" onclick="closePopup();return false;">취소</a>
+                <a href="#" class="submit" onclick="submit();return false;">확인</a> <!--별도의 POST 기능 함수로 구현 예정-->
             </div>
             <div class="dim"></div>
         </div>
 
         <div class="hidden1">
-            <form id="inputFormSingle">
+            <form id="input-form-single">
                 <!--사진입력부는 나 혼자서 구현하기 어려울수도 있다. 다른거 먼저 구현하고 구글하자-->
                 <!--각 요소의 값을 읽어와서, 버튼을 누르면 해당 요소가 딕셔너리로 정리된 팝업창이 뜨게 하자-->
                 <div class="basicInfo">
-                    <div class="textForm">
+                    <div class="text-form">
                         <p class="lab">상품이미지(링크)</p>
-                        <p class="labRequired">* 필수입력 항목</p>
-                        <br><input type="text" placeholder="여기에 상품 이미지의 URL을 입력하세요" id="productImage" required
+                        <p class="lab-required">* 필수입력 항목</p>
+                        <br><input type="text" placeholder="예: https://sample.com/image.png" id="productImage" required
                                    autocomplete=off>
                         <label for="productImage"></label>
                     </div>
                     <p class="lab">카테고리</p>
-                    <p class="labRequired">* 필수입력 항목</p>
+                    <p class="lab-required">* 필수입력 항목</p>
                     <div class="radios">
                         <input type="radio" id="premium" name="category" required><label
                             for="premium"><span></span>프리미엄</label>
                         <input type="radio" id="whoppers" name="category"><label for="whoppers"><span></span>와퍼</label>
-                        <input type="radio" id="chickenBurgers" name="category"><label
-                            for="chickenBurgers"><span></span>치킨버거</label>
+                        <input type="radio" id="chicken-burgers" name="category"><label
+                            for="chicken-burgers"><span></span>치킨버거</label>
                         <input type="radio" id="sides" name="category"><label for="sides"><span></span>사이드</label>
                         <input type="radio" id="drinks" name="category"><label for="drinks"><span></span>음료</label>
                         <input type="radio" id="desserts" name="category"><label for="desserts"><span></span>디저트</label>
                     </div>
-                    <div class="textForm">
+                    <div class="text-form">
                         <p class="lab">메뉴이름(한글)</p>
-                        <p class="labRequired">* 필수입력 항목</p>
-                        <br><input type="text" placeholder="최대 20자까지 입력 가능" maxlength="20" id="nameKr" required
+                        <p class="lab-required">* 필수입력 항목</p>
+                        <br><input type="text" placeholder="최대 20자 입력가능 (예: 와퍼)" maxlength="20" id="nameKr" required
                                    autocomplete=off>
                         <label for="nameKr"></label>
                     </div>
-                    <div class="textForm">
+                    <div class="text-form">
                         <p class="lab">메뉴이름(영어)</p>
-                        <p class="labRequired">* 필수입력 항목</p>
-                        <br><input type="text" placeholder="최대 50자까지 입력 가능 (영어)" maxlength="50" id="nameEng" required
+                        <p class="lab-required">* 필수입력 항목</p>
+                        <br><input type="text" placeholder="최대 50자 입력 (예: Whopper)" maxlength="50" id="nameEng" required
                                    autocomplete=off>
                         <label for="nameEng"></label>
                     </div>
-                    <div class="textForm">
+                    <div class="text-form">
                         <p class="lab">칼로리(kcal)</p>
-                        <p class="labRequired">* 필수입력 항목</p>
-                        <br><input type="text" placeholder="최대 20자까지 입력 가능" maxlength="20" id="calories" required
+                        <p class="lab-required">* 필수입력 항목</p>
+                        <br><input type="text" placeholder="숫자만 입력 (예: 100)" maxlength="20" id="calories" required
                                    autocomplete=off>
                         <label for="calories"></label>
                     </div>
-                    <div class="textForm">
+                    <div class="text-form">
                         <p class="lab">상품가격(원)</p>
-                        <p class="labRequired">* 필수입력 항목</p>
-                        <br><input type="text" placeholder="최대 20자까지 입력 가능" maxlength="20" id="price" required
+                        <p class="lab-required">* 필수입력 항목</p>
+                        <br><input type="text" placeholder="숫자만 입력 (예: 1000)" maxlength="20" id="price" required
                                    autocomplete=off>
                         <label for="price"></label>
                     </div>
-                    <div class="textForm">
+                    <div class="text-form">
                         <p class="lab">세트추가금액(원)</p>
-                        <p class="labRequired">* 필수입력 항목</p>
+                        <p class="lab-required">* 필수입력 항목</p>
                         <br><input type="text" value="0" maxlength="20" id="extraPrice" required
                                    autocomplete=off>
                         <label for="extraPrice"></label>
@@ -1294,7 +1313,7 @@
                     <!--CSS상으로 이미지 체크박스를 구현해야 한다-->
                     <!--자바스크립트로 "재료구성"에서 클릭된 성분이 "알레르기 유발성분"에서도 자동 클릭되게 해야 한다-->
                     <p class="lab">재료구성</p>
-                    <p class="labRequired">* 음료 제외 필수입력</p>
+                    <p class="lab-required">* 음료 제외 필수입력</p>
                     <div class="checkboxes">
                         <input type="checkbox" id="beef" name="ingredients" value="beef" required><label
                             for="beef">쇠고기</label>
@@ -1328,29 +1347,29 @@
                     </div>
                     <p class="lab">알레르기 유발재료</p>
                     <div class="checkboxes">
-                        <input type="checkbox" id="beefAllergen" name="allergens" value="beef" required><label
-                            for="beefAllergen">쇠고기</label>
-                        <input type="checkbox" id="porkAllergen" name="allergens" value="pork"><label
-                            for="porkAllergen">돼지고기</label>
-                        <input type="checkbox" id="chickenAllergen" name="allergens" value="chicken"><label
-                            for="chickenAllergen">닭고기</label>
-                        <input type="checkbox" id="shellfishAllergen" name="allergens" value="shellfish"><label
-                            for="shellfishAllergen">조개류</label>
-                        <input type="checkbox" id="shrimpAllergen" name="allergens" value="shrimp"><label
-                            for="shrimpAllergen">새우</label>
-                        <input type="checkbox" id="eggAllergen" name="allergens" value="egg"><label
-                            for="eggAllergen">난류</label>
-                        <input type="checkbox" id="soybeanAllergen" name="allergens" value="soybean"><label
-                            for="soybeanAllergen">대두</label>
-                        <input type="checkbox" id="tomatoAllergen" name="allergens" value="tomato"><label
-                            for="tomatoAllergen">토마토</label>
+                        <input type="checkbox" id="beef-allergen" name="allergens" value="beef" required><label
+                            for="beef-allergen">쇠고기</label>
+                        <input type="checkbox" id="pork-allergen" name="allergens" value="pork"><label
+                            for="pork-allergen">돼지고기</label>
+                        <input type="checkbox" id="chicken-allergen" name="allergens" value="chicken"><label
+                            for="chicken-allergen">닭고기</label>
+                        <input type="checkbox" id="shellfish-allergen" name="allergens" value="shellfish"><label
+                            for="shellfish-allergen">조개류</label>
+                        <input type="checkbox" id="shrimp-allergen" name="allergens" value="shrimp"><label
+                            for="shrimp-allergen">새우</label>
+                        <input type="checkbox" id="egg-allergen" name="allergens" value="egg"><label
+                            for="egg-allergen">난류</label>
+                        <input type="checkbox" id="soybean-allergen" name="allergens" value="soybean"><label
+                            for="soybean-allergen">대두</label>
+                        <input type="checkbox" id="tomato-allergen" name="allergens" value="tomato"><label
+                            for="tomato-allergen">토마토</label>
                     </div>
                 </div>
-                <span class="smallerTitle">기타설정</span>
+                <span class="smaller-title">기타설정</span>
                 <div class="divider"></div>
-                <div class="textForm">
+                <div class="text-form">
                     <p class="lab">할인가격</p>
-                    <p class="labRequired">* 필수입력 항목</p>
+                    <p class="lab-required">* 필수입력 항목</p>
                     <br><input type="text" value="0" maxlength="20" id="isDiscounted" required
                                    autocomplete=off>
                     <label for="isDiscounted"></label>
@@ -1369,6 +1388,7 @@
                         for="isNotRecommended"><span></span>아니오</label>
                 </div>
                 <p class="deletion">단종</p>
+                <p class="lab-required">* 단종 처리시 메뉴가 목록에서 삭제됩니다.</p>
                 <div class="radios">
                     <input type="radio" id="isDiscontinued" name="discontinue"><label
                         for="isDiscontinued"><span></span>예</label>
@@ -1378,26 +1398,26 @@
             </form>
         </div>
         <div class="hidden2">
-            <form id="inputFormCombo">
+            <form id="input-form-combo">
                 <!--각 요소의 값을 읽어와서, 버튼을 누르면 해당 요소가 딕셔너리로 정리된 팝업창이 뜨게 하자-->
                 <div class="basicInfo">
-                    <div class="textForm">
+                    <div class="text-form">
                         <p class="lab">세트이미지(링크)</p>
-                        <p class="labRequired">* 필수입력 항목</p>
+                        <p class="lab-required">* 필수입력 항목</p>
                         <br><input type="text" placeholder="여기에 상품 이미지의 URL을 입력하세요" id="comboImage" autocomplete=off
                                    required>
                         <label for="comboImage"></label>
                     </div>
-                    <div class="textForm">
+                    <div class="text-form">
                         <p class="lab">세트칼로리(kcal)</p>
-                        <p class="labRequired">* 필수입력 항목</p>
+                        <p class="lab-required">* 필수입력 항목</p>
                         <br><input type="text" placeholder="최대 20자까지 입력 가능" maxlength="20" id="caloriesCombo" required
                                    autocomplete=off>
                         <label for="caloriesCombo"></label>
                     </div>
-                    <div class="textForm">
+                    <div class="text-form">
                         <p class="lab">세트가격(원)</p>
-                        <p class="labRequired">* 필수입력 항목</p>
+                        <p class="lab-required">* 필수입력 항목</p>
                         <br><input type="text" placeholder="최대 20자까지 입력 가능" maxlength="20" id="priceCombo" required
                                    autocomplete=off>
                         <label for="priceCombo"></label>
@@ -1408,23 +1428,23 @@
                 </div>
             </form>
         </div>
-        <div class="alertContainer">
+        <div class="alert-container">
             <div class="alert">
                 <div>
                     단종 선택시<br>
                     메뉴에서 삭제됩니다!<br>
                     계속 진행하시겠습니까?
-                    <a href="#registerPopup" class="decline" onclick="alertDecline()">취소</a>
-                    <a href="#registerPopup" class="submit" onclick="alertProceed()">확인</a>
+                    <a href="#register-popup" class="decline" onclick="alertDecline()">취소</a>
+                    <a href="#register-popup" class="submit" onclick="alertProceed()">확인</a>
                 </div>
             </div>
         </div>
-        <div class="fillAlertContainer">
+        <div class="fill-alert-container">
             <div class="alert">
                 <div>
                     입력되지 않은<br>
                     정보가 있습니다!
-                    <a href="#registerPopup" class="decline fillAlertDecline" onclick="fillAlertClose()">뒤로</a>
+                    <a href="#register-popup" class="decline fill-alert-decline" onclick="fillAlertClose()">뒤로</a>
                 </div>
             </div>
         </div>

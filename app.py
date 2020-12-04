@@ -12,54 +12,74 @@ def home():
     return render_template('menuRegister.html')
 
 
-@app.route('/inputForm', methods=['POST'])
+@app.route('/api/menus', methods=['POST'])
 def write_menus():
-    #여기 있는 스키마는 동환님 작업 pull해서 최신버전 확인해야.
-    #강열님 스키마도 pull해서 최신작업 확인해야.
-    # menuType = request.form['menuType']
-    # nameKr = request.form['nameKr']
-    # nameEng = request.form['nameEng']
-    # image = request.form['image']
-    # price = request.form['price']
-    # extraPrice = request.form['extraPrice']
-    # calories = request.form['calories']
-    # isCombo = request.form['isCombo']
-    # defaultCombo = request.form['defaultCombo']
-    # isDefaultCombo = request.form['isDefaultCombo']
-    # drink = request.form['drink']
-    # sideMenu = request.form['sideMenu']
-    # ingredientsNonAllergicKr = request.form['ingredientsNonAllergicKr']
-    # ingredientsNonAllergicEng = request.form['ingredientsNonAllergicEng']
-    # ingredientsAllergicKr = request.form['ingredientsAllergicKr']
-    # ingredientsAllergicEng = request.form['ingredientsAllergicEng']
-    # isSoldOut = request.form['isSoldOut']
-    # isDiscounted = request.form['isDiscounted']
-    # isRecommended = request.form['isRecommended']
-    # isDiscontinued = request.form['isDiscontinued']
+    print(request.form['isCombo'])
+    print(request.form['image'])
+    print(request.form['menuType'])
+    print(request.form['nameKr'])
+    print(request.form['nameEng'])
+    print(request.form['calories'])
+    print(request.form['price'])
+    print(request.form['extraPrice'])
+    print(request.form['defaultCombo'])
+    print(request.form['isDefaultCombo'])
+    print(request.form['side'])
+    print(request.form['drink'])
+    print(request.form.getlist('ingredientsAllergicKr'))
+    print(request.form.getlist('ingredientsAllergicEng'))
+    print(request.form.getlist('ingredientsNonAllergicKr'))
+    print(request.form.getlist('ingredientsNonAllergicEng'))
+    print(request.form['isDiscounted'])
+    print(request.form['isSoldOut'])
+    print(request.form['isRecommended'])
+    print(request.form['isDiscontinued'])
 
-    # menu = {
-    #     'menuType': menuType,
-    #     'nameKr': nameKr,
-    #     'nameEng': nameEng,
-    #     'image': image,
-    #     'price': price,
-    #     'extraPrice': extraPrice,
-    #     'calories': calories,
-    #     'isCombo': isCombo,
-    #     'defaultCombo': defaultCombo,
-    #     'isDefaultCombo': isDefaultCombo,
-    #     'drink': drink,
-    #     'sideMenu': sideMenu,
-    #     'ingredientsNonAllergicKr': ingredientsNonAllergicKr,
-    #     'ingredientsNonAllergicEng': ingredientsNonAllergicEng,
-    #     'ingredientsAllergicKr': ingredientsAllergicKr,
-    #     'ingredientsAllergicEng': ingredientsAllergicEng,
-    #     'isSoldOut': isSoldOut,
-    #     'isDiscounted': isDiscounted,
-    #     'isRecommended': isRecommended,
-    #     'isDiscontinued': isDiscontinued
-    # }
-    #db.menus.insert_one(menu)
+    isCombo = request.form['isCombo']
+    image = request.form['image']
+    menuType = request.form['menuType']
+    nameKr = request.form['nameKr']
+    nameEng = request.form['nameEng']
+    calories = request.form['calories']
+    price = request.form['price']
+    extraPrice = request.form['extraPrice']
+    defaultCombo = request.form['defaultCombo'],
+    isDefaultCombo = request.form['isDefaultCombo']
+    side = request.form['side']
+    drink = request.form['drink']
+    ingredientsAllergicKr = request.form.getlist('ingredientsAllergicKr')
+    ingredientsAllergicEng = request.form.getlist('ingredientsAllergicEng')
+    ingredientsNonAllergicKr = request.form.getlist('ingredientsNonAllergicKr')
+    ingredientsNonAllergicEng = request.form.getlist('ingredientsNonAllergicEng')
+    isDiscounted = request.form['isDiscounted']
+    isSoldOut = request.form['isSoldOut']
+    isRecommended = request.form['isRecommended']
+    isDiscontinued = request.form['isDiscontinued']
+
+    menu = {
+        "isCombo": isCombo,
+        "image": image,
+        "menuType": menuType,
+        "nameKr": nameKr,
+        "nameEng": nameEng,
+        "calories": calories,
+        "price": price,
+        "extraPrice": extraPrice,
+        "defaultCombo": defaultCombo,
+        "isDefaultCombo": isDefaultCombo,
+        "side": side,
+        "drink": drink,
+        "ingredientsAllergicEng": ingredientsAllergicEng,
+        "ingredientsAllergicKr": ingredientsAllergicKr,
+        "ingredientsNonAllergicEng": ingredientsNonAllergicEng,
+        "ingredientsNonAllergicKr": ingredientsNonAllergicKr,
+        "isDiscounted": isDiscounted,
+        "isSoldOut": isSoldOut,
+        "isRecommended": isRecommended,
+        "isDiscontinued": isDiscontinued
+    }
+
+    db.menus.insert_one(menu)
 
     # 서버상으로 메뉴이름을 단품인 경우 [단품], 세트인경우 [세트]를  post한다
     return jsonify({'result': 'success', 'msg': '요청을 post했다.'})

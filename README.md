@@ -41,12 +41,15 @@
 - [x] 메뉴 단종 라디오버튼을 '예'로 클릭할 경우, '정말로 삭제할지' 모달창 띄워 확인. 취소시 자동으로 '아니오'.
 - [x] 필수입력항목에는 p.lab에 :after를 적용해서 빨간 글씨로 필수입력란임을 표시해주기
 - [x] javascript를 통해, (menuType === '프리미엄' or '와퍼' or '치킨버거')에 대해서 세트메뉴 미입력시 경고창 뜨도록 
+- [x] url 뒤에 #a 등의 찌꺼기가 붙는 문제 해결
+- [x] 팝업창 종료 시 .dim이 활성화되어 남아있는 문제 해결
+- [x] css 서식 통일
+- [x] 가로폭이 750px을 넘어가면 서식 깨지지 않고 scroll되도록 함
+- [x] 버겨류일 경우에는 inputFormCombo와 inputFormSingle이 (2초 정도의 time interval을 두고) 모두 submit, 그 외에는 inputFormSingle만 submit
+- [x] submit() 함수로 db에 데이터 전달
 
 ###남은 작업
 ####웹페이지 동작 관련
-- [ ] submit() 함수 구현하기
-- [ ] javascript를 통해, isCombo일 경우에는 inputFormCombo와 inputFormSingle이 (2초 정도의 time interval을 두고) 모두 submit, !isCombo이면 inputFormSingle만 submit
-
 - [ ] showMenu() 함수 구현하기(db로부터 읽어온 메뉴 데이터를 바탕으로, menuType별로 각 카테고리에 메뉴 카드를 .append())
 - [ ] isDiscontinued인 아이템은 서버상으로는 남아있되 jQuery상으로 .remove() 하기 
 - [ ] isSoldOut인 카드는 자동으로 흑백 + sold표시 (javascript + css 이용) - 서식은 구현해둠
