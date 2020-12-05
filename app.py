@@ -14,47 +14,26 @@ def home():
 
 @app.route('/api/menus', methods=['POST'])
 def write_menus():
-    print(request.form['isCombo'])
-    print(request.form['image'])
-    print(request.form['menuType'])
-    print(request.form['nameKr'])
-    print(request.form['nameEng'])
-    print(request.form['calories'])
-    print(request.form['price'])
-    print(request.form['extraPrice'])
-    print(request.form['defaultCombo'])
-    print(request.form['isDefaultCombo'])
-    print(request.form['side'])
-    print(request.form['drink'])
-    print(request.form.getlist('ingredientsAllergicKr'))
-    print(request.form.getlist('ingredientsAllergicEng'))
-    print(request.form.getlist('ingredientsNonAllergicKr'))
-    print(request.form.getlist('ingredientsNonAllergicEng'))
-    print(request.form['isDiscounted'])
-    print(request.form['isSoldOut'])
-    print(request.form['isRecommended'])
-    print(request.form['isDiscontinued'])
-
-    isCombo = request.form['isCombo']
+    isCombo = bool(int(request.form['isCombo']))
     image = request.form['image']
     menuType = request.form['menuType']
     nameKr = request.form['nameKr']
     nameEng = request.form['nameEng']
-    calories = request.form['calories']
-    price = request.form['price']
-    extraPrice = request.form['extraPrice']
-    defaultCombo = request.form['defaultCombo'],
-    isDefaultCombo = request.form['isDefaultCombo']
+    calories = int(request.form['calories'])
+    price = int(request.form['price'])
+    extraPrice = int(request.form['extraPrice'])
+    defaultCombo = request.form['defaultCombo']
+    isDefaultCombo = bool(int(request.form['isDefaultCombo']))
     side = request.form['side']
     drink = request.form['drink']
-    ingredientsAllergicKr = request.form.getlist('ingredientsAllergicKr')
-    ingredientsAllergicEng = request.form.getlist('ingredientsAllergicEng')
-    ingredientsNonAllergicKr = request.form.getlist('ingredientsNonAllergicKr')
-    ingredientsNonAllergicEng = request.form.getlist('ingredientsNonAllergicEng')
-    isDiscounted = request.form['isDiscounted']
-    isSoldOut = request.form['isSoldOut']
-    isRecommended = request.form['isRecommended']
-    isDiscontinued = request.form['isDiscontinued']
+    ingredientsAllergicKr = request.form.getlist('ingredientsAllergicKr[]')
+    ingredientsAllergicEng = request.form.getlist('ingredientsAllergicEng[]')
+    ingredientsNonAllergicKr = request.form.getlist('ingredientsNonAllergicKr[]')
+    ingredientsNonAllergicEng = request.form.getlist('ingredientsNonAllergicEng[]')
+    isDiscounted = int(request.form['isDiscounted'])
+    isSoldOut = bool(int(request.form['isSoldOut']))
+    isRecommended = bool(int(request.form['isRecommended']))
+    isDiscontinued = bool(int(request.form['isDiscontinued']))
 
     menu = {
         "isCombo": isCombo,

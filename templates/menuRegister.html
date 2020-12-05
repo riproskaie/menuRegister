@@ -29,11 +29,17 @@
         }
 
 
-        #menu-register,
-        #register-popup,
-        .alert-container {
+        #menu-register {
             min-width: 750px;
             overflow-x: scroll;
+        }
+
+        .popup,
+        .alert-container {
+            min-width: 600px;
+            min-height: 520px;
+            overflow-x: hidden;
+            overflow-y: hidden;
         }
 
         #menu-register {
@@ -792,7 +798,7 @@
             let extraPrice = parseInt($("#extraPrice").val());
             let discount = parseInt($("#isDiscounted").val());
 
-            let soldOut = $("input:radio[name=soldOut]:checked").attr("id");
+            let isSoldOut = $("input:radio[name=soldOut]:checked").attr("id");
             let isRecommended = $("input:radio[name=recommendation]:checked").attr("id");
             let isDiscontinued = $("input:radio[name=discontinue]:checked").attr("id");
 
@@ -851,22 +857,16 @@
             // 2. 딕셔너리 형태로 가공한다
             let newMenu = {};
 
-            newMenu["isCombo"] = false;
+            newMenu["isCombo"] = 0; // Node.js라면 false가 되어야
             newMenu["image"] = image;
             newMenu["menuType"] = category;
-
-            if (category === "프리미엄" || category === "와퍼" || category === "치킨버거") {
-                nameKr = nameKr + " (단품)";
-                nameEng = nameEng + " (A La Carte)";
-            }
-
             newMenu["nameKr"] = nameKr;
             newMenu["nameEng"] = nameEng;
             newMenu["calories"] = calories;
             newMenu["price"] = price;
             newMenu["extraPrice"] = extraPrice;
+            newMenu["isDefaultCombo"] = 0;
             newMenu["defaultCombo"] = "";
-            newMenu["isDefaultCombo"] = false;
             newMenu["side"] = "";
             newMenu["drink"] = "";
             newMenu["ingredientsAllergicEng"] = ingredientsAllergicEng;
@@ -875,22 +875,22 @@
             newMenu["ingredientsNonAllergicKr"] = ingredientsNonAllergicKr;
             newMenu["isDiscounted"] = discount;
 
-            if (soldOut === "isSoldOut") {
-                newMenu["isSoldOut"] = true;
+            if (isSoldOut === "isSoldOut") {
+                newMenu["isSoldOut"] = 1;
             } else {
-                newMenu["isSoldOut"] = false;
+                newMenu["isSoldOut"] = 0;
             }
 
             if (isRecommended === "isRecommended") {
-                newMenu["isRecommended"] = true;
+                newMenu["isRecommended"] = 1;
             } else {
-                newMenu["isRecommended"] = false;
+                newMenu["isRecommended"] = 0;
             }
 
             if (isDiscontinued === "isDiscontinued") {
-                newMenu["isDiscontinued"] = true;
+                newMenu["isDiscontinued"] = 1;
             } else {
-                newMenu["isDiscontinued"] = false;
+                newMenu["isDiscontinued"] = 0;
             }
 
             // 딕셔너리를 return한다
@@ -913,17 +913,17 @@
             };
             let category = categoryKorToEng[categoryId];
 
-            let nameKr = $("#nameKr").val() + " (세트)"; // 단품 데이터 재활용
-            let nameEng = $("#nameEng").val() + " (Combo)"; // 단품 데이터 재활용
+            let nameKr = $("#nameKr").val(); // 단품 데이터 재활용
+            let nameEng = $("#nameEng").val(); // 단품 데이터 재활용
             let calories = parseInt($("#caloriesCombo").val());
             let price = parseInt($("#priceCombo").val());
             let extraPrice = 0;
             let discount = parseInt($("#isDiscounted").val()); //단품 데이터 재활용 (텍스트인풋으로 바꿀 예정)
-            let soldOut = $("input:radio[name=soldOut]:checked").attr("id"); //단품 데이터 재활용
+            let isSoldOut = $("input:radio[name=soldOut]:checked").attr("id"); //단품 데이터 재활용
             let isRecommended = $("input:radio[name=recommendation]:checked").attr("id"); //단품 데이터 재활용
             let isDiscontinued = $("input:radio[name=discontinue]:checked").attr("id"); //단품 데이터 재활용
 
-            let ingredients = ["potato"];
+            let ingredients = [];
 
             $("input:checkbox[name=ingredients]:checked").each(function () {
                 let ingredient = $(this).val();
@@ -979,16 +979,16 @@
             // 3. 딕셔너리 형태로 가공한다
             let newMenu = {};
 
-            newMenu["isCombo"] = true;
+            newMenu["isCombo"] = 1;
             newMenu["image"] = image;
             newMenu["menuType"] = category;
-            newMenu["nameKr"] = nameKr;
-            newMenu["nameEng"] = nameEng;
+            newMenu["nameKr"] = nameKr + " (세트)";
+            newMenu["nameEng"] = nameEng + " (Combo)";
             newMenu["calories"] = calories;
             newMenu["price"] = price;
             newMenu["extraPrice"] = extraPrice;
             newMenu["defaultCombo"] = "";
-            newMenu["isDefaultCombo"] = true;
+            newMenu["isDefaultCombo"] = 1;
             newMenu["side"] = ""; //프렌치프라이 objectId값 (백엔드로)
             newMenu["drink"] = ""; //코카콜라 objectId값 (백엔드로)
             newMenu["ingredientsAllergicEng"] = ingredientsAllergicEng;
@@ -997,27 +997,29 @@
             newMenu["ingredientsNonAllergicKr"] = ingredientsNonAllergicKr;
             newMenu["isDiscounted"] = discount;
 
-            if (soldOut === "isSoldOut") {
-                newMenu["isSoldOut"] = true;
+            if (isSoldOut === "isSoldOut") {
+                newMenu["isSoldOut"] = 1;
             } else {
-                newMenu["isSoldOut"] = false;
+                newMenu["isSoldOut"] = 0;
             }
 
             if (isRecommended === "isRecommended") {
-                newMenu["isRecommended"] = true;
+                newMenu["isRecommended"] = 1;
             } else {
-                newMenu["isRecommended"] = false;
+                newMenu["isRecommended"] = 0;
             }
 
             if (isDiscontinued === "isDiscontinued") {
-                newMenu["isDiscontinued"] = true;
+                newMenu["isDiscontinued"] = 1;
             } else {
-                newMenu["isDiscontinued"] = false;
+                newMenu["isDiscontinued"] = 0;
             }
 
             return newMenu;
         }
 
+
+        // 메뉴등록(POST)
         function submit() {
             // 1. 폼에 입력된 단품과 세트 정보 딕셔너리를 받아온다 (앞서 정의한 함수 활용)
             let singleInfo = getInputValueSingle();
@@ -1038,6 +1040,11 @@
 
             let checkDrink = singleInfo["menuType"] === "음료"
 
+            if ($("input:radio[name=category]:checked").length === 0) {
+                fillAlertPopup();
+                return;
+            }
+
             // 만약 하나라도 해당되면 경고모달창을 띄운 뒤 원래 창으로 돌아간다
             if (checkDrink) {
                 if (noImage || noMenuType || noNameKr || noNameEng || noCalories || noPrice || noExtraPrice || noDiscount) {
@@ -1051,11 +1058,13 @@
                 }
             }
 
+
             let isCombo = singleInfo["isCombo"];
             let image = singleInfo["image"];
             let menuType = singleInfo["menuType"];
             let nameKr = singleInfo["nameKr"];
             let nameEng = singleInfo["nameEng"];
+
             let calories = singleInfo["calories"];
             let price = singleInfo["price"];
             let extraPrice = singleInfo["extraPrice"];
@@ -1072,37 +1081,16 @@
             let isRecommended = singleInfo["isRecommended"];
             let isDiscontinued = singleInfo["isDiscontinued"];
 
-            console.log(singleInfo);
+            // 입력되지 않은 항목이 있을 경우 제출하지 않는다
+            // 모든 필수입력항목이 입력되었다면, 딕셔너리에 담긴 데이터를 ajax를 통해 시간차를 두고 순차적으로 서버에 POST한다
+            // 원래 화면으로 돌아가고 사이트를 refresh한다 (windows.location.reload(); 를 이용)
 
-            // ajax를 통해 단품 폼만 서버에 POST한다
-            $.ajax({
-                type: "POST",
-                url: "/api/menus",
-                data: { isCombo: isCombo, image: image, menuType: menuType,
-                    nameKr: nameKr, nameEng: nameEng, calories: calories,
-                    price: price, extraPrice: extraPrice, defaultCombo: defaultCombo,
-                    isDefaultCombo: isDefaultCombo, side: side, drink: drink,
-                    isDiscounted: isDiscounted,
-                    ingredientsAllergicEng: ingredientsAllergicEng,
-                    ingredientsAllergicKr: ingredientsAllergicKr,
-                    ingredientsNonAllergicEng: ingredientsNonAllergicEng,
-                    ingredientsNonAllergicKr: ingredientsNonAllergicKr,
-                    isSoldOut: isSoldOut, isRecommended: isRecommended, isDiscontinued: isDiscontinued },
-                success: function (response) {
-                    if (response["result"] === "success") {
-                        alert(response["msg"]);
-                    } else {
-                        alert("메뉴 올리기 실패");
-                    }
-                }
-            })
+            if (menuType === "프리미엄" || menuType === "와퍼" || menuType === "치킨버거") {
+                nameKr = singleInfo["nameKr"] + " (단품)";
+                nameEng = singleInfo["nameEng"] + " (A La Carte)";
+            }
 
-
-            // 2-2-1. true라면, 두 폼을 모두 입력한다. 입력되지 않은 항목이 있을 경우 제출을 하지 않는 분기를 구현한다
-            // 2-2-2 모든 필수입력항목이 입력되었다면, 딕셔너리에 담긴 데이터를 ajax를 통해 시간차를 두고 순차적으로 서버에 POST한다
-            // 3. 원래 화면으로 돌아가고 사이트를 refresh한다 (windows.location.reload(); 를 이용)
-
-            if (singleInfo["menuType"] === "프리미엄" || singleInfo["menuType"] === "와퍼" || singleInfo["menuType"] === "치킨") {
+            if (menuType === "프리미엄" || menuType === "와퍼" || menuType === "치킨버거") {
                 let comboInfo = getInputValueCombo();
 
                 // 기입되지 않은 항목이 있는지 체크
@@ -1115,13 +1103,28 @@
                     return;
                 }
 
-                // 약간의 시간 interval을 둬야 하나?
+                // 기본세트의 추가재료(감자) 업데이트
+                if ((isCombo === 1) && !(comboInfo["ingredientsNonAllergicEng"].includes("potato"))) {
+                    comboInfo["ingredientsNonAllergicEng"].push("potato");
+                    comboInfo["ingredientsNonAllergicKr"].push("감자");
+                }
 
                 // ajax를 통해 세트 폼도 서버에 POST한다
                 $.ajax({
                     type: "POST",
                     url: "/api/menus",
-                    data: {},
+                    data: {
+                        isCombo: comboInfo["isCombo"], image: comboInfo["image"], menuType: menuType,
+                        nameKr: comboInfo["nameKr"], nameEng: comboInfo["nameEng"], calories: comboInfo["calories"],
+                        price: comboInfo["price"], extraPrice: extraPrice, defaultCombo: defaultCombo,
+                        isDefaultCombo: comboInfo["isDefaultCombo"], side: comboInfo["side"], drink: comboInfo["drink"],
+                        isDiscounted: isDiscounted,
+                        ingredientsAllergicEng: comboInfo["ingredientsAllergicEng"],
+                        ingredientsAllergicKr: comboInfo["ingredientsAllergicKr"],
+                        ingredientsNonAllergicEng: comboInfo["ingredientsNonAllergicEng"],
+                        ingredientsNonAllergicKr: comboInfo["ingredientsNonAllergicKr"],
+                        isSoldOut: isSoldOut, isRecommended: isRecommended, isDiscontinued: isDiscontinued
+                    },
                     success: function (response) {
                         if (response["result"] === "success") {
                             alert(response["msg"]);
@@ -1132,6 +1135,35 @@
                 })
 
             }
+
+            // ajax를 통해 단품 폼만 서버에 POST한다
+
+            setTimeout(function () {
+                $.ajax({
+                    type: "POST",
+                    url: "/api/menus",
+                    data: {
+                        isCombo: isCombo, image: image, menuType: menuType,
+                        nameKr: nameKr, nameEng: nameEng, calories: calories,
+                        price: price, extraPrice: extraPrice, defaultCombo: defaultCombo,
+                        isDefaultCombo: isDefaultCombo, side: side, drink: drink,
+                        isDiscounted: isDiscounted,
+                        ingredientsAllergicEng: ingredientsAllergicEng,
+                        ingredientsAllergicKr: ingredientsAllergicKr,
+                        ingredientsNonAllergicEng: ingredientsNonAllergicEng,
+                        ingredientsNonAllergicKr: ingredientsNonAllergicKr,
+                        isSoldOut: isSoldOut, isRecommended: isRecommended, isDiscontinued: isDiscontinued
+                    },
+                    success: function (response) {
+                        if (response["result"] === "success") {
+                            alert(response["msg"]);
+                        } else {
+                            closePopup();
+                            alert("메뉴 올리기 실패");
+                        }
+                    }
+                })
+            }, 2000);
 
             closePopup();
         }
@@ -1149,7 +1181,7 @@
             </div>
             <!--카테고리와 안내문에 해당-->
             <div class="direction"> <!--사용법안내 회색창-->
-                <p style="font-family: "Gothic A1", sans-serif;">[안내] 생성된 메뉴를 클릭하면 상세정보 수정이 가능합니다.</p>
+                <p style="font-family: " Gothic A1", sans-serif;">[안내] 생성된 메뉴를 클릭하면 상세정보 수정이 가능합니다.</p>
             </div>
             <div id="category-tabs">
                 <!--라디오버튼으로 카테고리 탭을 구현함-->
@@ -1291,7 +1323,7 @@
                     <div class="text-form">
                         <p class="lab">칼로리(kcal)</p>
                         <p class="lab-required">* 필수입력 항목</p>
-                        <br><input type="text" placeholder="숫자만 입력 (예: 100)" maxlength="20" id="calories" required
+                        <br><input type="text" placeholder="숫자만 입력 (예: 1000)" maxlength="20" id="calories" required
                                    autocomplete=off>
                         <label for="calories"></label>
                     </div>
@@ -1371,7 +1403,7 @@
                     <p class="lab">할인가격</p>
                     <p class="lab-required">* 필수입력 항목</p>
                     <br><input type="text" value="0" maxlength="20" id="isDiscounted" required
-                                   autocomplete=off>
+                               autocomplete=off>
                     <label for="isDiscounted"></label>
                 </div>
                 <p class="lab">품절</p>
@@ -1404,21 +1436,21 @@
                     <div class="text-form">
                         <p class="lab">세트이미지(링크)</p>
                         <p class="lab-required">* 필수입력 항목</p>
-                        <br><input type="text" placeholder="여기에 상품 이미지의 URL을 입력하세요" id="comboImage" autocomplete=off
+                        <br><input type="text" placeholder="예: https://sample.com/image.png" id="comboImage" autocomplete=off
                                    required>
                         <label for="comboImage"></label>
                     </div>
                     <div class="text-form">
                         <p class="lab">세트칼로리(kcal)</p>
                         <p class="lab-required">* 필수입력 항목</p>
-                        <br><input type="text" placeholder="최대 20자까지 입력 가능" maxlength="20" id="caloriesCombo" required
+                        <br><input type="text" placeholder="숫자만 입력 (예: 1000)" maxlength="20" id="caloriesCombo" required
                                    autocomplete=off>
                         <label for="caloriesCombo"></label>
                     </div>
                     <div class="text-form">
                         <p class="lab">세트가격(원)</p>
                         <p class="lab-required">* 필수입력 항목</p>
-                        <br><input type="text" placeholder="최대 20자까지 입력 가능" maxlength="20" id="priceCombo" required
+                        <br><input type="text" placeholder="숫자만 입력 (예: 1000)" maxlength="20" id="priceCombo" required
                                    autocomplete=off>
                         <label for="priceCombo"></label>
                     </div>

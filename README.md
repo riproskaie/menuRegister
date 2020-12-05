@@ -43,22 +43,27 @@
 - [x] javascript를 통해, (menuType === '프리미엄' or '와퍼' or '치킨버거')에 대해서 세트메뉴 미입력시 경고창 뜨도록 
 - [x] url 뒤에 #a 등의 찌꺼기가 붙는 문제 해결
 - [x] 팝업창 종료 시 .dim이 활성화되어 남아있는 문제 해결
-- [x] css 서식 통일
+- [x] css 서식 통일 (소문자에 하이픈)
 - [x] 가로폭이 750px을 넘어가면 서식 깨지지 않고 scroll되도록 함
 - [x] 버겨류일 경우에는 inputFormCombo와 inputFormSingle이 (2초 정도의 time interval을 두고) 모두 submit, 그 외에는 inputFormSingle만 submit
-- [x] submit() 함수로 db에 데이터 전달
+- [x] submit() 함수로 db에 데이터 전달 (array, boolean을 db로 전달 시 문제 해결)
+- [x] 할인가 표시 이펙트를 css상으로 구현하기 
 
 ###남은 작업
 ####웹페이지 동작 관련
+##### showMenu()
 - [ ] showMenu() 함수 구현하기(db로부터 읽어온 메뉴 데이터를 바탕으로, menuType별로 각 카테고리에 메뉴 카드를 .append())
 - [ ] isDiscontinued인 아이템은 서버상으로는 남아있되 jQuery상으로 .remove() 하기 
 - [ ] isSoldOut인 카드는 자동으로 흑백 + sold표시 (javascript + css 이용) - 서식은 구현해둠
 - [ ] isDiscounted인 경우에는 SALE 표시 - 서식은 구현해둠
-- [ ] 메뉴 카드를 클릭하면 inputForm 팝업창에 해당 메뉴 데이터가 뜨게 해서 수정창으로 활용하기
 
-- [ ] 사이드/음료는 라디오버튼을 통해 선택하되, ObjectId 값을 서버로 보내게 하기 
+##### editMenu()
+- [ ] 메뉴 카드를 클릭하면 inputForm 팝업창에 해당 메뉴 데이터가 뜨게 해서 수정창으로 활용하기
 - [ ] 클라이언트(javascript) 및 백엔드 상에서, ObjectId를 이용해 수정 반영하기 (?)
-- [ ] 가능하면 x축 방향으로도 스크롤이 되게 할 것 (창을 줄이니까 사이트가 깨짐)
+- [ ] 사이드/음료는 라디오버튼을 통해 선택하되, ObjectId 값을 업데이트해주기
+- [ ] delete가 제대로 되는지 확인하기
+- [ ] 
+- [ ] 도메인 url 서식 검증할지?
 
 ####제출서식 관련
 - [ ] html을 pug로 바꾸고 세부모듈로 분할하기

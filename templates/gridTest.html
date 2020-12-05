@@ -111,6 +111,15 @@
         // href에는 수정팝업으로 가는 #id가 들어간다
         // a의 id에는 서버에서 읽어온 ObjectID가 자동으로 할당될 예정이다
         // 클릭되면 해당 id값의 정보를 읽어와 폼에 기입하는 함수를 만들어야 한다
+
+        // 세자릿수마다 콤마 찍어주는 함수
+        function numberWithCommas(x) {
+            return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        }
+
+        let price = numberWithCommas(5000);
+        let discountPrice = numberWithCommas(4000);
+
         $(document).ready(function () {
             let tempHtml = `
                 <div class="card" id="fifthBurger">
@@ -121,7 +130,7 @@
                     </div>
                     <div>
                         <a href="" class="menuName">버거5</a>
-                        <div class="price">￦ 5000</div>
+                        <div class="price">￦ ${price}</div>
                     </div>
                 </div>
             `;
@@ -136,7 +145,8 @@
 
         // 세일중일 경우 css를 다음과 같이 넣는다
         $(document).ready(function() {
-            $("#fifthBurger").append("<style>#fifthBurger> div > div.price:after {display: block; transform: translate(-200%, -600%); height: 1rem; width: 35px; padding: 10px 5px 10px 5px; margin: 10px 0 0 40px; background-color: #f07303; color: #ffffff; font-size: 0.8rem; content: 'SALE';}</style>");
+            $("#fifthBurger > div > div,price").html(`<del>W ${price}</del><br> → W ${discountPrice}`);
+            $("#fifthBurger").append("<style>div#fifthBurger:after {display: block; position:absolute; height: 1rem; width: 35px; padding: 10px 5px 10px 5px; margin: 10px 0 0 40px; background-color: #f07303; color: #ffffff; font-size: 0.8rem; content: 'SALE';}</style>");
         })
 
 
@@ -150,7 +160,7 @@
                     </a>
                 </div>
                 <div class="menuInfo">
-                    <a href="" class="menuName">이버거의이름은20자가될정도로너무길어요</a>
+                    <a href="" class="menuName">이버거의이름은20자나될정도로너무길어요</a>
                     <div class="price">￦ 5000</div>
                 </div>
             </div>
