@@ -1,5 +1,6 @@
 from flask import Flask, render_template, jsonify, request, make_response
 from pymongo import MongoClient
+from bson import ObjectId
 
 app = Flask(__name__)
 
@@ -12,8 +13,9 @@ def home():
     return render_template('menuRegister.html')
 
 
-@app.route('/api/menus', methods=['POST'])
-def write_menus():
+# 올리기/수정/삭제 기능 동시 수행
+@app.route('/api/menus', methods=['POST', 'PUT'])
+def postEditMenu():
     isCombo = bool(int(request.form['isCombo']))
     image = request.form['image']
     menuType = request.form['menuType']
@@ -35,39 +37,65 @@ def write_menus():
     isRecommended = bool(int(request.form['isRecommended']))
     isDiscontinued = bool(int(request.form['isDiscontinued']))
 
-    menu = {
-        "isCombo": isCombo,
-        "image": image,
-        "menuType": menuType,
-        "nameKr": nameKr,
-        "nameEng": nameEng,
-        "calories": calories,
-        "price": price,
-        "extraPrice": extraPrice,
-        "defaultCombo": defaultCombo,
-        "isDefaultCombo": isDefaultCombo,
-        "side": side,
-        "drink": drink,
-        "ingredientsAllergicEng": ingredientsAllergicEng,
-        "ingredientsAllergicKr": ingredientsAllergicKr,
-        "ingredientsNonAllergicEng": ingredientsNonAllergicEng,
-        "ingredientsNonAllergicKr": ingredientsNonAllergicKr,
-        "isDiscounted": isDiscounted,
-        "isSoldOut": isSoldOut,
-        "isRecommended": isRecommended,
-        "isDiscontinued": isDiscontinued
-    }
+    if request.method == "POST":
+        menu = {
+            "isCombo": isCombo,
+            "image": image,
+            "menuType": menuType,
+            "nameKr": nameKr,
+            "nameEng": nameEng,
+            "calories": calories,
+            "price": price,
+            "extraPrice": extraPrice,
+            "defaultCombo": defaultCombo,
+            "isDefaultCombo": isDefaultCombo,
+            "side": side,
+            "drink": drink,
+            "ingredientsAllergicEng": ingredientsAllergicEng,
+            "ingredientsAllergicKr": ingredientsAllergicKr,
+            "ingredientsNonAllergicEng": ingredientsNonAllergicEng,
+            "ingredientsNonAllergicKr": ingredientsNonAllergicKr,
+            "isDiscounted": isDiscounted,
+            "isSoldOut": isSoldOut,
+            "isRecommended": isRecommended,
+            "isDiscontinued": isDiscontinued
+        }
 
-    db.menus.insert_one(menu)
+        db.menus.insert_one(menu)
+
+    else:
+        id = request.form['objectId']
+        objectId = ObjectId(id)
+
+        if db.menus.find_one({"_id": objectId}) is not None:
+            db.menus.update_one({"nameKr": nameKr}, {"$set": {'isCombo': isCombo, 'image': image,
+                                                              'menuType': menuType, 'nameKr': nameKr,
+                                                              'nameEng': nameEng, 'calories': calories,
+                                                              'price': price, 'extraPrice': extraPrice,
+                                                              'defaultCombo': defaultCombo,
+                                                              'isDefaultCombo': isDefaultCombo,
+                                                              'side': side, 'drink': drink,
+                                                              'ingredientsAllergicKr': ingredientsAllergicKr,
+                                                              'ingredientsAllergicEng': ingredientsAllergicEng,
+                                                              'ingredientsNonAllergicKr': ingredientsNonAllergicKr,
+                                                              'ingredientsNonAllergicEng': ingredientsNonAllergicEng,
+                                                              'isDiscounted': isDiscounted,
+                                                              'isSoldOut': isSoldOut,
+                                                              'isRecommended': isRecommended,
+                                                              'isDiscontinued': isDiscontinued}})
 
     # 서버상으로 메뉴이름을 단품인 경우 [단품], 세트인경우 [세트]를  post한다
     return jsonify({'result': 'success', 'msg': '요청을 post했다.'})
 
+
 @app.route('/api/menus', methods=['GET'])
-def read_menus():
+def readMenus():
     menus = list(db.menus.find({}))
-    menus[0]['_id'] = str(menus[0]['_id']) # ObjectId 값은 str 로 형변환시 내부값만 추출된다
+    for i in range(0, len(menus)):
+        menus[i]['_id'] = str(menus[i]['_id'])  # ObjectId 값은 str 로 형변환시 내부값만 추출된다
+
     return jsonify({'result': 'success', 'menus_list': menus})
+
 
 if __name__ == '__main__':
     app.run('0.0.0.0', port=5000, debug=True)

@@ -625,6 +625,11 @@
         // 메뉴등록 준비 함수 (+ 버튼을 누르면 실행된다)
         history.replaceState({}, null, location.pathname);
 
+        // 세자릿수마다 콤마 찍어주는 함수
+        function numberWithCommas(x) {
+            return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        }
+
         function openRegisterPopup() {
             // 팝업창을 준비 (폼은 비어있음)
             $(".dim").show();
@@ -640,6 +645,95 @@
             $(".register-or-edit").text("메뉴수정");
 
             // 2. 클릭한 a태그의 id(objectId)를 참조해서, DB에서 데이터를 GET한 뒤 폼에 차례로 입력
+            // isCombo == true 일 경우(프리미엄, 와퍼, 치킨버거)와 == false 일 경우 두 가지를 구분해서, 데이터를 읽어와야 한다
+
+            $(".card").one("click", function(){
+                let objectId = $(this).attr('id');
+                $.ajax({
+                    type: "GET",
+                    url: "/api/menus",
+                    data: {},
+                    success: function (response) {
+                        if (response["result"] === "success") {
+
+                            // 단품 서식을 해당 메뉴의 값으로 채움
+                            let menuNum = 0;
+                            let menus = response['menus_list'];
+                            let singleToEdit = menus[0];
+
+                            // 메뉴의 가짓수가 백의 자리를 넘지 않으므로 부득이 while문을 사용함
+                            while (menuNum < menus.length) {
+                                if (menus[menuNum]["_id"] === objectId){
+                                    singleToEdit = menus[menuNum]
+                                    break;
+                                } else {
+                                    menuNum += 1;
+                                }
+                            }
+
+                            $("#product-image").val(singleToEdit["image"]);
+
+                            let nameKr = singleToEdit["nameKr"];
+                            let nameEng = singleToEdit["nameEng"];
+
+                            // (버거류일 경우) 입력 당시의 상품이름만 남긴다
+                            if (nameKr.includes(" (단품)")){
+                                nameKr = nameKr.substring(0, nameKr.length - 5);
+                            }
+                            if (nameEng.includes(" (A La Carte)")){
+                                nameEng = nameEng.substring(0, nameEng.length - 13);
+                            }
+
+                            $("#name-kr").val(nameKr);
+                            $("#name-eng").val(nameEng);
+
+                            $("#calories").val(singleToEdit["calories"]);
+                            $("#price").val(singleToEdit["price"]);
+                            $("#extra-price").val(singleToEdit["extraPrice"]);
+                            $("#is-discounted").val(singleToEdit["isDiscounted"]);
+
+                            $(`input:radio[name=category][value=${singleToEdit["menuType"]}]`).prop("checked", true);
+                            $(`input:radio[name=soldOut][value=${singleToEdit["isSoldOut"]}]`).prop("checked", true);
+                            $(`input:radio[name=recommendation][value=${singleToEdit["isRecommended"] + 0}]`).prop("checked", true); // boolean -> integer 형변환
+                            $(`input:radio[name=discontinue][value=${singleToEdit["isDiscontinued"]}]`).prop("checked", true);
+
+                            let nonAllergens = singleToEdit["ingredientsNonAllergicEng"];
+                            let allergens = singleToEdit["ingredientsAllergicEng"];
+
+                            for (let nonAllergen = 0; nonAllergen < nonAllergens.length; nonAllergen++) {
+                                $(`input:checkbox[name=ingredients][value=${nonAllergens[nonAllergen]}]`).prop("checked", true);
+                            }
+
+                            for (let allergen = 0; allergen < allergens.length; allergen++) {
+                                $(`input:checkbox[name=allergens][value=${allergens[allergen]}]`).prop("checked", true);
+                            }
+
+                            // 버거류(프리미엄/와퍼/치킨버거일 경우) 세트 서식을 해당 메뉴의 값으로 채움
+
+                            if (singleToEdit["menuType"] == "프리미엄" || singleToEdit["menuType"] == "와퍼" || singleToEdit["menuType"] == "치킨버거" ) {
+
+                                menuNum = 0;
+                                let comboToEdit = menus[0];
+                                while (menuNum < menus.length) {
+                                    if (menus[menuNum]["nameKr"] === (nameKr + " (세트)")){
+                                        comboToEdit = menus[menuNum];
+                                        break;
+                                    } else {
+                                        menuNum += 1;
+                                    }
+                                }
+
+                                $("#combo-image").val(comboToEdit["image"]);
+                                $("#calories-combo").val(comboToEdit["calories"]);
+                                $("#price-combo").val(comboToEdit["price"]);
+                            }
+
+                        } else {
+                            alert("메뉴 받아오기 실패");
+                        }
+                    }
+                })
+            })
         }
 
         function closePopup() {
@@ -651,7 +745,7 @@
             $("#register-popup").css("display", "none");
             $(".dim").hide();
             window.location.href = window.location.href; // window.location.reload()를 쓰면 dim이 없어지지 않음
-            history.replaceState({}, null, location.pathname);
+            history.replaceState({}, null, location.pathname); // URL 뒤의 잔여 id(#~)를 없애기 위함
         }
 
         // 팝업창에 입력폼을 불러온다
@@ -666,7 +760,7 @@
         })
 
         $(document).ready(function () {
-            $("input:radio[id=isDiscontinued]").click(function () {
+            $("input:radio[id=is-discontinued]").click(function () {
                 $(".alert-container").css("display", "flex");
             })
         })
@@ -677,7 +771,7 @@
 
         function alertDecline() {
             $(".alert-container").css("display", "none");
-            $("input:radio[id=isNotDiscontinued]").click();
+            $("input:radio[id=is-not-discontinued]").click();
         }
 
         function fillAlertPopup() {
@@ -688,11 +782,7 @@
             $(".fill-alert-container").css("display", "none");
         }
 
-
-        // 메뉴카드 추가용 jQuery. 이걸 응용해서 showMenu() 함수를 만들 것
-        // href에는 팝업으로 가는 #id가 들어간다
-        // 클릭되면 해당 id값의 정보를 읽어와 폼에 기입하는 함수를 만들어야 한다
-        $(document).ready(function () {
+        function showMenu() {
             // 1. 메뉴카드 목록 초기화
             let plusCard = `<div class="last-card">
                             <a href="#register-popup" class="plus-button" onclick="openRegisterPopup()"> + </a>
@@ -725,22 +815,22 @@
                 data: {},
                 success: function (response) {
                     let menus = response['menus_list'];
-                    console.log(menus);
 
                     for (let i = 0; i < menus.length; i++) {
                         let menu = menus[i];
-                        let objectId = menu["_id"];
                         let isCombo = menu["isCombo"];
-                        let menuType = menu["menuType"]; //한국어
-                        let image = menu["image"];
-                        let nameKr = menu["nameKr"];
-                        let price = menu["price"];
-                        let isDiscounted = menu["isDiscounted"];
-                        let isSoldOut = menu["isSoldOut"];
                         let isDiscontinued = menu["isDiscontinued"];
 
                         // 카드만 만들 것이므로, 단품 && 단종되지 않은 메뉴 정보들만 읽어온다
                         if ((isCombo === false) && (isDiscontinued === false)) {
+                            let objectId = menu["_id"];
+                            let menuType = menu["menuType"]; //한국어
+                            let image = menu["image"];
+                            let nameKr = menu["nameKr"];
+                            let price = menu["price"];
+                            let isDiscounted = menu["isDiscounted"];
+                            let isSoldOut = menu["isSoldOut"];
+
                             // 카드의 틀을 만든다
                             let tempHtml = `
                                 <div class="card" id="${objectId}">
@@ -751,7 +841,7 @@
                                     </div>
                                     <div>
                                         <a href="#register-popup" onclick="openEditPopup()" class="menu-name">${nameKr}</a>
-                                        <div class="price">￦ ${price}</div>
+                                        <div class="price">￦ ${numberWithCommas(price)}</div>
                                     </div>
                                 </div>
                             `;
@@ -767,12 +857,11 @@
                             };
 
                             let category = categories[menuType];
-                            console.log(category);
                             $(`.${category} > div > div.last-card`).before(tempHtml);
 
                             // 할인 (주황색 SALE 레이블 첨가, 원가에 취소선, 새 가격 첨가)
                             if (isDiscounted > 0) {
-                                $(`#${objectId} > div > div,price`).html(`<del>W ${price}</del><br> → W ${isDiscounted}`);
+                                $(`#${objectId} > div > div.price`).html(`<del>￦ ${numberWithCommas(price)}</del><br> → ￦ ${numberWithCommas(isDiscounted)}`);
                                 $(`#${objectId}`).append(`<style>div#${objectId}:after {display: block; position:absolute; height: 1rem; width: 35px; padding: 10px 5px 10px 5px; margin: 10px 0 0 40px; background-color: #f07303; color: #ffffff; font-size: 0.8rem; content: 'SALE';}</style>`);
                             }
 
@@ -783,10 +872,14 @@
                             }
                             // 7. 1~6을 반복
                         }
-
                     }
                 }
             })
+        }
+
+
+        $(document).ready(function () {
+            showMenu();
         })
 
 
@@ -822,7 +915,7 @@
         // 단품 메뉴정보를 폼에서 입력받는 함수
         function getInputValueSingle() {
             // 1. 사용자가 입력한 폼 데이터를 받아와서 변수에 저장한다
-            let image = $("#productImage").val();
+            let image = $("#product-image").val();
 
             let categoryId = $("input:radio[name=category]:checked").attr("id");
             let categoryKorToEng = {
@@ -836,16 +929,16 @@
 
             let category = categoryKorToEng[categoryId];
 
-            let nameKr = $("#nameKr").val();
-            let nameEng = $("#nameEng").val();
+            let nameKr = $("#name-kr").val();
+            let nameEng = $("#name-eng").val();
             let calories = parseInt($("#calories").val());
             let price = parseInt($("#price").val());
-            let extraPrice = parseInt($("#extraPrice").val());
-            let discount = parseInt($("#isDiscounted").val());
+            let extraPrice = parseInt($("#extra-price").val());
+            let discount = parseInt($("#is-discounted").val());
 
-            let isSoldOut = $("input:radio[name=soldOut]:checked").attr("id");
-            let isRecommended = $("input:radio[name=recommendation]:checked").attr("id");
-            let isDiscontinued = $("input:radio[name=discontinue]:checked").attr("id");
+            let isSoldOut = parseInt($("input:radio[name=soldOut]:checked").val());
+            let isRecommended = parseInt($("input:radio[name=recommendation]:checked").val());
+            let isDiscontinued = parseInt($("input:radio[name=discontinue]:checked").val());
 
             let ingredients = [];
 
@@ -919,24 +1012,9 @@
             newMenu["ingredientsNonAllergicEng"] = ingredientsNonAllergicEng;
             newMenu["ingredientsNonAllergicKr"] = ingredientsNonAllergicKr;
             newMenu["isDiscounted"] = discount;
-
-            if (isSoldOut === "isSoldOut") {
-                newMenu["isSoldOut"] = 1;
-            } else {
-                newMenu["isSoldOut"] = 0;
-            }
-
-            if (isRecommended === "isRecommended") {
-                newMenu["isRecommended"] = 1;
-            } else {
-                newMenu["isRecommended"] = 0;
-            }
-
-            if (isDiscontinued === "isDiscontinued") {
-                newMenu["isDiscontinued"] = 1;
-            } else {
-                newMenu["isDiscontinued"] = 0;
-            }
+            newMenu["isSoldOut"] = isSoldOut;
+            newMenu["isRecommended"] = isRecommended;
+            newMenu["isDiscontinued"] = isDiscontinued;
 
             // 딕셔너리를 return한다
             return newMenu;
@@ -945,7 +1023,7 @@
         // 세트 메뉴정보를 폼에서 입력받는 함수
         function getInputValueCombo() {
             // 1. 사용자가 입력한 폼 데이터를 받아와서 변수에 저장한다
-            let image = $("#comboImage").val();
+            let image = $("#combo-image").val();
 
             let categoryId = $("input:radio[name=category]:checked").attr("id");
             let categoryKorToEng = {
@@ -958,15 +1036,15 @@
             };
             let category = categoryKorToEng[categoryId];
 
-            let nameKr = $("#nameKr").val(); // 단품 데이터 재활용
-            let nameEng = $("#nameEng").val(); // 단품 데이터 재활용
-            let calories = parseInt($("#caloriesCombo").val());
-            let price = parseInt($("#priceCombo").val());
+            let nameKr = $("#name-kr").val(); // 단품 데이터 재활용
+            let nameEng = $("#name-eng").val(); // 단품 데이터 재활용
+            let calories = parseInt($("#calories-combo").val());
+            let price = parseInt($("#price-combo").val());
             let extraPrice = 0;
-            let discount = parseInt($("#isDiscounted").val()); //단품 데이터 재활용 (텍스트인풋으로 바꿀 예정)
-            let isSoldOut = $("input:radio[name=soldOut]:checked").attr("id"); //단품 데이터 재활용
-            let isRecommended = $("input:radio[name=recommendation]:checked").attr("id"); //단품 데이터 재활용
-            let isDiscontinued = $("input:radio[name=discontinue]:checked").attr("id"); //단품 데이터 재활용
+            let discount = parseInt($("#is-discounted").val()); //단품 데이터 재활용 (텍스트인풋으로 바꿀 예정)
+            let isSoldOut = parseInt($("input:radio[name=soldOut]:checked").val()); //단품 데이터 재활용
+            let isRecommended = parseInt($("input:radio[name=recommendation]:checked").val()); //단품 데이터 재활용
+            let isDiscontinued = parseInt($("input:radio[name=discontinue]:checked").val()); //단품 데이터 재활용
 
             let ingredients = [];
 
@@ -1041,24 +1119,9 @@
             newMenu["ingredientsNonAllergicEng"] = ingredientsNonAllergicEng;
             newMenu["ingredientsNonAllergicKr"] = ingredientsNonAllergicKr;
             newMenu["isDiscounted"] = discount;
-
-            if (isSoldOut === "isSoldOut") {
-                newMenu["isSoldOut"] = 1;
-            } else {
-                newMenu["isSoldOut"] = 0;
-            }
-
-            if (isRecommended === "isRecommended") {
-                newMenu["isRecommended"] = 1;
-            } else {
-                newMenu["isRecommended"] = 0;
-            }
-
-            if (isDiscontinued === "isDiscontinued") {
-                newMenu["isDiscontinued"] = 1;
-            } else {
-                newMenu["isDiscontinued"] = 0;
-            }
+            newMenu["isSoldOut"] = isSoldOut;
+            newMenu["isRecommended"] = isRecommended;
+            newMenu["isDiscontinued"] = isDiscontinued;
 
             return newMenu;
         }
@@ -1313,39 +1376,39 @@
             <form id="input-form-single">
                 <!--사진입력부는 나 혼자서 구현하기 어려울수도 있다. 다른거 먼저 구현하고 구글하자-->
                 <!--각 요소의 값을 읽어와서, 버튼을 누르면 해당 요소가 딕셔너리로 정리된 팝업창이 뜨게 하자-->
-                <div class="basicInfo">
+                <div class="basic-info">
                     <div class="text-form">
                         <p class="lab">상품이미지(링크)</p>
                         <p class="lab-required">* 필수입력 항목</p>
-                        <br><input type="text" placeholder="예: https://sample.com/image.png" id="productImage" required
+                        <br><input type="text" placeholder="예: https://sample.com/image.png" id="product-image" required
                                    autocomplete=off>
-                        <label for="productImage"></label>
+                        <label for="product-image"></label>
                     </div>
                     <p class="lab">카테고리</p>
                     <p class="lab-required">* 필수입력 항목</p>
                     <div class="radios">
-                        <input type="radio" id="premium" name="category" required><label
+                        <input type="radio" id="premium" name="category" value="프리미엄" required><label
                             for="premium"><span></span>프리미엄</label>
-                        <input type="radio" id="whoppers" name="category"><label for="whoppers"><span></span>와퍼</label>
-                        <input type="radio" id="chicken-burgers" name="category"><label
+                        <input type="radio" id="whoppers" name="category" value="와퍼"><label for="whoppers"><span></span>와퍼</label>
+                        <input type="radio" id="chicken-burgers" name="category" value="치킨버거"><label
                             for="chicken-burgers"><span></span>치킨버거</label>
-                        <input type="radio" id="sides" name="category"><label for="sides"><span></span>사이드</label>
-                        <input type="radio" id="drinks" name="category"><label for="drinks"><span></span>음료</label>
-                        <input type="radio" id="desserts" name="category"><label for="desserts"><span></span>디저트</label>
+                        <input type="radio" id="sides" name="category" value="사이드"><label for="sides"><span></span>사이드</label>
+                        <input type="radio" id="drinks" name="category" value="음료"><label for="drinks"><span></span>음료</label>
+                        <input type="radio" id="desserts" name="category" value="디저트"><label for="desserts"><span></span>디저트</label>
                     </div>
                     <div class="text-form">
                         <p class="lab">메뉴이름(한글)</p>
                         <p class="lab-required">* 필수입력 항목</p>
-                        <br><input type="text" placeholder="최대 20자 입력가능 (예: 와퍼)" maxlength="20" id="nameKr" required
+                        <br><input type="text" placeholder="최대 20자 입력가능 (예: 와퍼)" maxlength="20" id="name-kr" required
                                    autocomplete=off>
-                        <label for="nameKr"></label>
+                        <label for="name-kr"></label>
                     </div>
                     <div class="text-form">
                         <p class="lab">메뉴이름(영어)</p>
                         <p class="lab-required">* 필수입력 항목</p>
-                        <br><input type="text" placeholder="최대 50자 입력 (예: Whopper)" maxlength="50" id="nameEng" required
+                        <br><input type="text" placeholder="최대 50자 입력 (예: Whopper)" maxlength="50" id="name-eng" required
                                    autocomplete=off>
-                        <label for="nameEng"></label>
+                        <label for="name-eng"></label>
                     </div>
                     <div class="text-form">
                         <p class="lab">칼로리(kcal)</p>
@@ -1364,9 +1427,9 @@
                     <div class="text-form">
                         <p class="lab">세트추가금액(원)</p>
                         <p class="lab-required">* 필수입력 항목</p>
-                        <br><input type="text" value="0" maxlength="20" id="extraPrice" required
+                        <br><input type="text" value="0" maxlength="20" id="extra-price" required
                                    autocomplete=off>
-                        <label for="extraPrice"></label>
+                        <label for="extra-price"></label>
                     </div>
                     <!--CSS상으로 체크박스 줄바꿈 및 정렬(3열로) 구현해야 한다-->
                     <!--CSS상으로 이미지 체크박스를 구현해야 한다-->
@@ -1429,58 +1492,58 @@
                 <div class="text-form">
                     <p class="lab">할인가격</p>
                     <p class="lab-required">* 필수입력 항목</p>
-                    <br><input type="text" value="0" maxlength="20" id="isDiscounted" required
+                    <br><input type="text" value="0" maxlength="20" id="is-discounted" required
                                autocomplete=off>
-                    <label for="isDiscounted"></label>
+                    <label for="is-discounted"></label>
                 </div>
                 <p class="lab">품절</p>
                 <div class="radios">
-                    <input type="radio" id="isSoldOut" name="soldOut"><label for="isSoldOut"><span></span>예</label>
-                    <input type="radio" checked="checked" id="isNotSoldOut" name="soldOut"><label
-                        for="isNotSoldOut"><span></span>아니오</label>
+                    <input type="radio" id="is-sold-out" value="1" name="soldOut"><label for="is-sold-out"><span></span>예</label>
+                    <input type="radio" checked="checked" id="is-not-sold-out" value="0" name="soldOut"><label
+                        for="is-not-sold-out"><span></span>아니오</label>
                 </div>
                 <p class="lab">추천</p>
                 <div class="radios">
-                    <input type="radio" checked="checked" id="isRecommended" name="recommendation"><label
-                        for="isRecommended"><span></span>예</label>
-                    <input type="radio" id="isNotRecommended" name="recommendation"><label
-                        for="isNotRecommended"><span></span>아니오</label>
+                    <input type="radio" checked="checked" id="is-recommended" value="1" name="recommendation"><label
+                        for="is-recommended"><span></span>예</label>
+                    <input type="radio" id="is-not-recommended" value="0" name="recommendation"><label
+                        for="is-not-recommended"><span></span>아니오</label>
                 </div>
                 <p class="deletion">단종</p>
                 <p class="lab-required">* 단종 처리시 메뉴가 목록에서 삭제됩니다.</p>
                 <div class="radios">
-                    <input type="radio" id="isDiscontinued" name="discontinue"><label
-                        for="isDiscontinued"><span></span>예</label>
-                    <input type="radio" checked="checked" id="isNotDiscontinued" name="discontinue"><label
-                        for="isNotDiscontinued"><span></span>아니오</label>
+                    <input type="radio" id="is-discontinued" value="1" name="discontinue"><label
+                        for="is-discontinued"><span></span>예</label>
+                    <input type="radio" checked="checked" id="is-not-discontinued" value="0" name="discontinue"><label
+                        for="is-not-discontinued"><span></span>아니오</label>
                 </div>
             </form>
         </div>
         <div class="hidden2">
             <form id="input-form-combo">
                 <!--각 요소의 값을 읽어와서, 버튼을 누르면 해당 요소가 딕셔너리로 정리된 팝업창이 뜨게 하자-->
-                <div class="basicInfo">
+                <div class="basic-info">
                     <div class="text-form">
                         <p class="lab">세트이미지(링크)</p>
                         <p class="lab-required">* 필수입력 항목</p>
-                        <br><input type="text" placeholder="예: https://sample.com/image.png" id="comboImage"
+                        <br><input type="text" placeholder="예: https://sample.com/image.png" id="combo-image"
                                    autocomplete=off
                                    required>
-                        <label for="comboImage"></label>
+                        <label for="combo-image"></label>
                     </div>
                     <div class="text-form">
                         <p class="lab">세트칼로리(kcal)</p>
                         <p class="lab-required">* 필수입력 항목</p>
-                        <br><input type="text" placeholder="숫자만 입력 (예: 1000)" maxlength="20" id="caloriesCombo" required
+                        <br><input type="text" placeholder="숫자만 입력 (예: 1000)" maxlength="20" id="calories-combo" required
                                    autocomplete=off>
-                        <label for="caloriesCombo"></label>
+                        <label for="calories-combo"></label>
                     </div>
                     <div class="text-form">
                         <p class="lab">세트가격(원)</p>
                         <p class="lab-required">* 필수입력 항목</p>
-                        <br><input type="text" placeholder="숫자만 입력 (예: 1000)" maxlength="20" id="priceCombo" required
+                        <br><input type="text" placeholder="숫자만 입력 (예: 1000)" maxlength="20" id="price-combo" required
                                    autocomplete=off>
-                        <label for="priceCombo"></label>
+                        <label for="price-combo"></label>
                     </div>
                     <!--CSS상으로 체크박스 줄바꿈 및 정렬(3열로) 구현해야 한다-->
                     <!--CSS상으로 이미지 체크박스를 구현해야 한다-->
