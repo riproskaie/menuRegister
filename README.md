@@ -48,6 +48,7 @@
 - [x] 버겨류일 경우에는 inputFormCombo와 inputFormSingle이 (2초 정도의 time interval을 두고) 모두 submit, 그 외에는 inputFormSingle만 submit
 - [x] submit() 함수로 db에 데이터 전달 (array, boolean을 db로 전달 시 문제 해결)
 - [x] 할인가 표시 이펙트를 css상으로 구현하기 
+- [ ] ObjectId 내부값 추출 고민 (인코더를 시도해보다가 str 형변환으로 해결함)
 
 ###남은 작업
 ####웹페이지 동작 관련

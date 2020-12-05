@@ -1,4 +1,4 @@
-from flask import Flask, render_template, jsonify, request
+from flask import Flask, render_template, jsonify, request, make_response
 from pymongo import MongoClient
 
 app = Flask(__name__)
@@ -65,7 +65,9 @@ def write_menus():
 
 @app.route('/api/menus', methods=['GET'])
 def read_menus():
-    return jsonify({'result': 'success', 'msg': 'menus 연결되었습니다'})
+    menus = list(db.menus.find({}))
+    menus[0]['_id'] = str(menus[0]['_id']) # ObjectId 값은 str 로 형변환시 내부값만 추출된다
+    return jsonify({'result': 'success', 'menus_list': menus})
 
 if __name__ == '__main__':
     app.run('0.0.0.0', port=5000, debug=True)
