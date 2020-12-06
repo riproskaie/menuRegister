@@ -139,13 +139,13 @@
 
         // 품절되었을 경우 css를 다음과 같이 넣는다
         $(document).ready(function() {
-            $("#longBurger > div > a").append("<style>#longBurger > div > a {-webkit-filter: grayscale(100%); filter: gray;}");
+            $("#longBurger > div > a").append("<style>#longBurger > div > a {-webkit-filter: grayscale(100%); filter: gray;}</style>");
             $("#longBurger > div > div.price").append("<style>#longBurger > div > div.price::after {display: block; height: 1rem; width: 35px; padding: 10px 5px 10px 5px; margin: 10px 0 0 40px; background-color: #818181; color: #ffffff; font-size: 0.8rem; content: 'SOLD'</style>");
         })
 
         // 세일중일 경우 css를 다음과 같이 넣는다
         $(document).ready(function() {
-            $("#fifthBurger > div > div,price").html(`<del>W ${price}</del><br> → W ${discountPrice}`);
+            $("#fifthBurger > div > div.price").html(`<del>W ${price}</del><br> → W ${discountPrice}`);
             $("#fifthBurger").append("<style>div#fifthBurger:after {display: block; position:absolute; height: 1rem; width: 35px; padding: 10px 5px 10px 5px; margin: 10px 0 0 40px; background-color: #f07303; color: #ffffff; font-size: 0.8rem; content: 'SALE';}</style>");
         })
 

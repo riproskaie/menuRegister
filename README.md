@@ -10,26 +10,30 @@
 - inputFormCombo, inputFormSingle: 카드 생성을 위한 입력 폼입니다. 탭을 이용해 두 가지 데이터를 한꺼번에 서버로 보내게 하려 합니다. html에서 미리 정의된 submit 타입 버튼을 사용하기보다는, 딕셔너리를 자바스크립트 함수로 서버에 보내게 하려고 합니다.
 
 ###진행중인 작업
-####11월 17일~18일
+####11월 17일
 - [x] 검은고딕 폰트를 전체 적용이 아닌 요소별 세부적용으로 바꾸기
 - [x] menuRegister.html 페이지와 css 틀 만들기 (구글 검색하며 작업하기 쉽도록 우선 html로 제작)
 - [x] 라우트에 각 페이지 등록하기 (그동안 페이지 구성이 바뀌었으므로 수정 필요함)
 - [x] 스크롤바 css 디자인 적용 (선행작업자 코드 그대로 사용)
 
-####11월 19일~22일
+####11월 19일
 - [x] inputFormCombo.html, inputFormSingle.html 페이지와 css 틀 만들기 
 - [x] 카드 생성을 위한 클릭버튼을 a 태그와 css로 구현하기
 - [x] inputFormSingle에 양식 제출을 위한 javascript(jQuery) 적용하기
 - [x] 더미 데이터 db에 입력하기 (flask 이용함)
 
-####11월 23일
+####11월 20일
 - [x] 샘플로 사용할 메뉴 이미지들 캡처 후 일정한 크기로 자르기
 
-####11월 24일~11월 29일
+####11월 21일~11월 23일
 - [x] css를 통해, label 요소 이용해서 디자인된 팝업창 구현하기 + 일정 영역에만 스크롤 적용시키기
 - [x] 현재 a태그로 구현한 카테고리 버튼을 radio input을 이용한 tab으로 바꾸기
+
+#### 11월 24일
 - [x] premium, whoppers, chickenBurgers, drinks, sides, desserts 페이지를 div로 바꾸어 menuRegister 내로 통합하기
-- [x] menuRegister 페이지 내에 inputForm 팝업창을 hidden div 형태로 포함시키기 
+
+#### 11월 25일~11월 29일 (여기서 어려움을 겪음)
+- [x] menuRegister 페이지 내에 inputForm 팝업창을 hidden div 형태로 포함시키기  
 - [x] inputForm이 팝업창 내에 표시되게 하기
 
 ####11월 30일~12월 1일
@@ -73,16 +77,15 @@
 - [x] 메뉴 카드를 클릭하면 _id 값을 매개로 inputForm 팝업창에 해당 메뉴 데이터가 뜨게 해서, 수정창으로 활용하기
 - [x] 메뉴수정창에 단품과 세트의 경우가 제대로 올라오는지 확인하기
 - [x] showMenu()에서 가격란(붉은글씨)에 천의 자리마다 점 찍기 (Stack Overflow에 소개된 외부함수 이용). 할인가에도 적용함
-
+- [x] isDiscontinued인 아이템은 서버상으로는 남아있되 jQuery상으로 .remove() 하기
+- [x] POST를 응용해 수정 반영하기 (Node.js 상으로는 따로 구현이 필요함)
+- [x] 상품 이미지 하단 일부(음료 등) 잘림 -> .menu-name 옆에 <br> 추가해서 해결
 
 ###남은 작업
 ####웹페이지 동작 관련
 ##### editMenu()
-- [ ] PUT UPDATE를 통해 수정 반영하기 (Node.js 상으로는 따로 구현이 필요함)
-- [ ] delete가 제대로 되는지 확인하기 (구현은 했음)
 
-##### showMenu()
-- [ ] isDiscontinued인 아이템은 서버상으로는 남아있되 jQuery상으로 .remove() 하기 (테스트 필요)
+##### showMenu() 
 - [ ] isSoldOut인 카드는 자동으로 흑백 + sold표시 (javascript + css 이용) - 서식은 구현해둠 (1차 테스트 완료, 2차 테스트 필요)
 - [ ] isDiscounted인 경우에는 SALE 표시 - 서식은 구현해둠 (1차테스트 완료, 2차테스트 필요)
 
@@ -91,6 +94,7 @@
 - [ ] 도메인 url 서식 검증할지? (외부 함수 사용하면 쉬울 듯하나, 어차피 수정이 가능하므로 애매... 시간여유가 있다면 하자.)
 - [ ] 반복되는 ajax get success를 없애고 한번만 되게 하기 (어려움. 내 수준에서 아예 ajax 없이 하기는 역량밖)
 - [ ] 입력/수정 폼에서 탭이 단품으로 default로 클릭되게 할 수 있을까? (치명적인 glitch는 아님)
+- [ ] 할인가는 원가보다 싸서는 안 될텐데 별도의 alert를 띄워야 하나?
 
 ####제출서식 관련
 - [ ] 그리드 확인용 불필요한 css 지우기

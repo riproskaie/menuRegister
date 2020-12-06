@@ -14,8 +14,10 @@ def home():
 
 
 # 올리기/수정/삭제 기능 동시 수행
-@app.route('/api/menus', methods=['POST', 'PUT'])
+@app.route('/api/menus', methods=['POST'])
 def postEditMenu():
+    print(request.form['objectId'])
+    objectId = request.form['objectId']
     isCombo = bool(int(request.form['isCombo']))
     image = request.form['image']
     menuType = request.form['menuType']
@@ -37,7 +39,7 @@ def postEditMenu():
     isRecommended = bool(int(request.form['isRecommended']))
     isDiscontinued = bool(int(request.form['isDiscontinued']))
 
-    if request.method == "POST":
+    if objectId == "":
         menu = {
             "isCombo": isCombo,
             "image": image,
@@ -64,10 +66,10 @@ def postEditMenu():
         db.menus.insert_one(menu)
 
     else:
-        id = request.form['objectId']
-        objectId = ObjectId(id)
+        assert isinstance(objectId, object)
+        _id = ObjectId(objectId)
 
-        if db.menus.find_one({"_id": objectId}) is not None:
+        if db.menus.find_one({"_id": _id}) is not None:
             db.menus.update_one({"nameKr": nameKr}, {"$set": {'isCombo': isCombo, 'image': image,
                                                               'menuType': menuType, 'nameKr': nameKr,
                                                               'nameEng': nameEng, 'calories': calories,

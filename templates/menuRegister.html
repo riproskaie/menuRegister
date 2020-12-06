@@ -207,7 +207,7 @@
         }
 
         .card img {
-            height: 100px;
+            height: 120px;
             width: 150px;
             object-fit: cover;
         }
@@ -230,6 +230,7 @@
         }
 
         .menu-name {
+
             font-size: 2rem;
         }
 
@@ -434,6 +435,11 @@
             padding: 20px 20px 20px 20px;
         }
 
+        form #object-id-single,
+        form #object-id-combo {
+            display: none;
+        }
+
         form p.lab,
         form p.deletion {
             position: relative;
@@ -622,7 +628,6 @@
 
     </style>
     <script type="text/javascript">
-        // 메뉴등록 준비 함수 (+ 버튼을 누르면 실행된다)
         history.replaceState({}, null, location.pathname);
 
         // 세자릿수마다 콤마 찍어주는 함수
@@ -630,6 +635,7 @@
             return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
         }
 
+        // 메뉴등록 준비 함수 (+ 버튼을 누르면 실행된다)
         function openRegisterPopup() {
             // 팝업창을 준비 (폼은 비어있음)
             $(".dim").show();
@@ -647,7 +653,7 @@
             // 2. 클릭한 a태그의 id(objectId)를 참조해서, DB에서 데이터를 GET한 뒤 폼에 차례로 입력
             // isCombo == true 일 경우(프리미엄, 와퍼, 치킨버거)와 == false 일 경우 두 가지를 구분해서, 데이터를 읽어와야 한다
 
-            $(".card").one("click", function(){
+            $(".card").one("click", function () {
                 let objectId = $(this).attr('id');
                 $.ajax({
                     type: "GET",
@@ -663,7 +669,7 @@
 
                             // 메뉴의 가짓수가 백의 자리를 넘지 않으므로 부득이 while문을 사용함
                             while (menuNum < menus.length) {
-                                if (menus[menuNum]["_id"] === objectId){
+                                if (menus[menuNum]["_id"] === objectId) {
                                     singleToEdit = menus[menuNum]
                                     break;
                                 } else {
@@ -671,16 +677,17 @@
                                 }
                             }
 
+                            $("#object-id-single").val(objectId);
                             $("#product-image").val(singleToEdit["image"]);
 
                             let nameKr = singleToEdit["nameKr"];
                             let nameEng = singleToEdit["nameEng"];
 
                             // (버거류일 경우) 입력 당시의 상품이름만 남긴다
-                            if (nameKr.includes(" (단품)")){
+                            if (nameKr.includes(" (단품)")) {
                                 nameKr = nameKr.substring(0, nameKr.length - 5);
                             }
-                            if (nameEng.includes(" (A La Carte)")){
+                            if (nameEng.includes(" (A La Carte)")) {
                                 nameEng = nameEng.substring(0, nameEng.length - 13);
                             }
 
@@ -693,9 +700,9 @@
                             $("#is-discounted").val(singleToEdit["isDiscounted"]);
 
                             $(`input:radio[name=category][value=${singleToEdit["menuType"]}]`).prop("checked", true);
-                            $(`input:radio[name=soldOut][value=${singleToEdit["isSoldOut"]}]`).prop("checked", true);
+                            $(`input:radio[name=soldOut][value=${singleToEdit["isSoldOut"] + 0}]`).prop("checked", true); // boolean -> integer 형변환
                             $(`input:radio[name=recommendation][value=${singleToEdit["isRecommended"] + 0}]`).prop("checked", true); // boolean -> integer 형변환
-                            $(`input:radio[name=discontinue][value=${singleToEdit["isDiscontinued"]}]`).prop("checked", true);
+                            $(`input:radio[name=discontinue][value=${singleToEdit["isDiscontinued"] + 0}]`).prop("checked", true); // boolean -> integer 형변환
 
                             let nonAllergens = singleToEdit["ingredientsNonAllergicEng"];
                             let allergens = singleToEdit["ingredientsAllergicEng"];
@@ -709,13 +716,12 @@
                             }
 
                             // 버거류(프리미엄/와퍼/치킨버거일 경우) 세트 서식을 해당 메뉴의 값으로 채움
-
-                            if (singleToEdit["menuType"] == "프리미엄" || singleToEdit["menuType"] == "와퍼" || singleToEdit["menuType"] == "치킨버거" ) {
+                            if (singleToEdit["menuType"] == "프리미엄" || singleToEdit["menuType"] == "와퍼" || singleToEdit["menuType"] == "치킨버거") {
 
                                 menuNum = 0;
                                 let comboToEdit = menus[0];
                                 while (menuNum < menus.length) {
-                                    if (menus[menuNum]["nameKr"] === (nameKr + " (세트)")){
+                                    if (menus[menuNum]["nameKr"] === (nameKr + " (세트)")) {
                                         comboToEdit = menus[menuNum];
                                         break;
                                     } else {
@@ -723,16 +729,16 @@
                                     }
                                 }
 
+                                $("#object-id-combo").val(comboToEdit["_id"]);
                                 $("#combo-image").val(comboToEdit["image"]);
                                 $("#calories-combo").val(comboToEdit["calories"]);
                                 $("#price-combo").val(comboToEdit["price"]);
                             }
-
                         } else {
                             alert("메뉴 받아오기 실패");
                         }
                     }
-                })
+                });
             })
         }
 
@@ -748,22 +754,23 @@
             history.replaceState({}, null, location.pathname); // URL 뒤의 잔여 id(#~)를 없애기 위함
         }
 
-        // 팝업창에 입력폼을 불러온다
-        $(document).ready(function () {
-            let tempHtml = $(".hidden1").html();
-            $(".input-form1").append(tempHtml);
-        })
-
-        $(document).ready(function () {
-            let tempHtml = $(".hidden2").html();
-            $(".input-form2").append(tempHtml);
-        })
-
-        $(document).ready(function () {
-            $("input:radio[id=is-discontinued]").click(function () {
-                $(".alert-container").css("display", "flex");
+        function callInputForm() {
+            $(document).ready(function () {
+                let tempHtml = $(".hidden1").html();
+                $(".input-form1").append(tempHtml);
             })
-        })
+
+            $(document).ready(function () {
+                let tempHtml = $(".hidden2").html();
+                $(".input-form2").append(tempHtml);
+            })
+
+            $(document).ready(function () {
+                $("input:radio[id=is-discontinued]").click(function () {
+                    $(".alert-container").css("display", "flex");
+                })
+            })
+        }
 
         function alertProceed() {
             $(".alert-container").css("display", "none");
@@ -831,6 +838,11 @@
                             let isDiscounted = menu["isDiscounted"];
                             let isSoldOut = menu["isSoldOut"];
 
+                            // (버거류일 경우) 입력 당시의 상품이름만 남긴다
+                            if (nameKr.includes(" (단품)")) {
+                                nameKr = nameKr.substring(0, nameKr.length - 5);
+                            }
+
                             // 카드의 틀을 만든다
                             let tempHtml = `
                                 <div class="card" id="${objectId}">
@@ -840,7 +852,7 @@
                                         </a>
                                     </div>
                                     <div>
-                                        <a href="#register-popup" onclick="openEditPopup()" class="menu-name">${nameKr}</a>
+                                        <a href="#register-popup" onclick="openEditPopup()" class="menu-name"><br>${nameKr}</a>
                                         <div class="price">￦ ${numberWithCommas(price)}</div>
                                     </div>
                                 </div>
@@ -861,14 +873,14 @@
 
                             // 할인 (주황색 SALE 레이블 첨가, 원가에 취소선, 새 가격 첨가)
                             if (isDiscounted > 0) {
-                                $(`#${objectId} > div > div.price`).html(`<del>￦ ${numberWithCommas(price)}</del><br> → ￦ ${numberWithCommas(isDiscounted)}`);
-                                $(`#${objectId}`).append(`<style>div#${objectId}:after {display: block; position:absolute; height: 1rem; width: 35px; padding: 10px 5px 10px 5px; margin: 10px 0 0 40px; background-color: #f07303; color: #ffffff; font-size: 0.8rem; content: 'SALE';}</style>`);
+                                $(`#${objectId} > div > div.price`).html(`<del>￦ ${numberWithCommas(price)}</del><br> → ￦ ${numberWithCommas(price - isDiscounted)}`);
+                                $(`#${objectId}`).append(`<style type="text/css">div#${objectId}:after {display: block; position:fixed; height: 1rem; width: 35px; padding: 10px 5px 10px 5px; margin: 10px 0 0 40px; background-color: #f07303; color: #ffffff; font-size: 0.8rem; content: "SALE"}</style>`);
                             }
 
                             // 품절 (상품이미지 흑백처리. 회색 SOLD 레이블 첨가)
-                            if (isSoldOut == true) {
-                                $(`#${objectId} > div > a`).append(`<style>#${objectId} > div > a {-webkit-filter: grayscale(100%); filter: gray;}`);
-                                $(`#${objectId} > div > div.price`).append(`<style>#${objectId} > div > div.price::after {display: block; height: 1rem; width: 35px; padding: 10px 5px 10px 5px; margin: 10px 0 0 40px; background-color: #818181; color: #ffffff; font-size: 0.8rem; content: 'SOLD'</style>`);
+                            if (isSoldOut === true) {
+                                $(`#${objectId}  > div > a`).append(`<style type="text/css">#${objectId} > div > a > img {-webkit-filter: grayscale(100%); filter: gray;}</style>`);
+                                $(`#${objectId} > div > div.price`).append(`<style type="text/css">#${objectId} > div > div.price:after {display: block; height: 1rem; width: 35px; padding: 10px 5px 10px 5px; margin: 10px 0 0 40px; background-color: #818181; color: #ffffff; font-size: 0.8rem; content: "SOLD";}</style>`);
                             }
                             // 7. 1~6을 반복
                         }
@@ -877,44 +889,43 @@
             })
         }
 
-
         $(document).ready(function () {
             showMenu();
-        })
+            callInputForm();
 
-
-        //팝업 제어용 JQuery (별도의 함수명을 부여해서 document ready 시켜야)
-        // // input-form-single
-        $(document).ready(function () {
-            $("input:checkbox[name=ingredients]").click(function () {
-                let ingredientId = $(this).attr("id");
-                let chk = $(this).is(":checked");
-                if (chk === true) {
-                    $("input:checkbox[name=allergens][id=" + ingredientId + "-allergen]").prop("checked", true);
-                } else {
-                    $("input:checkbox[name=allergens][id=" + ingredientId + "-allergen]").prop("checked", false);
-                }
+            // 재료 체크박스의 내용과 알레르기유발물질 체크박스의 내용을 상호 반영하는 부분 (별도의 함수로 분리시킬경우 오류발생)
+            $(document).ready(function () {
+                $("input:checkbox[name=ingredients]").click(function () {
+                    let ingredientId = $(this).attr("id");
+                    let chk = $(this).is(":checked");
+                    if (chk === true) {
+                        $("input:checkbox[name=allergens][id=" + ingredientId + "-allergen]").prop("checked", true);
+                    } else {
+                        $("input:checkbox[name=allergens][id=" + ingredientId + "-allergen]").prop("checked", false);
+                    }
+                })
             })
-        })
 
-        // // vice versa (입력 시 오류 방지 용도)
-        $(document).ready(function () {
-            $("input:checkbox[name=allergens]").click(function () {
-                let allergenId = $(this).attr("id");
-                let strArr = allergenId.split("-allergen");
-                let chk = $(this).is(":checked");
-                if (chk === true) {
-                    $("input:checkbox[name=ingredients][id=" + strArr[0] + "]").prop("checked", true);
-                } else {
-                    $("input:checkbox[name=ingredients][id=" + strArr[0] + "]").prop("checked", false);
-                }
+            $(document).ready(function () {
+                $("input:checkbox[name=allergens]").click(function () {
+                    let allergenId = $(this).attr("id");
+                    let strArr = allergenId.split("-allergen");
+                    let chk = $(this).is(":checked");
+                    if (chk === true) {
+                        $("input:checkbox[name=ingredients][id=" + strArr[0] + "]").prop("checked", true);
+                    } else {
+                        $("input:checkbox[name=ingredients][id=" + strArr[0] + "]").prop("checked", false);
+                    }
+                })
             })
-        })
 
+
+        })
 
         // 단품 메뉴정보를 폼에서 입력받는 함수
         function getInputValueSingle() {
             // 1. 사용자가 입력한 폼 데이터를 받아와서 변수에 저장한다
+            let objectId = $("#object-id-single").val();
             let image = $("#product-image").val();
 
             let categoryId = $("input:radio[name=category]:checked").attr("id");
@@ -992,9 +1003,9 @@
                 ingredientsNonAllergicKr.push(ingredientsEngToKr[ingredientsNonAllergicEng[ingredient]]);
             }
 
-            // 2. 딕셔너리 형태로 가공한다
             let newMenu = {};
 
+            newMenu["objectId"] = objectId;
             newMenu["isCombo"] = 0; // Node.js라면 false가 되어야
             newMenu["image"] = image;
             newMenu["menuType"] = category;
@@ -1023,6 +1034,7 @@
         // 세트 메뉴정보를 폼에서 입력받는 함수
         function getInputValueCombo() {
             // 1. 사용자가 입력한 폼 데이터를 받아와서 변수에 저장한다
+            let objectId = $("#object-id-combo").val();
             let image = $("#combo-image").val();
 
             let categoryId = $("input:radio[name=category]:checked").attr("id");
@@ -1098,10 +1110,10 @@
                 ingredientsNonAllergicKr.push(ingredientsEngToKr[ingredientsNonAllergicEng[ingredient]]);
             }
 
-
             // 3. 딕셔너리 형태로 가공한다
             let newMenu = {};
 
+            newMenu["objectId"] = objectId;
             newMenu["isCombo"] = 1;
             newMenu["image"] = image;
             newMenu["menuType"] = category;
@@ -1166,7 +1178,7 @@
                 }
             }
 
-
+            let objectId = singleInfo["objectId"];
             let isCombo = singleInfo["isCombo"];
             let image = singleInfo["image"];
             let menuType = singleInfo["menuType"];
@@ -1217,25 +1229,36 @@
                     comboInfo["ingredientsNonAllergicKr"].push("감자");
                 }
 
-                // ajax를 통해 세트 폼도 서버에 POST한다
+                // 세트 폼 서버에 POST
                 $.ajax({
                     type: "POST",
                     url: "/api/menus",
                     data: {
-                        isCombo: comboInfo["isCombo"], image: comboInfo["image"], menuType: menuType,
-                        nameKr: comboInfo["nameKr"], nameEng: comboInfo["nameEng"], calories: comboInfo["calories"],
-                        price: comboInfo["price"], extraPrice: extraPrice, defaultCombo: defaultCombo,
-                        isDefaultCombo: comboInfo["isDefaultCombo"], side: comboInfo["side"], drink: comboInfo["drink"],
+                        objectId: comboInfo["objectId"],
+                        isCombo: comboInfo["isCombo"],
+                        image: comboInfo["image"],
+                        menuType: menuType,
+                        nameKr: comboInfo["nameKr"],
+                        nameEng: comboInfo["nameEng"],
+                        calories: comboInfo["calories"],
+                        price: comboInfo["price"],
+                        extraPrice: extraPrice,
+                        defaultCombo: defaultCombo,
+                        isDefaultCombo: comboInfo["isDefaultCombo"],
+                        side: comboInfo["side"],
+                        drink: comboInfo["drink"],
                         isDiscounted: isDiscounted,
                         ingredientsAllergicEng: comboInfo["ingredientsAllergicEng"],
                         ingredientsAllergicKr: comboInfo["ingredientsAllergicKr"],
                         ingredientsNonAllergicEng: comboInfo["ingredientsNonAllergicEng"],
                         ingredientsNonAllergicKr: comboInfo["ingredientsNonAllergicKr"],
-                        isSoldOut: isSoldOut, isRecommended: isRecommended, isDiscontinued: isDiscontinued
+                        isSoldOut: isSoldOut,
+                        isRecommended: isRecommended,
+                        isDiscontinued: isDiscontinued
                     },
                     success: function (response) {
                         if (response["result"] === "success") {
-                            alert(response["msg"]);
+                            alert(response["msg"] + " 세트");
                         } else {
                             alert("메뉴 받아오기 실패");
                         }
@@ -1244,14 +1267,14 @@
 
             }
 
-            // ajax를 통해 단품 폼만 서버에 POST한다 (오작동 방지를 위해 2초간격 setTimeout())
+            // 단품 폼 서버에 POST (오작동 방지를 위해 2초간격 setTimeout())
 
             setTimeout(function () {
                 $.ajax({
                     type: "POST",
                     url: "/api/menus",
                     data: {
-                        isCombo: isCombo, image: image, menuType: menuType,
+                        objectId: objectId, isCombo: isCombo, image: image, menuType: menuType,
                         nameKr: nameKr, nameEng: nameEng, calories: calories,
                         price: price, extraPrice: extraPrice, defaultCombo: defaultCombo,
                         isDefaultCombo: isDefaultCombo, side: side, drink: drink,
@@ -1264,7 +1287,7 @@
                     },
                     success: function (response) {
                         if (response["result"] === "success") {
-                            alert(response["msg"]);
+                            alert(response["msg"] + " 단품");
                         } else {
                             closePopup();
                             alert("메뉴 올리기 실패");
@@ -1289,7 +1312,7 @@
             </div>
             <!--카테고리와 안내문에 해당-->
             <div class="direction"> <!--사용법안내 회색창-->
-                <p style="font-family: " Gothic A1", sans-serif;">[안내] 생성된 메뉴를 클릭하면 상세정보 수정이 가능합니다.</p>
+                <p style="font-family: 'Gothic A1', sans-serif;">[안내] 생성된 메뉴를 클릭하면 상세정보 수정이 가능합니다.</p>
             </div>
             <div id="category-tabs">
                 <!--라디오버튼으로 카테고리 탭을 구현함-->
@@ -1316,258 +1339,269 @@
                     <!--메뉴등록 버튼-->
                     <div class="container">
                     </div>
-                    premium
                 </div>
                 <div class="whoppers">
                     <!--메뉴등록 버튼-->
                     <div class="container">
                     </div>
-                    whoppers
                 </div>
                 <div class="chicken-burgers">
                     <!--메뉴등록 버튼-->
                     <div class="container">
                     </div>
-                    chicken burgers
                 </div>
                 <div class="sides">
                     <!--메뉴등록 버튼-->
                     <div class="container">
                     </div>
-                    sides
                 </div>
                 <div class="drinks">
                     <!--메뉴등록 버튼-->
                     <div class="container">
                     </div>
-                    drinks
                 </div>
                 <div class="desserts">
                     <!--메뉴등록 버튼-->
                     <div class="container">
                     </div>
-                    desserts
                 </div>
             </div>
-        </div>
-        <div>
-            <div class="popup" id="register-popup">
-                <span class="register-or-edit">메뉴등록</span>
-                <div class="input-form">
-                    <div id="form-tabs">
-                        <input id="single" type="radio" name="singleOrCombo" checked="checked"/>
-                        <label for="single">단품</label>
-                        <input id="combo" type="radio" name="singleOrCombo"/>
-                        <label for="combo">세트</label>
-                        <!--여기에 입력폼이 표시됩니다-->
-                        <div class="input-form1">
-                        </div>
-                        <div class="input-form2">
+            <div class="popup-area">
+                <div class="popup" id="register-popup">
+                    <span class="register-or-edit">메뉴등록</span>
+                    <div class="input-form">
+                        <div id="form-tabs">
+                            <input id="single" type="radio" name="singleOrCombo" checked="checked"/>
+                            <label for="single">단품</label>
+                            <input id="combo" type="radio" name="singleOrCombo"/>
+                            <label for="combo">세트</label>
+                            <!--여기에 입력폼이 표시됩니다-->
+                            <div class="input-form1">
+                            </div>
+                            <div class="input-form2">
+                            </div>
                         </div>
                     </div>
+                    <a href="#a" class="decline" onclick="closePopup();return false;">취소</a>
+                    <a href="#" class="submit" onclick="submit();return false;">확인</a> <!--별도의 POST 기능 함수로 구현 예정-->
                 </div>
-                <a href="#a" class="decline" onclick="closePopup();return false;">취소</a>
-                <a href="#" class="submit" onclick="submit();return false;">확인</a> <!--별도의 POST 기능 함수로 구현 예정-->
+                <div class="dim"></div>
             </div>
-            <div class="dim"></div>
-        </div>
 
-        <div class="hidden1">
-            <form id="input-form-single">
-                <!--사진입력부는 나 혼자서 구현하기 어려울수도 있다. 다른거 먼저 구현하고 구글하자-->
-                <!--각 요소의 값을 읽어와서, 버튼을 누르면 해당 요소가 딕셔너리로 정리된 팝업창이 뜨게 하자-->
-                <div class="basic-info">
-                    <div class="text-form">
-                        <p class="lab">상품이미지(링크)</p>
-                        <p class="lab-required">* 필수입력 항목</p>
-                        <br><input type="text" placeholder="예: https://sample.com/image.png" id="product-image" required
-                                   autocomplete=off>
-                        <label for="product-image"></label>
-                    </div>
-                    <p class="lab">카테고리</p>
-                    <p class="lab-required">* 필수입력 항목</p>
-                    <div class="radios">
-                        <input type="radio" id="premium" name="category" value="프리미엄" required><label
-                            for="premium"><span></span>프리미엄</label>
-                        <input type="radio" id="whoppers" name="category" value="와퍼"><label for="whoppers"><span></span>와퍼</label>
-                        <input type="radio" id="chicken-burgers" name="category" value="치킨버거"><label
-                            for="chicken-burgers"><span></span>치킨버거</label>
-                        <input type="radio" id="sides" name="category" value="사이드"><label for="sides"><span></span>사이드</label>
-                        <input type="radio" id="drinks" name="category" value="음료"><label for="drinks"><span></span>음료</label>
-                        <input type="radio" id="desserts" name="category" value="디저트"><label for="desserts"><span></span>디저트</label>
-                    </div>
-                    <div class="text-form">
-                        <p class="lab">메뉴이름(한글)</p>
-                        <p class="lab-required">* 필수입력 항목</p>
-                        <br><input type="text" placeholder="최대 20자 입력가능 (예: 와퍼)" maxlength="20" id="name-kr" required
-                                   autocomplete=off>
-                        <label for="name-kr"></label>
-                    </div>
-                    <div class="text-form">
-                        <p class="lab">메뉴이름(영어)</p>
-                        <p class="lab-required">* 필수입력 항목</p>
-                        <br><input type="text" placeholder="최대 50자 입력 (예: Whopper)" maxlength="50" id="name-eng" required
-                                   autocomplete=off>
-                        <label for="name-eng"></label>
-                    </div>
-                    <div class="text-form">
-                        <p class="lab">칼로리(kcal)</p>
-                        <p class="lab-required">* 필수입력 항목</p>
-                        <br><input type="text" placeholder="숫자만 입력 (예: 1000)" maxlength="20" id="calories" required
-                                   autocomplete=off>
-                        <label for="calories"></label>
-                    </div>
-                    <div class="text-form">
-                        <p class="lab">상품가격(원)</p>
-                        <p class="lab-required">* 필수입력 항목</p>
-                        <br><input type="text" placeholder="숫자만 입력 (예: 1000)" maxlength="20" id="price" required
-                                   autocomplete=off>
-                        <label for="price"></label>
-                    </div>
-                    <div class="text-form">
-                        <p class="lab">세트추가금액(원)</p>
-                        <p class="lab-required">* 필수입력 항목</p>
-                        <br><input type="text" value="0" maxlength="20" id="extra-price" required
-                                   autocomplete=off>
-                        <label for="extra-price"></label>
-                    </div>
-                    <!--CSS상으로 체크박스 줄바꿈 및 정렬(3열로) 구현해야 한다-->
-                    <!--CSS상으로 이미지 체크박스를 구현해야 한다-->
-                    <!--자바스크립트로 "재료구성"에서 클릭된 성분이 "알레르기 유발성분"에서도 자동 클릭되게 해야 한다-->
-                    <p class="lab">재료구성</p>
-                    <p class="lab-required">* 음료 제외 필수입력</p>
-                    <div class="checkboxes">
-                        <input type="checkbox" id="beef" name="ingredients" value="beef" required><label
-                            for="beef">쇠고기</label>
-                        <input type="checkbox" id="pork" name="ingredients" value="pork"> <label for="pork">돼지고기</label>
-                        <input type="checkbox" id="chicken" name="ingredients" value="chicken"><label
-                            for="chicken">닭고기</label>
-                        <input type="checkbox" id="pollock" name="ingredients" value="pollock"><label
-                            for="pollock">명태연육</label>
-                        <input type="checkbox" id="crab" name="ingredients" value="crab"><label for="crab">붉은대게</label>
-                        <input type="checkbox" id="shellfish" name="ingredients" value="shellfish"><label
-                            for="shellfish">조개류</label>
-                        <input type="checkbox" id="shrimp" name="ingredients" value="shrimp"><label
-                            for="shrimp">새우</label>
-                        <input type="checkbox" id="cheese" name="ingredients" value="cheese"><label
-                            for="cheese">치즈</label>
-                        <input type="checkbox" id="egg" name="ingredients" value="egg"><label for="egg">난류</label>
-                        <input type="checkbox" id="flour" name="ingredients" value="flour"><label
-                            for="flour">밀가루</label>
-                        <input type="checkbox" id="soybean" name="ingredients" value="soybean"><label
-                            for="soybean">대두</label>
-                        <input type="checkbox" id="potato" name="ingredients" value="potato"><label
-                            for="potato">감자</label>
-                        <input type="checkbox" id="lettuce" name="ingredients" value="lettuce"><label
-                            for="lettuce">양상추</label>
-                        <input type="checkbox" id="tomato" name="ingredients" value="tomato"><label
-                            for="tomato">토마토</label>
-                        <input type="checkbox" id="cucumber" name="ingredients" value="cucumber"><label for="cucumber">오이</label>
-                        <input type="checkbox" id="onion" name="ingredients" value="onion"><label for="onion">양파</label>
-                        <input type="checkbox" id="truffle" name="ingredients" value="truffle"><label
-                            for="truffle">트러플</label>
-                    </div>
-                    <p class="lab">알레르기 유발재료</p>
-                    <div class="checkboxes">
-                        <input type="checkbox" id="beef-allergen" name="allergens" value="beef" required><label
-                            for="beef-allergen">쇠고기</label>
-                        <input type="checkbox" id="pork-allergen" name="allergens" value="pork"><label
-                            for="pork-allergen">돼지고기</label>
-                        <input type="checkbox" id="chicken-allergen" name="allergens" value="chicken"><label
-                            for="chicken-allergen">닭고기</label>
-                        <input type="checkbox" id="shellfish-allergen" name="allergens" value="shellfish"><label
-                            for="shellfish-allergen">조개류</label>
-                        <input type="checkbox" id="shrimp-allergen" name="allergens" value="shrimp"><label
-                            for="shrimp-allergen">새우</label>
-                        <input type="checkbox" id="egg-allergen" name="allergens" value="egg"><label
-                            for="egg-allergen">난류</label>
-                        <input type="checkbox" id="soybean-allergen" name="allergens" value="soybean"><label
-                            for="soybean-allergen">대두</label>
-                        <input type="checkbox" id="tomato-allergen" name="allergens" value="tomato"><label
-                            for="tomato-allergen">토마토</label>
-                    </div>
-                </div>
-                <span class="smaller-title">기타설정</span>
-                <div class="divider"></div>
-                <div class="text-form">
-                    <p class="lab">할인가격</p>
-                    <p class="lab-required">* 필수입력 항목</p>
-                    <br><input type="text" value="0" maxlength="20" id="is-discounted" required
+            <div class="hidden1">
+                <form id="input-form-single">
+                    <!--사진입력부는 나 혼자서 구현하기 어려울수도 있다. 다른거 먼저 구현하고 구글하자-->
+                    <!--각 요소의 값을 읽어와서, 버튼을 누르면 해당 요소가 딕셔너리로 정리된 팝업창이 뜨게 하자-->
+                    <div class="basic-info">
+                        <input type="text" placeholder="예: https://sample.com/image.png" id="object-id-single"
                                autocomplete=off>
-                    <label for="is-discounted"></label>
-                </div>
-                <p class="lab">품절</p>
-                <div class="radios">
-                    <input type="radio" id="is-sold-out" value="1" name="soldOut"><label for="is-sold-out"><span></span>예</label>
-                    <input type="radio" checked="checked" id="is-not-sold-out" value="0" name="soldOut"><label
-                        for="is-not-sold-out"><span></span>아니오</label>
-                </div>
-                <p class="lab">추천</p>
-                <div class="radios">
-                    <input type="radio" checked="checked" id="is-recommended" value="1" name="recommendation"><label
-                        for="is-recommended"><span></span>예</label>
-                    <input type="radio" id="is-not-recommended" value="0" name="recommendation"><label
-                        for="is-not-recommended"><span></span>아니오</label>
-                </div>
-                <p class="deletion">단종</p>
-                <p class="lab-required">* 단종 처리시 메뉴가 목록에서 삭제됩니다.</p>
-                <div class="radios">
-                    <input type="radio" id="is-discontinued" value="1" name="discontinue"><label
-                        for="is-discontinued"><span></span>예</label>
-                    <input type="radio" checked="checked" id="is-not-discontinued" value="0" name="discontinue"><label
-                        for="is-not-discontinued"><span></span>아니오</label>
-                </div>
-            </form>
-        </div>
-        <div class="hidden2">
-            <form id="input-form-combo">
-                <!--각 요소의 값을 읽어와서, 버튼을 누르면 해당 요소가 딕셔너리로 정리된 팝업창이 뜨게 하자-->
-                <div class="basic-info">
-                    <div class="text-form">
-                        <p class="lab">세트이미지(링크)</p>
+                        <div class="text-form">
+                            <p class="lab">상품이미지(링크)</p>
+                            <p class="lab-required">* 필수입력 항목</p>
+                            <br><input type="text" placeholder="예: https://sample.com/image.png" id="product-image"
+                                       required
+                                       autocomplete=off>
+                            <label for="product-image"></label>
+                        </div>
+                        <p class="lab">카테고리</p>
                         <p class="lab-required">* 필수입력 항목</p>
-                        <br><input type="text" placeholder="예: https://sample.com/image.png" id="combo-image"
-                                   autocomplete=off
-                                   required>
-                        <label for="combo-image"></label>
+                        <div class="radios">
+                            <input type="radio" id="premium" name="category" value="프리미엄" required><label
+                                for="premium"><span></span>프리미엄</label>
+                            <input type="radio" id="whoppers" name="category" value="와퍼"><label
+                                for="whoppers"><span></span>와퍼</label>
+                            <input type="radio" id="chicken-burgers" name="category" value="치킨버거"><label
+                                for="chicken-burgers"><span></span>치킨버거</label>
+                            <input type="radio" id="sides" name="category" value="사이드"><label for="sides"><span></span>사이드</label>
+                            <input type="radio" id="drinks" name="category" value="음료"><label for="drinks"><span></span>음료</label>
+                            <input type="radio" id="desserts" name="category" value="디저트"><label
+                                for="desserts"><span></span>디저트</label>
+                        </div>
+                        <div class="text-form">
+                            <p class="lab">메뉴이름(한글)</p>
+                            <p class="lab-required">* 필수입력 항목</p>
+                            <br><input type="text" placeholder="최대 20자 입력가능 (예: 와퍼)" maxlength="20" id="name-kr"
+                                       required
+                                       autocomplete=off>
+                            <label for="name-kr"></label>
+                        </div>
+                        <div class="text-form">
+                            <p class="lab">메뉴이름(영어)</p>
+                            <p class="lab-required">* 필수입력 항목</p>
+                            <br><input type="text" placeholder="최대 50자 입력 (예: Whopper)" maxlength="50" id="name-eng"
+                                       required
+                                       autocomplete=off>
+                            <label for="name-eng"></label>
+                        </div>
+                        <div class="text-form">
+                            <p class="lab">칼로리(kcal)</p>
+                            <p class="lab-required">* 필수입력 항목</p>
+                            <br><input type="text" placeholder="숫자만 입력 (예: 1000)" maxlength="20" id="calories" required
+                                       autocomplete=off>
+                            <label for="calories"></label>
+                        </div>
+                        <div class="text-form">
+                            <p class="lab">상품가격(원)</p>
+                            <p class="lab-required">* 필수입력 항목</p>
+                            <br><input type="text" placeholder="숫자만 입력 (예: 1000)" maxlength="20" id="price" required
+                                       autocomplete=off>
+                            <label for="price"></label>
+                        </div>
+                        <div class="text-form">
+                            <p class="lab">세트추가금액(원)</p>
+                            <p class="lab-required">* 필수입력 항목</p>
+                            <br><input type="text" value="0" maxlength="20" id="extra-price" required
+                                       autocomplete=off>
+                            <label for="extra-price"></label>
+                        </div>
+                        <!--CSS상으로 체크박스 줄바꿈 및 정렬(3열로) 구현해야 한다-->
+                        <!--CSS상으로 이미지 체크박스를 구현해야 한다-->
+                        <!--자바스크립트로 "재료구성"에서 클릭된 성분이 "알레르기 유발성분"에서도 자동 클릭되게 해야 한다-->
+                        <p class="lab">재료구성</p>
+                        <p class="lab-required">* 음료 제외 필수입력</p>
+                        <div class="checkboxes">
+                            <input type="checkbox" id="beef" name="ingredients" value="beef" required><label
+                                for="beef">쇠고기</label>
+                            <input type="checkbox" id="pork" name="ingredients" value="pork"> <label
+                                for="pork">돼지고기</label>
+                            <input type="checkbox" id="chicken" name="ingredients" value="chicken"><label
+                                for="chicken">닭고기</label>
+                            <input type="checkbox" id="pollock" name="ingredients" value="pollock"><label
+                                for="pollock">명태연육</label>
+                            <input type="checkbox" id="crab" name="ingredients" value="crab"><label
+                                for="crab">붉은대게</label>
+                            <input type="checkbox" id="shellfish" name="ingredients" value="shellfish"><label
+                                for="shellfish">조개류</label>
+                            <input type="checkbox" id="shrimp" name="ingredients" value="shrimp"><label
+                                for="shrimp">새우</label>
+                            <input type="checkbox" id="cheese" name="ingredients" value="cheese"><label
+                                for="cheese">치즈</label>
+                            <input type="checkbox" id="egg" name="ingredients" value="egg"><label for="egg">난류</label>
+                            <input type="checkbox" id="flour" name="ingredients" value="flour"><label
+                                for="flour">밀가루</label>
+                            <input type="checkbox" id="soybean" name="ingredients" value="soybean"><label
+                                for="soybean">대두</label>
+                            <input type="checkbox" id="potato" name="ingredients" value="potato"><label
+                                for="potato">감자</label>
+                            <input type="checkbox" id="lettuce" name="ingredients" value="lettuce"><label
+                                for="lettuce">양상추</label>
+                            <input type="checkbox" id="tomato" name="ingredients" value="tomato"><label
+                                for="tomato">토마토</label>
+                            <input type="checkbox" id="cucumber" name="ingredients" value="cucumber"><label
+                                for="cucumber">오이</label>
+                            <input type="checkbox" id="onion" name="ingredients" value="onion"><label
+                                for="onion">양파</label>
+                            <input type="checkbox" id="truffle" name="ingredients" value="truffle"><label
+                                for="truffle">트러플</label>
+                        </div>
+                        <p class="lab">알레르기 유발재료</p>
+                        <div class="checkboxes">
+                            <input type="checkbox" id="beef-allergen" name="allergens" value="beef" required><label
+                                for="beef-allergen">쇠고기</label>
+                            <input type="checkbox" id="pork-allergen" name="allergens" value="pork"><label
+                                for="pork-allergen">돼지고기</label>
+                            <input type="checkbox" id="chicken-allergen" name="allergens" value="chicken"><label
+                                for="chicken-allergen">닭고기</label>
+                            <input type="checkbox" id="shellfish-allergen" name="allergens" value="shellfish"><label
+                                for="shellfish-allergen">조개류</label>
+                            <input type="checkbox" id="shrimp-allergen" name="allergens" value="shrimp"><label
+                                for="shrimp-allergen">새우</label>
+                            <input type="checkbox" id="egg-allergen" name="allergens" value="egg"><label
+                                for="egg-allergen">난류</label>
+                            <input type="checkbox" id="soybean-allergen" name="allergens" value="soybean"><label
+                                for="soybean-allergen">대두</label>
+                            <input type="checkbox" id="tomato-allergen" name="allergens" value="tomato"><label
+                                for="tomato-allergen">토마토</label>
+                        </div>
                     </div>
+                    <span class="smaller-title">기타설정</span>
+                    <div class="divider"></div>
                     <div class="text-form">
-                        <p class="lab">세트칼로리(kcal)</p>
+                        <p class="lab">할인가격</p>
                         <p class="lab-required">* 필수입력 항목</p>
-                        <br><input type="text" placeholder="숫자만 입력 (예: 1000)" maxlength="20" id="calories-combo" required
+                        <br><input type="text" value="0" maxlength="20" id="is-discounted" required
                                    autocomplete=off>
-                        <label for="calories-combo"></label>
+                        <label for="is-discounted"></label>
                     </div>
-                    <div class="text-form">
-                        <p class="lab">세트가격(원)</p>
-                        <p class="lab-required">* 필수입력 항목</p>
-                        <br><input type="text" placeholder="숫자만 입력 (예: 1000)" maxlength="20" id="price-combo" required
-                                   autocomplete=off>
-                        <label for="price-combo"></label>
+                    <p class="lab">품절</p>
+                    <div class="radios">
+                        <input type="radio" id="is-sold-out" value="1" name="soldOut"><label
+                            for="is-sold-out"><span></span>예</label>
+                        <input type="radio" checked="checked" id="is-not-sold-out" value="0" name="soldOut"><label
+                            for="is-not-sold-out"><span></span>아니오</label>
                     </div>
-                    <!--CSS상으로 체크박스 줄바꿈 및 정렬(3열로) 구현해야 한다-->
-                    <!--CSS상으로 이미지 체크박스를 구현해야 한다-->
-                    <!--자바스크립트로 "재료구성"에서 클릭된 성분이 "알레르기 유발성분"에서도 자동 클릭되게 해야 한다-->
-                </div>
-            </form>
-        </div>
-        <div class="alert-container">
-            <div class="alert">
-                <div>
-                    단종 선택시<br>
-                    메뉴에서 삭제됩니다!<br>
-                    계속 진행하시겠습니까?
-                    <a href="#register-popup" class="decline" onclick="alertDecline()">취소</a>
-                    <a href="#register-popup" class="submit" onclick="alertProceed()">확인</a>
+                    <p class="lab">추천</p>
+                    <div class="radios">
+                        <input type="radio" checked="checked" id="is-recommended" value="1" name="recommendation"><label
+                            for="is-recommended"><span></span>예</label>
+                        <input type="radio" id="is-not-recommended" value="0" name="recommendation"><label
+                            for="is-not-recommended"><span></span>아니오</label>
+                    </div>
+                    <p class="deletion">단종</p>
+                    <p class="lab-required">* 단종 처리시 메뉴가 목록에서 삭제됩니다.</p>
+                    <div class="radios">
+                        <input type="radio" id="is-discontinued" value="1" name="discontinue"><label
+                            for="is-discontinued"><span></span>예</label>
+                        <input type="radio" checked="checked" id="is-not-discontinued" value="0"
+                               name="discontinue"><label
+                            for="is-not-discontinued"><span></span>아니오</label>
+                    </div>
+                </form>
+            </div>
+            <div class="hidden2">
+                <form id="input-form-combo">
+                    <!--각 요소의 값을 읽어와서, 버튼을 누르면 해당 요소가 딕셔너리로 정리된 팝업창이 뜨게 하자-->
+                    <div class="basic-info">
+                        <input type="text" placeholder="예: https://sample.com/image.png" id="object-id-combo"
+                               autocomplete=off>
+                        <div class="text-form">
+                            <p class="lab">세트이미지(링크)</p>
+                            <p class="lab-required">* 필수입력 항목</p>
+                            <br><input type="text" placeholder="예: https://sample.com/image.png" id="combo-image"
+                                       autocomplete=off
+                                       required>
+                            <label for="combo-image"></label>
+                        </div>
+                        <div class="text-form">
+                            <p class="lab">세트칼로리(kcal)</p>
+                            <p class="lab-required">* 필수입력 항목</p>
+                            <br><input type="text" placeholder="숫자만 입력 (예: 1000)" maxlength="20" id="calories-combo"
+                                       required
+                                       autocomplete=off>
+                            <label for="calories-combo"></label>
+                        </div>
+                        <div class="text-form">
+                            <p class="lab">세트가격(원)</p>
+                            <p class="lab-required">* 필수입력 항목</p>
+                            <br><input type="text" placeholder="숫자만 입력 (예: 1000)" maxlength="20" id="price-combo"
+                                       required
+                                       autocomplete=off>
+                            <label for="price-combo"></label>
+                        </div>
+                        <!--CSS상으로 체크박스 줄바꿈 및 정렬(3열로) 구현해야 한다-->
+                        <!--CSS상으로 이미지 체크박스를 구현해야 한다-->
+                        <!--자바스크립트로 "재료구성"에서 클릭된 성분이 "알레르기 유발성분"에서도 자동 클릭되게 해야 한다-->
+                    </div>
+                </form>
+            </div>
+            <div class="alert-container">
+                <div class="alert">
+                    <div>
+                        단종 선택시<br>
+                        메뉴에서 삭제됩니다!<br>
+                        계속 진행하시겠습니까?
+                        <a href="#register-popup" class="decline" onclick="alertDecline()">취소</a>
+                        <a href="#register-popup" class="submit" onclick="alertProceed()">확인</a>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="fill-alert-container">
-            <div class="alert">
-                <div>
-                    입력되지 않은<br>
-                    정보가 있습니다!
-                    <a href="#register-popup" class="decline fill-alert-decline" onclick="fillAlertClose()">뒤로</a>
+            <div class="fill-alert-container">
+                <div class="alert">
+                    <div>
+                        입력되지 않은<br>
+                        정보가 있습니다!
+                        <a href="#register-popup" class="decline fill-alert-decline" onclick="fillAlertClose()">뒤로</a>
+                    </div>
                 </div>
             </div>
         </div>
