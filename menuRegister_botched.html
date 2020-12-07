@@ -33,29 +33,26 @@
         #menu-register {
             min-width: 750px;
             overflow-x: scroll;
-        }
-
-        .popup,
-        .alert-container {
-            min-width: 600px;
-            min-height: 520px;
-            overflow-x: hidden;
-            overflow-y: hidden;
-        }
-
-        #menu-register {
             display: flex;
             flex-direction: column;
         }
 
-        /*메인페이지(메뉴관리) 관련 css*/
+        /*헤더*/
         #menu-register .top-area {
             font-family: "Black Han Sans", sans-serif;
             height: 200px;
             background-color: #E1C89F;
         }
 
-        #menu-register .btn {
+        #menu-register .top-area .header {
+            position: relative;
+            width: 85%;
+            height: 100%;
+            margin: auto;
+            display: grid;
+        }
+
+        #menu-register .top-area .header .btn {
             font-family: "Black Han Sans", sans-serif;
             position: absolute;
             text-decoration: none;
@@ -71,11 +68,11 @@
             display: inline-block;
         }
 
-        #menu-register .btn:hover {
+        #menu-register .top-area .header .btn:hover {
             background-color: #fff6e5;
         }
 
-        #menu-register .logo {
+        #menu-register .top-area .header .logo {
             position: absolute;
             width: 150px;
             height: 100px;
@@ -84,7 +81,7 @@
             transform: translateY(-50%);
         }
 
-        #menu-register span.title {
+        #menu-register .top-area .header span.title {
             font-family: "Black Han Sans", sans-serif;
             font-size: 5rem;
             margin-right: 1rem;
@@ -95,6 +92,19 @@
             color: #fff
         }
 
+        #menu-register .direction {
+            background-color: #999999;
+            color: #ffffff;
+            text-align: center;
+            height: 50px;
+            margin: 0 0 5px 0;
+        }
+
+        /*카테고리탭*/
+
+        #menu-register #category-tabs {
+            text-align: center;
+        }
 
         #menu-register #category-tabs input[id="premium-category"], #menu-register #category-tabs input[id="premium-category"] ~ div.premium,
         #menu-register #category-tabs input[id="whoppers-category"], #menu-register #category-tabs input[id="whoppers-category"] ~ div.whoppers,
@@ -112,10 +122,6 @@
         #menu-register #category-tabs input[id="drinks-category"]:checked ~ div.drinks,
         #menu-register #category-tabs input[id="desserts-category"]:checked ~ div.desserts {
             display: block;
-        }
-
-        #menu-register #category-tabs {
-            text-align: center;
         }
 
         #menu-register #category-tabs > label {
@@ -164,21 +170,169 @@
             color: #9a9a9a;
         }
 
-        #menu-register .header {
-            position: relative;
-            width: 85%;
-            height: 100%;
-            margin: auto;
+        #menu-register #category-tabs div .container {
             display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(auto, 350px));
         }
 
-        #menu-register .direction {
-            background-color: #999999;
-            color: #ffffff;
-            text-align: center;
-            height: 50px;
-            margin: 0 0 5px 0;
+
+        /*팝업(모달창)영역*/
+
+        #menu-register .popup-area .popup {
+            position: absolute;
+            display: none;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 70%;
+            height: 70%;
+            padding: 20px;
+            box-sizing: border-box;
+            background: #f7f3f0;
+            z-index: 5;
         }
+
+        #menu-register .popup-area .popup:target {
+            opacity: 1;
+        }
+
+        #menu-register .popup-area .popup:target + .dim {
+            opacity: 1;
+            z-index: 2;
+        }
+
+        #menu-register .popup-area #register-popup {
+            position: fixed;
+        }
+
+        #menu-register .popup-area .popup .input-form {
+            position: relative;
+            top: 2rem;
+        }
+
+
+        /*폼(탭버튼 제외)이 들어갈 공간에 해당*/
+        #menu-register .popup-area .popup .input-form #form-tabs {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 100%;
+            height: 100%;
+            background: #f7f3f0;
+        }
+
+        #menu-register .popup-area .popup .input-form #form-tabs input[type="radio"]:nth-of-type(1), #form-tabs input[type="radio"]:nth-of-type(1) ~ div.input-form1,
+        #menu-register .popup-area .popup .input-form #form-tabs input[type="radio"]:nth-of-type(2), #form-tabs input[type="radio"]:nth-of-type(2) ~ div.input-form2 {
+            display: none;
+        }
+
+        #menu-register .popup-area .popup .input-form #form-tabs input[type="radio"]:nth-of-type(1):checked ~ div.input-form1,
+        #menu-register .popup-area .popup .input-form #form-tabs input[type="radio"]:nth-of-type(2):checked ~ div.input-form2 {
+            display: block;
+        }
+
+        #menu-register .popup-area .popup .input-form #form-tabs div.input-form1,
+        #menu-register .popup-area .popup .input-form #form-tabs div.input-form2 {
+            overflow-y: scroll;
+            overflow-x: hidden;
+            background-color: #ffffff;
+            height: 240px;
+            margin: 10px 10px 10px 10px;
+        }
+
+        #menu-register .popup-area .popup .input-form #form-tabs > label {
+            font-family: "Black Han Sans", sans-serif;
+            display: inline-block;
+            font-size: 2rem;
+            border-radius: 10px;
+            padding: 5px 10px 5px 10px;
+            text-align: center;
+            width: 70px;
+            color: #ffffff;
+            background-color: #9a9a9a;
+            text-decoration: none;
+            margin-bottom: 10px;
+        }
+
+        #menu-register .popup-area .popup .input-form #form-tabs > label:hover {
+            cursor: pointer;
+            background-color: #cccccc;
+        }
+
+        #menu-register .popup-area .popup .input-form #form-tabs label[for=single] {
+            position: relative;
+            margin-left: 10px;
+        }
+
+        #menu-register .popup-area .popup .input-form #form-tabs input[type="radio"][id="single"]:checked ~ label[for="single"],
+        #menu-register .popup-area .popup .input-form #form-tabs input[type="radio"][id="combo"]:checked ~ label[for="combo"] {
+            background-color: #33a74c;
+        }
+
+
+        #menu-register .popup-area .popup a.decline:after,
+        #menu-register .popup-area .popup a.submit:after {
+            content: "";
+        }
+
+        #menu-register .popup-area .dim {
+            position: fixed;
+            left: 0;
+            top: 0;
+            z-index: -1;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            opacity: 0;
+        }
+
+
+
+
+
+
+        .decline {
+            font-family: "Black Han Sans", sans-serif;
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            color: #ffffff;
+            font-size: 2rem;
+            transform: translate(-110%, -15%);
+            padding: 20px 15% 20px 15%;
+            background: #000000;
+            border-radius: 10px;
+            z-index: 1;
+            cursor: pointer;
+        }
+
+        .submit {
+            font-family: "Black Han Sans", sans-serif;
+            position: absolute;
+            bottom: 0;
+            right: 50%;
+            color: #ffffff;
+            border-color: #E50014;
+            transform: translate(110%, -15%);
+            padding: 20px 15% 20px 15%;
+            background: #E50014;
+            border-radius: 10px;
+            font-size: 2rem;
+            cursor: pointer;
+        }
+
+
+
+
+
+
+
+
+
+
+
+
 
         span.smaller-title,
         span.register-or-edit {
@@ -191,10 +345,6 @@
 
 
         /*메뉴카드(사진+이름+가격) 관련 css*/
-        .container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(auto, 350px));
-        }
 
         .card {
             display: grid;
@@ -227,6 +377,7 @@
         }
 
         .menu-name {
+
             font-size: 2rem;
         }
 
@@ -237,37 +388,35 @@
             color: #E50014;
         }
 
-
-        div.sale-sign:after {
-            display: block;
-            position: absolute;
-            height: 1rem;
-            width: 35px;
-            padding: 10px 5px 10px 5px;
-            margin: 10px 0 0 40px;
-            background-color: #f07303;
-            color: #ffffff;
-            font-size: 0.8rem;
-            content: "SALE"
+                div.sale-sign:after {
+        	display: block;
+	        position:fixed;
+	        height: 1rem;
+	        width: 35px;
+	        padding: 10px 5px 10px 5px;
+	        margin: 10px 0 0 40px;
+	        background-color: #f07303;
+	        color: #ffffff;
+	        font-size: 0.8rem;
+	        content: "SALE"
         }
 
         a.grayscale {
-            -webkit-filter: grayscale(100%);
-            filter: gray;
+	        -webkit-filter: grayscale(100%);
+	        filter: gray;
         }
 
         div.sold-sign:after {
-            display: block;
-            height: 1rem;
-            width: 35px;
-            padding: 10px 5px 10px 5px;
-            margin: 10px 0 0 40px;
-            background-color: #818181;
-            color: #ffffff;
-            font-size: 0.8rem;
-            content: "SOLD";
+	        display: block;
+	        height: 1rem;
+	        width: 35px;
+	        padding: 10px 5px 10px 5px;
+	        margin: 10px 0 0 40px;
+	        background-color: #818181;
+	        color: #ffffff;
+	        font-size: 0.8rem;
+	        content: "SOLD";
         }
-
 
         /*메뉴등록(+)버튼 관련 css*/
         a.plus-button {
@@ -313,149 +462,9 @@
         }
 
 
-        /*팝업(모달)창 관련*/
-        .popup {
-            position: absolute;
-            display: none;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 70%;
-            height: 70%;
-            padding: 20px;
-            box-sizing: border-box;
-            background: #f7f3f0;
-            z-index: 5;
-        }
-
-        .popup:target {
-            opacity: 1;
-        }
-
-        .popup:target + .dim {
-            opacity: 1;
-            z-index: 2;
-        }
-
-        #register-popup {
-            position: fixed;
-        }
-
-        .input-form {
-            position: relative;
-            top: 2rem;
-        }
 
 
-        .decline {
-            font-family: "Black Han Sans", sans-serif;
-            position: absolute;
-            bottom: 0;
-            left: 50%;
-            color: #ffffff;
-            font-size: 2rem;
-            transform: translate(-110%, -15%);
-            padding: 20px 15% 20px 15%;
-            background: #000000;
-            border-radius: 10px;
-            z-index: 1;
-            cursor: pointer;
-        }
 
-        .submit {
-            font-family: "Black Han Sans", sans-serif;
-            position: absolute;
-            bottom: 0;
-            right: 50%;
-            color: #ffffff;
-            border-color: #E50014;
-            transform: translate(110%, -15%);
-            padding: 20px 15% 20px 15%;
-            background: #E50014;
-            border-radius: 10px;
-            font-size: 2rem;
-            cursor: pointer;
-        }
-
-        a.decline:after,
-        a.submit:after {
-            content: "";
-        }
-
-        .dim {
-            position: fixed;
-            left: 0;
-            top: 0;
-            z-index: -1;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.6);
-            opacity: 0;
-        }
-
-
-        /*폼(탭버튼 제외)이 들어갈 공간에 해당*/
-        #form-tabs {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 100%;
-            height: 100%;
-            background: #f7f3f0;
-        }
-
-        #form-tabs input[type="radio"]:nth-of-type(1), #form-tabs input[type="radio"]:nth-of-type(1) ~ div.input-form1,
-        #form-tabs input[type="radio"]:nth-of-type(2), #form-tabs input[type="radio"]:nth-of-type(2) ~ div.input-form2 {
-            display: none;
-        }
-
-        #form-tabs input[type="radio"]:nth-of-type(1):checked ~ div.input-form1,
-        #form-tabs input[type="radio"]:nth-of-type(2):checked ~ div.input-form2 {
-            display: block;
-        }
-
-        #form-tabs div.input-form1,
-        #form-tabs div.input-form2 {
-            overflow-y: scroll;
-            overflow-x: hidden;
-            background-color: #ffffff;
-            height: 240px;
-            margin: 10px 10px 10px 10px;
-        }
-
-        #form-tabs > label {
-            font-family: "Black Han Sans", sans-serif;
-            display: inline-block;
-            font-size: 2rem;
-            border-radius: 10px;
-            padding: 5px 10px 5px 10px;
-            text-align: center;
-            width: 70px;
-            color: #ffffff;
-            background-color: #9a9a9a;
-            text-decoration: none;
-            margin-bottom: 10px;
-        }
-
-        #form-tabs > label:hover {
-            cursor: pointer;
-            background-color: #cccccc;
-        }
-
-        #form-tabs label[for=single] {
-            position: relative;
-            margin-left: 10px;
-        }
-
-        #form-tabs input[type="radio"][id="single"]:checked ~ label[for="single"],
-        #form-tabs input[type="radio"][id="combo"]:checked ~ label[for="combo"] {
-            background-color: #33a74c;
-        }
-
-        .hidden1, .hidden2 {
-            display: none;
-        }
 
 
         /*css for input form*/
@@ -653,6 +662,21 @@
         .fill-alert-decline {
             transform: translate(-50%, -20%);
         }
+
+
+        /*경계선*/
+
+        .popup,
+        .alert-container {
+            min-width: 600px;
+            min-height: 520px;
+            overflow-x: hidden;
+            overflow-y: hidden;
+        }
+
+
+
+
     </style>
     <script type="text/javascript">
         history.replaceState({}, null, location.pathname);
@@ -985,7 +1009,7 @@
 
             $("input:checkbox[name=ingredients]:checked").each(function () {
                 let ingredient = $(this).val();
-                if (ingredients.includes(ingredient)) {
+                if (ingredients.includes(ingredient)){
                     return false;
                 } else {
                     ingredients.push(ingredient);  // 디버그 (수정 시 중복해서 checkbox의 값을 읽는 것 방지)
@@ -1096,7 +1120,7 @@
 
             $("input:checkbox[name=ingredients]:checked").each(function () {
                 let ingredient = $(this).val();
-                if (ingredients.includes(ingredient)) {
+                if (ingredients.includes(ingredient)){
                     return false;
                 } else {
                     ingredients.push(ingredient);  // 디버그 (수정 시 중복해서 checkbox의 값을 읽는 것 방지)
@@ -1109,6 +1133,7 @@
                 let allergenVal = $(this).val();
                 ingredientsAllergicEng.push(allergenVal);
             });
+
 
 
             // 중복요소 제거 (위의 .each문 어딘가에 문제가 있는 듯하나, 찾기 힘들어 이렇게 해결함)
@@ -1597,8 +1622,8 @@
                             <p class="lab-required">* 필수입력 항목</p>
                             <br>
                             <input type="text" placeholder="예: https://sample.com/image.png" id="combo-image"
-                                   autocomplete=off
-                                   required>
+                                       autocomplete=off
+                                       required>
                             <label for="combo-image"></label>
                         </div>
                         <div class="text-form">

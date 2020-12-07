@@ -39,6 +39,21 @@ def postEditMenu():
     isRecommended = bool(int(request.form['isRecommended']))
     isDiscontinued = bool(int(request.form['isDiscontinued']))
 
+    coke = db.menus.find_one({'nameKr': '코카콜라(R)'})
+    frenchFries = db.menus.find_one({'nameKr': '프렌치프라이(R)'})
+
+    if isCombo and coke is not None:
+        drink = coke['_id']
+    else:
+        drink = ""
+
+    if isCombo and frenchFries is not None:
+        side = frenchFries['_id']
+        ingredientsNonAllergicKr.append('감자')
+        ingredientsNonAllergicEng.append('potato')
+    else:
+        side = ""
+
     if objectId == "":
         menu = {
             "isCombo": isCombo,
@@ -64,6 +79,7 @@ def postEditMenu():
         }
 
         db.menus.insert_one(menu)
+
 
     else:
         assert isinstance(objectId, object)
@@ -95,6 +111,11 @@ def readMenus():
     menus = list(db.menus.find({}))
     for i in range(0, len(menus)):
         menus[i]['_id'] = str(menus[i]['_id'])  # ObjectId 값은 str 로 형변환시 내부값만 추출된다
+        menus[i]['side'] = str(menus[i]['side'])
+        menus[i]['drink'] = str(menus[i]['drink'])
+        if menus[i]['isCombo'] and '감자' in menus[i]['ingredientsNonAllergicKr']:
+            menus[i]['ingredientsNonAllergicKr'].remove('감자')
+            menus[i]['ingredientsNonAllergicEng'].remove('potato')
 
     return jsonify({'result': 'success', 'menus_list': menus})
 
